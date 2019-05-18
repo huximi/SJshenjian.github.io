@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>谈谈对volatile的理解 | 沈健的技术博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="多线程,面试,">
+  
+
+  <meta name="description" content="synchronized关键字、Lock对象同时支持原子性、有序性和可见性；volatile变量支持有序性、可见性，不支持原子性。 保证可见性可见性是对于多CPU而言，单CPU不存在可见性问题1）立即将工作内存中寄存器里存储的修改后的变量写回到主内存中，主要通过使load/store指令一并执行实现(注意内存模型中规定read/load、 store/write必须成对出现)2）其他处理器通过嗅探">
+<meta name="keywords" content="多线程,面试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="谈谈对volatile的理解">
+<meta property="og:url" content="http://www.shenjian.online/2019/01/10/谈谈对volatile的理解/index.html">
+<meta property="og:site_name" content="沈健的技术博客">
+<meta property="og:description" content="synchronized关键字、Lock对象同时支持原子性、有序性和可见性；volatile变量支持有序性、可见性，不支持原子性。 保证可见性可见性是对于多CPU而言，单CPU不存在可见性问题1）立即将工作内存中寄存器里存储的修改后的变量写回到主内存中，主要通过使load/store指令一并执行实现(注意内存模型中规定read/load、 store/write必须成对出现)2）其他处理器通过嗅探">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-03-20T09:51:48.847Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="谈谈对volatile的理解">
+<meta name="twitter:description" content="synchronized关键字、Lock对象同时支持原子性、有序性和可见性；volatile变量支持有序性、可见性，不支持原子性。 保证可见性可见性是对于多CPU而言，单CPU不存在可见性问题1）立即将工作内存中寄存器里存储的修改后的变量写回到主内存中，主要通过使load/store指令一并执行实现(注意内存模型中规定read/load、 store/write必须成对出现)2）其他处理器通过嗅探">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+            标签
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#保证可见性"><span class="toc-text">保证可见性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#保证有序性"><span class="toc-text">保证有序性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实际使用场景–状态变量标记"><span class="toc-text">实际使用场景–状态变量标记</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-谈谈对volatile的理解" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">谈谈对volatile的理解</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2019.01.10</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Jian Shen</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/category/多线程/">多线程</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>synchronized关键字、Lock对象同时支持原子性、有序性和可见性；volatile变量支持有序性、可见性，不支持原子性。</p>
+<h2 id="保证可见性"><a href="#保证可见性" class="headerlink" title="保证可见性"></a>保证可见性</h2><p>可见性是对于多CPU而言，单CPU不存在可见性问题<br>1）立即将工作内存中寄存器里存储的修改后的变量写回到主内存中，主要通过使load/store指令一并执行实现(注意内存模型中规定read/load、 store/write必须成对出现)<br>2）其他处理器通过嗅探总线上传播过来的数据监测自己工作内存中缓存是否过期。过期，则从主存中重新读取。</p>
+<p>double与long为非原子的64位操作，用volatile修饰，可保证其安全性</p>
+<h2 id="保证有序性"><a href="#保证有序性" class="headerlink" title="保证有序性"></a>保证有序性</h2><p>通过内存屏障禁止指令重排序。具体是通过在volatile修饰的变量赋值后，多执行一个lock addI $0X0, (%esp)操作。  –ps ESP为32位堆栈顶指针</p>
+<h2 id="实际使用场景–状态变量标记"><a href="#实际使用场景–状态变量标记" class="headerlink" title="实际使用场景–状态变量标记"></a>实际使用场景–状态变量标记</h2><p>一般业务场景中用于 volatile static Boolean flag = true</p>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持沈健</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2019/01/09/内存溢出遇到过吗，怎么处理/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2019/01/10/Object转JSON保持数据顺序及Value为空Key仍返回/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+              标签
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
