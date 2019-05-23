@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>ThreadPoolExecutor及ThreadFactory | 沈健的技术博客</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="多线程,">
+  
+
+  <meta name="description" content="1. ThreadPoolExecutor构造参数详解1.1 corePoolSize与maximumPoolSizeThreadPoolExecutor将根据corePoolSize与maximumPoolSize自动调整线程池的大小。当新任务在方法execute(java.lang.Runnable)中提交时如果池中当前线程数量少于corePoolSize,则新创建线程来处理请求，即使其他线程">
+<meta name="keywords" content="多线程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ThreadPoolExecutor及ThreadFactory">
+<meta property="og:url" content="http://www.shenjian.online/2019/05/23/ThreadPoolExecutor及ThreadFactory/index.html">
+<meta property="og:site_name" content="沈健的技术博客">
+<meta property="og:description" content="1. ThreadPoolExecutor构造参数详解1.1 corePoolSize与maximumPoolSizeThreadPoolExecutor将根据corePoolSize与maximumPoolSize自动调整线程池的大小。当新任务在方法execute(java.lang.Runnable)中提交时如果池中当前线程数量少于corePoolSize,则新创建线程来处理请求，即使其他线程">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-05-23T09:59:03.253Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ThreadPoolExecutor及ThreadFactory">
+<meta name="twitter:description" content="1. ThreadPoolExecutor构造参数详解1.1 corePoolSize与maximumPoolSizeThreadPoolExecutor将根据corePoolSize与maximumPoolSize自动调整线程池的大小。当新任务在方法execute(java.lang.Runnable)中提交时如果池中当前线程数量少于corePoolSize,则新创建线程来处理请求，即使其他线程">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbeddx" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?57e94d016e201fba3603a8a2b0263af0";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+
+</head>
+</html>
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+            标签
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-ThreadPoolExecutor构造参数详解"><span class="toc-text">1. ThreadPoolExecutor构造参数详解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-corePoolSize与maximumPoolSize"><span class="toc-text">1.1 corePoolSize与maximumPoolSize</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-keepAliveTime与timeUnit"><span class="toc-text">1.2 keepAliveTime与timeUnit</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3-workQueue"><span class="toc-text">1.3 workQueue</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-4-threadFactory"><span class="toc-text">1.4 threadFactory</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-5-handler"><span class="toc-text">1.5 handler</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-自定义ThreadFactory"><span class="toc-text">2. 自定义ThreadFactory</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-ThreadPoolExecutor及ThreadFactory" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">ThreadPoolExecutor及ThreadFactory</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2019.05.23</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>Jian Shen</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/category/多线程/">多线程</a>
+  </span>
+
+
+
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="1-ThreadPoolExecutor构造参数详解"><a href="#1-ThreadPoolExecutor构造参数详解" class="headerlink" title="1. ThreadPoolExecutor构造参数详解"></a>1. ThreadPoolExecutor构造参数详解</h1><h2 id="1-1-corePoolSize与maximumPoolSize"><a href="#1-1-corePoolSize与maximumPoolSize" class="headerlink" title="1.1 corePoolSize与maximumPoolSize"></a>1.1 corePoolSize与maximumPoolSize</h2><p>ThreadPoolExecutor将根据corePoolSize与maximumPoolSize自动调整线程池的大小。当新任务在方法execute(java.lang.Runnable)中提交时<strong>如果池中当前线程数量少于corePoolSize,则新创建线程来处理请求，即使其他线程是空闲的;如果池中当前线程数量多于corePoolSize而小于maximumPoolSize,则仅当队列满时才新创建线程</strong>(由此可得，若队列无界，maximumPoolSize无效，池中线程数始终为corePoolSize；若队列有界，maximumPoolSize无界，则允许任意数量的并发)</p>
+<h2 id="1-2-keepAliveTime与timeUnit"><a href="#1-2-keepAliveTime与timeUnit" class="headerlink" title="1.2 keepAliveTime与timeUnit"></a>1.2 keepAliveTime与timeUnit</h2><p>池中线程数多于corePoolSize时，线程空闲时间超过以timeUnit为单位的时间keepAliveTime后，则终止，避免资源浪费。默认情况下，保持活动资源策略不应用于corePoolSizeThreads,但是只要keepAliveTime不为0，可以通过allowsCoreThreadTimeOut(boolean)方法将此超时策略应用于核心线程。</p>
+<h2 id="1-3-workQueue"><a href="#1-3-workQueue" class="headerlink" title="1.3 workQueue"></a>1.3 workQueue</h2><h2 id="1-4-threadFactory"><a href="#1-4-threadFactory" class="headerlink" title="1.4 threadFactory"></a>1.4 threadFactory</h2><h2 id="1-5-handler"><a href="#1-5-handler" class="headerlink" title="1.5 handler"></a>1.5 handler</h2><h1 id="2-自定义ThreadFactory"><a href="#2-自定义ThreadFactory" class="headerlink" title="2. 自定义ThreadFactory"></a>2. 自定义ThreadFactory</h1>
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，支持沈健</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2019/05/19/区块链架构/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="hide pull-right" href="/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/archives/" rel="noopener noreferrer" target="_self">
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/category/" rel="noopener noreferrer" target="_self">
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a class="CIRCLE" href="/tag/" rel="noopener noreferrer" target="_self">
+              标签
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+    
+
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
