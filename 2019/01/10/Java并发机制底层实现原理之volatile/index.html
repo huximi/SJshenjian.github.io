@@ -7,26 +7,26 @@
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
   
-  <title>内存溢出遇到过吗，怎么处理 | 沈健的技术博客</title>
+  <title>Java并发机制底层实现原理之volatile | 沈健的技术博客</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="面试,">
+    <meta name="keywords" content="多线程,面试,">
   
 
-  <meta name="description" content="首先要仔细分析日志，根据报错的类层层查找，重点按以下几点进行排查： 审查静态对象对于静态对象要特别留神，特别是类型为Map、List、Set，静态的变量会一直驻存在内存中，生命周期比较长，不会被垃圾器回收 审查栈变量不用的变量设成Null以便回收，多用局部变量，少用成员变量 审查String类相关1）字符串累加的尽量用StirngBuffer或StringBuilder的append方法，避免使用">
-<meta name="keywords" content="面试">
+  <meta name="description" content="如果一个字段被声明成volatile，Java内存模型保证所有线程看到这个变量的值是一致的。 1. 实现原理有volatile修饰的变量进行写操作时会多出带有lock前缀的汇编指令，该指令在多核处理器中引发两件事情：1）立即将工作内存中寄存器里存储的修改后的变量写回到主内存中，从处理器方面考虑，主要是总线锁定(Lock#信号)、缓存锁定(缓存一致性确保修改的原子性，缓存一致性机制会阻止同事修改由两">
+<meta name="keywords" content="多线程,面试">
 <meta property="og:type" content="article">
-<meta property="og:title" content="内存溢出遇到过吗，怎么处理">
-<meta property="og:url" content="http://www.shenjian.online/2019/01/09/内存溢出遇到过吗，怎么处理/index.html">
+<meta property="og:title" content="Java并发机制底层实现原理之volatile">
+<meta property="og:url" content="http://www.shenjian.online/2019/01/10/Java并发机制底层实现原理之volatile/index.html">
 <meta property="og:site_name" content="沈健的技术博客">
-<meta property="og:description" content="首先要仔细分析日志，根据报错的类层层查找，重点按以下几点进行排查： 审查静态对象对于静态对象要特别留神，特别是类型为Map、List、Set，静态的变量会一直驻存在内存中，生命周期比较长，不会被垃圾器回收 审查栈变量不用的变量设成Null以便回收，多用局部变量，少用成员变量 审查String类相关1）字符串累加的尽量用StirngBuffer或StringBuilder的append方法，避免使用">
+<meta property="og:description" content="如果一个字段被声明成volatile，Java内存模型保证所有线程看到这个变量的值是一致的。 1. 实现原理有volatile修饰的变量进行写操作时会多出带有lock前缀的汇编指令，该指令在多核处理器中引发两件事情：1）立即将工作内存中寄存器里存储的修改后的变量写回到主内存中，从处理器方面考虑，主要是总线锁定(Lock#信号)、缓存锁定(缓存一致性确保修改的原子性，缓存一致性机制会阻止同事修改由两">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-01-16T15:17:17.370Z">
+<meta property="og:updated_time" content="2019-06-01T12:20:50.801Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="内存溢出遇到过吗，怎么处理">
-<meta name="twitter:description" content="首先要仔细分析日志，根据报错的类层层查找，重点按以下几点进行排查： 审查静态对象对于静态对象要特别留神，特别是类型为Map、List、Set，静态的变量会一直驻存在内存中，生命周期比较长，不会被垃圾器回收 审查栈变量不用的变量设成Null以便回收，多用局部变量，少用成员变量 审查String类相关1）字符串累加的尽量用StirngBuffer或StringBuilder的append方法，避免使用">
+<meta name="twitter:title" content="Java并发机制底层实现原理之volatile">
+<meta name="twitter:description" content="如果一个字段被声明成volatile，Java内存模型保证所有线程看到这个变量的值是一致的。 1. 实现原理有volatile修饰的变量进行写操作时会多出带有lock前缀的汇编指令，该指令在多核处理器中引发两件事情：1）立即将工作内存中寄存器里存储的修改后的变量写回到主内存中，从处理器方面考虑，主要是总线锁定(Lock#信号)、缓存锁定(缓存一致性确保修改的原子性，缓存一致性机制会阻止同事修改由两">
 
   
 
@@ -124,20 +124,20 @@
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#审查静态对象"><span class="toc-text">审查静态对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#审查栈变量"><span class="toc-text">审查栈变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#审查String类相关"><span class="toc-text">审查String类相关</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#审查频繁申请内存与释放内存的操作"><span class="toc-text">审查频繁申请内存与释放内存的操作</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-实现原理"><span class="toc-text">1. 实现原理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-使用优化"><span class="toc-text">2. 使用优化</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-实际使用场景–状态变量标记"><span class="toc-text">3. 实际使用场景–状态变量标记</span></a></li></ol>
   </div>
 
 
 
 <div class="content content-post CENTER">
-   <article id="post-内存溢出遇到过吗，怎么处理" class="article article-type-post" itemprop="blogPost">
+   <article id="post-Java并发机制底层实现原理之volatile" class="article article-type-post" itemprop="blogPost">
   <header class="article-header">
-    <h1 class="post-title">内存溢出遇到过吗，怎么处理</h1>
+    <h1 class="post-title">Java并发机制底层实现原理之volatile</h1>
 
     <div class="article-meta">
       <span>
         <i class="icon-calendar"></i>
-        <span>2019.01.09</span>
+        <span>2019.01.10</span>
       </span>
 
       
@@ -150,7 +150,7 @@
       
   <span class="article-category">
     <i class="icon-list"></i>
-    <a class="article-category-link" href="/category/JAVA/">JAVA</a>
+    <a class="article-category-link" href="/category/多线程/">多线程</a>
   </span>
 
 
@@ -170,11 +170,12 @@
 
   <div class="article-content">
     
-      <p>首先要仔细分析日志，根据报错的类层层查找，重点按以下几点进行排查：</p>
-<h2 id="审查静态对象"><a href="#审查静态对象" class="headerlink" title="审查静态对象"></a>审查静态对象</h2><p>对于静态对象要特别留神，特别是类型为Map、List、Set，静态的变量会一直驻存在内存中，生命周期比较长，不会被垃圾器回收</p>
-<h2 id="审查栈变量"><a href="#审查栈变量" class="headerlink" title="审查栈变量"></a>审查栈变量</h2><p>不用的变量设成Null以便回收，多用局部变量，少用成员变量</p>
-<h2 id="审查String类相关"><a href="#审查String类相关" class="headerlink" title="审查String类相关"></a>审查String类相关</h2><p>1）字符串累加的尽量用StirngBuffer或StringBuilder的append方法，避免使用+操作符连接两个字符串。<br>2）在循环中不要去创建String对象。</p>
-<h2 id="审查频繁申请内存与释放内存的操作"><a href="#审查频繁申请内存与释放内存的操作" class="headerlink" title="审查频繁申请内存与释放内存的操作"></a>审查频繁申请内存与释放内存的操作</h2><p>对于频繁申请释放内存的操作，System.gc()不一定适用，因为JVM并不保证调用该方法就一定能启动垃圾回收集，它只不过是向JVM发出一定申请，最好使用finallize强制执行。</p>
+      <p>如果一个字段被声明成volatile，Java内存模型保证所有线程看到这个变量的值是一致的。</p>
+<h1 id="1-实现原理"><a href="#1-实现原理" class="headerlink" title="1. 实现原理"></a>1. 实现原理</h1><p>有volatile修饰的变量进行写操作时会多出带有lock前缀的汇编指令，该指令在多核处理器中引发两件事情：<br>1）立即将工作内存中寄存器里存储的修改后的变量写回到主内存中，从处理器方面考虑，主要是总线锁定(Lock#信号)、缓存锁定(缓存一致性确保修改的原子性，缓存一致性机制会阻止同事修改由两个以上处理器换缓存的内存区域数据)<br>从工作内存考虑，主要通过使load/store指令一并执行实现(注意内存模型中规定read/load、 store/write必须成对出现)<br>2）其他处理器通过嗅探总线上传播过来的数据监测自己工作内存中缓存是否过期。过期，修改的时候则从主存中重新读取。</p>
+<p>注意: volatile保证了三大性质之可见性(对于多CPU而言，单CPU不存在可见性问题)、有序性;<br>      double与long为非原子的64位操作，用volatile修饰，可保证其安全性</p>
+<h1 id="2-使用优化"><a href="#2-使用优化" class="headerlink" title="2. 使用优化"></a>2. 使用优化</h1><p>JDK7并发包中新增了一个队列集合类LinkedTransferQueue, 他在使用volatile变量时，用一种追加字节的方式来优化队列的入队与出队的性能。使用追加到64字节的方式填满同一个高速缓冲行，避免头结点与尾节点加载到同一个缓存行，使头、尾节点在修改时都不会相互锁定。  </p>
+<h1 id="3-实际使用场景–状态变量标记"><a href="#3-实际使用场景–状态变量标记" class="headerlink" title="3. 实际使用场景–状态变量标记"></a>3. 实际使用场景–状态变量标记</h1><p>一般业务场景中用于 volatile static Boolean flag = true</p>
+<p>ps: CPU术语定义<br>内存屏障： 是一组处理器指令，用于实现对内存操作的顺序控制<br>缓存行： CPU高速缓存中可以分配的最小存储单位，处理器填写缓存行时会加载整个缓存行。</p>
 
     
   </div>
@@ -212,10 +213,10 @@
 
    
   <div class="box-prev-next clearfix">
-    <a class="hide pull-left" href="/">
+    <a class="show pull-left" href="/2019/01/09/内存溢出遇到过吗，怎么处理/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="show pull-right" href="/2019/01/10/Java并发机制底层实现原理之volatile/">
+    <a class="show pull-right" href="/2019/01/10/Object转JSON保持数据顺序及Value为空Key仍返回/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>
