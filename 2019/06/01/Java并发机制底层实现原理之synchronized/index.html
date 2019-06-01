@@ -15,18 +15,18 @@
     <meta name="keywords" content="多线程,">
   
 
-  <meta name="description" content="1. synchronized实现同步的基础java中的每一个对象都可以作为锁。具体有3种表现形式：  普通的同步方法，锁是当前的实例对象 静态的同步方法，锁是当前类lass对象 同步方法块，锁时synchronized括号里配置的对象    2. synchronized实现原理JVM基于进入和退出Monitor对象来实现方法同步与代码块同步，代码块同步是使用monitorenter和monit">
+  <meta name="description" content="1. synchronized实现同步的基础java中的每一个对象都可以作为锁。具体有3种表现形式：  普通的同步方法，锁是当前的实例对象 静态的同步方法，锁是当前类class对象 同步方法块，锁是synchronized括号里配置的对象  2. synchronized实现原理JVM基于进入和退出Monitor对象来实现方法同步与代码块同步，代码块同步是使用monitorenter和monito">
 <meta name="keywords" content="多线程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java并发机制底层实现原理之synchronized">
 <meta property="og:url" content="http://www.shenjian.online/2019/06/01/Java并发机制底层实现原理之synchronized/index.html">
 <meta property="og:site_name" content="沈健的技术博客">
-<meta property="og:description" content="1. synchronized实现同步的基础java中的每一个对象都可以作为锁。具体有3种表现形式：  普通的同步方法，锁是当前的实例对象 静态的同步方法，锁是当前类lass对象 同步方法块，锁时synchronized括号里配置的对象    2. synchronized实现原理JVM基于进入和退出Monitor对象来实现方法同步与代码块同步，代码块同步是使用monitorenter和monit">
+<meta property="og:description" content="1. synchronized实现同步的基础java中的每一个对象都可以作为锁。具体有3种表现形式：  普通的同步方法，锁是当前的实例对象 静态的同步方法，锁是当前类class对象 同步方法块，锁是synchronized括号里配置的对象  2. synchronized实现原理JVM基于进入和退出Monitor对象来实现方法同步与代码块同步，代码块同步是使用monitorenter和monito">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-06-01T14:39:41.140Z">
+<meta property="og:updated_time" content="2019-06-01T14:44:52.770Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java并发机制底层实现原理之synchronized">
-<meta name="twitter:description" content="1. synchronized实现同步的基础java中的每一个对象都可以作为锁。具体有3种表现形式：  普通的同步方法，锁是当前的实例对象 静态的同步方法，锁是当前类lass对象 同步方法块，锁时synchronized括号里配置的对象    2. synchronized实现原理JVM基于进入和退出Monitor对象来实现方法同步与代码块同步，代码块同步是使用monitorenter和monit">
+<meta name="twitter:description" content="1. synchronized实现同步的基础java中的每一个对象都可以作为锁。具体有3种表现形式：  普通的同步方法，锁是当前的实例对象 静态的同步方法，锁是当前类class对象 同步方法块，锁是synchronized括号里配置的对象  2. synchronized实现原理JVM基于进入和退出Monitor对象来实现方法同步与代码块同步，代码块同步是使用monitorenter和monito">
 
   
 
@@ -172,11 +172,9 @@
     
       <h1 id="1-synchronized实现同步的基础"><a href="#1-synchronized实现同步的基础" class="headerlink" title="1. synchronized实现同步的基础"></a>1. synchronized实现同步的基础</h1><p>java中的每一个对象都可以作为锁。具体有3种表现形式：</p>
 <ul>
-<li>普通的同步方法，锁是当前的实例对象<ul>
-<li>静态的同步方法，锁是当前类lass对象</li>
-<li>同步方法块，锁时synchronized括号里配置的对象</li>
-</ul>
-</li>
+<li>普通的同步方法，锁是当前的实例对象</li>
+<li>静态的同步方法，锁是当前类class对象</li>
+<li>同步方法块，锁是synchronized括号里配置的对象</li>
 </ul>
 <h1 id="2-synchronized实现原理"><a href="#2-synchronized实现原理" class="headerlink" title="2. synchronized实现原理"></a>2. synchronized实现原理</h1><p>JVM基于进入和退出Monitor对象来实现方法同步与代码块同步，代码块同步是使用monitorenter和monitorexit指令来实现，而方法同步实现方式未在JVM规范中指出，但是也可以使用这两个指令实现。</p>
 <h1 id="3-synchronized锁存放位置"><a href="#3-synchronized锁存放位置" class="headerlink" title="3. synchronized锁存放位置"></a>3. synchronized锁存放位置</h1><p>synchronized锁存放在Java对象头里。如果对象是数组类型，则虚拟机用3个字宽(Word)存储对象头，如果对象是非数组类型，则用2个字宽存储对象头。32位虚拟机中，1字宽为4字节，即32bit<br>Java对象头里的Mark Word里默认存放的是HashCode、分代年龄和锁标记位。</p>
