@@ -7,7 +7,7 @@
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
   
-  <title>谈谈对volatile的理解 | 沈健的技术博客</title>
+  <title>Java并发机制底层实现原理之volatile | 沈健的技术博客</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -15,18 +15,18 @@
     <meta name="keywords" content="多线程,面试,">
   
 
-  <meta name="description" content="synchronized关键字、Lock对象同时支持原子性、有序性和可见性；volatile变量支持有序性、可见性，不支持原子性。 保证可见性可见性是对于多CPU而言，单CPU不存在可见性问题1）立即将工作内存中寄存器里存储的修改后的变量写回到主内存中，主要通过使load/store指令一并执行实现(注意内存模型中规定read/load、 store/write必须成对出现)2）其他处理器通过嗅探">
+  <meta name="description" content="如果一个字段被声明成volatile，Java内存模型保证所有线程看到这个变量的值是一致的。 1. 实现原理有volatile修饰的变量进行写操作时会多出带有lock前缀的汇编指令，该指令在多核处理器中引发两件事情：1）立即将工作内存中寄存器里存储的修改后的变量写回到主内存中，主要通过使load/store指令一并执行实现(注意内存模型中规定read/load、 store/write必须成对出现">
 <meta name="keywords" content="多线程,面试">
 <meta property="og:type" content="article">
-<meta property="og:title" content="谈谈对volatile的理解">
+<meta property="og:title" content="Java并发机制底层实现原理之volatile">
 <meta property="og:url" content="http://www.shenjian.online/2019/01/10/谈谈对volatile的理解/index.html">
 <meta property="og:site_name" content="沈健的技术博客">
-<meta property="og:description" content="synchronized关键字、Lock对象同时支持原子性、有序性和可见性；volatile变量支持有序性、可见性，不支持原子性。 保证可见性可见性是对于多CPU而言，单CPU不存在可见性问题1）立即将工作内存中寄存器里存储的修改后的变量写回到主内存中，主要通过使load/store指令一并执行实现(注意内存模型中规定read/load、 store/write必须成对出现)2）其他处理器通过嗅探">
+<meta property="og:description" content="如果一个字段被声明成volatile，Java内存模型保证所有线程看到这个变量的值是一致的。 1. 实现原理有volatile修饰的变量进行写操作时会多出带有lock前缀的汇编指令，该指令在多核处理器中引发两件事情：1）立即将工作内存中寄存器里存储的修改后的变量写回到主内存中，主要通过使load/store指令一并执行实现(注意内存模型中规定read/load、 store/write必须成对出现">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-03-20T09:51:48.847Z">
+<meta property="og:updated_time" content="2019-06-01T11:03:21.997Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="谈谈对volatile的理解">
-<meta name="twitter:description" content="synchronized关键字、Lock对象同时支持原子性、有序性和可见性；volatile变量支持有序性、可见性，不支持原子性。 保证可见性可见性是对于多CPU而言，单CPU不存在可见性问题1）立即将工作内存中寄存器里存储的修改后的变量写回到主内存中，主要通过使load/store指令一并执行实现(注意内存模型中规定read/load、 store/write必须成对出现)2）其他处理器通过嗅探">
+<meta name="twitter:title" content="Java并发机制底层实现原理之volatile">
+<meta name="twitter:description" content="如果一个字段被声明成volatile，Java内存模型保证所有线程看到这个变量的值是一致的。 1. 实现原理有volatile修饰的变量进行写操作时会多出带有lock前缀的汇编指令，该指令在多核处理器中引发两件事情：1）立即将工作内存中寄存器里存储的修改后的变量写回到主内存中，主要通过使load/store指令一并执行实现(注意内存模型中规定read/load、 store/write必须成对出现">
 
   
 
@@ -124,7 +124,7 @@
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#保证可见性"><span class="toc-text">保证可见性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#保证有序性"><span class="toc-text">保证有序性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实际使用场景–状态变量标记"><span class="toc-text">实际使用场景–状态变量标记</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-实现原理"><span class="toc-text">1. 实现原理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-使用优化"><span class="toc-text">2. 使用优化</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-实际使用场景–状态变量标记"><span class="toc-text">3. 实际使用场景–状态变量标记</span></a></li></ol>
   </div>
 
 
@@ -132,7 +132,7 @@
 <div class="content content-post CENTER">
    <article id="post-谈谈对volatile的理解" class="article article-type-post" itemprop="blogPost">
   <header class="article-header">
-    <h1 class="post-title">谈谈对volatile的理解</h1>
+    <h1 class="post-title">Java并发机制底层实现原理之volatile</h1>
 
     <div class="article-meta">
       <span>
@@ -170,11 +170,12 @@
 
   <div class="article-content">
     
-      <p>synchronized关键字、Lock对象同时支持原子性、有序性和可见性；volatile变量支持有序性、可见性，不支持原子性。</p>
-<h2 id="保证可见性"><a href="#保证可见性" class="headerlink" title="保证可见性"></a>保证可见性</h2><p>可见性是对于多CPU而言，单CPU不存在可见性问题<br>1）立即将工作内存中寄存器里存储的修改后的变量写回到主内存中，主要通过使load/store指令一并执行实现(注意内存模型中规定read/load、 store/write必须成对出现)<br>2）其他处理器通过嗅探总线上传播过来的数据监测自己工作内存中缓存是否过期。过期，则从主存中重新读取。</p>
-<p>double与long为非原子的64位操作，用volatile修饰，可保证其安全性</p>
-<h2 id="保证有序性"><a href="#保证有序性" class="headerlink" title="保证有序性"></a>保证有序性</h2><p>通过内存屏障禁止指令重排序。具体是通过在volatile修饰的变量赋值后，多执行一个lock addI $0X0, (%esp)操作。  –ps ESP为32位堆栈顶指针</p>
-<h2 id="实际使用场景–状态变量标记"><a href="#实际使用场景–状态变量标记" class="headerlink" title="实际使用场景–状态变量标记"></a>实际使用场景–状态变量标记</h2><p>一般业务场景中用于 volatile static Boolean flag = true</p>
+      <p>如果一个字段被声明成volatile，Java内存模型保证所有线程看到这个变量的值是一致的。</p>
+<h1 id="1-实现原理"><a href="#1-实现原理" class="headerlink" title="1. 实现原理"></a>1. 实现原理</h1><p>有volatile修饰的变量进行写操作时会多出带有lock前缀的汇编指令，该指令在多核处理器中引发两件事情：<br>1）立即将工作内存中寄存器里存储的修改后的变量写回到主内存中，主要通过使load/store指令一并执行实现(注意内存模型中规定read/load、 store/write必须成对出现)<br>2）其他处理器通过嗅探总线上传播过来的数据监测自己工作内存中缓存是否过期。过期，修改的时候则从主存中重新读取。</p>
+<p>注意: volatile保证了三大性质之可见性(对于多CPU而言，单CPU不存在可见性问题)、有序性;<br>      double与long为非原子的64位操作，用volatile修饰，可保证其安全性</p>
+<h1 id="2-使用优化"><a href="#2-使用优化" class="headerlink" title="2. 使用优化"></a>2. 使用优化</h1><p>JDK7并发包中新增了一个队列集合类LinkedTransferQueue, 他在使用volatile变量时，用一种追加字节的方式来优化队列的入队与出队的性能。使用追加到64字节的方式填满同一个高速缓冲行，避免头结点与尾节点加载到同一个缓存行，使头、尾节点在修改时都不会相互锁定。  </p>
+<h1 id="3-实际使用场景–状态变量标记"><a href="#3-实际使用场景–状态变量标记" class="headerlink" title="3. 实际使用场景–状态变量标记"></a>3. 实际使用场景–状态变量标记</h1><p>一般业务场景中用于 volatile static Boolean flag = true</p>
+<p>ps: CPU术语定义<br>内存屏障： 是一组处理器指令，用于实现对内存操作的顺序控制<br>缓存行： CPU高速缓存中可以分配的最小存储单位，处理器填写缓存行时会加载整个缓存行。</p>
 
     
   </div>
