@@ -23,7 +23,7 @@
 <meta property="og:site_name" content="沈健的技术博客">
 <meta property="og:description" content="如果一个字段被声明成volatile，Java内存模型保证所有线程看到这个变量的值是一致的。 1. 实现原理有volatile修饰的变量进行写操作时会多出带有lock前缀的汇编指令，该指令在多核处理器中引发两件事情：1）立即将工作内存中寄存器里存储的修改后的变量写回到主内存中，从处理器方面考虑，主要是总线锁定(Lock#信号)、缓存锁定(缓存一致性确保修改的原子性，缓存一致性机制会阻止同事修改由两">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-06-01T12:20:50.801Z">
+<meta property="og:updated_time" content="2019-06-02T08:55:22.596Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java并发机制底层实现原理之volatile">
 <meta name="twitter:description" content="如果一个字段被声明成volatile，Java内存模型保证所有线程看到这个变量的值是一致的。 1. 实现原理有volatile修饰的变量进行写操作时会多出带有lock前缀的汇编指令，该指令在多核处理器中引发两件事情：1）立即将工作内存中寄存器里存储的修改后的变量写回到主内存中，从处理器方面考虑，主要是总线锁定(Lock#信号)、缓存锁定(缓存一致性确保修改的原子性，缓存一致性机制会阻止同事修改由两">
@@ -172,7 +172,9 @@
     
       <p>如果一个字段被声明成volatile，Java内存模型保证所有线程看到这个变量的值是一致的。</p>
 <h1 id="1-实现原理"><a href="#1-实现原理" class="headerlink" title="1. 实现原理"></a>1. 实现原理</h1><p>有volatile修饰的变量进行写操作时会多出带有lock前缀的汇编指令，该指令在多核处理器中引发两件事情：<br>1）立即将工作内存中寄存器里存储的修改后的变量写回到主内存中，从处理器方面考虑，主要是总线锁定(Lock#信号)、缓存锁定(缓存一致性确保修改的原子性，缓存一致性机制会阻止同事修改由两个以上处理器换缓存的内存区域数据)<br>从工作内存考虑，主要通过使load/store指令一并执行实现(注意内存模型中规定read/load、 store/write必须成对出现)<br>2）其他处理器通过嗅探总线上传播过来的数据监测自己工作内存中缓存是否过期。过期，修改的时候则从主存中重新读取。</p>
-<p>注意: volatile保证了三大性质之可见性(对于多CPU而言，单CPU不存在可见性问题)、有序性;<br>      double与long为非原子的64位操作，用volatile修饰，可保证其安全性</p>
+<p>注意: volatile保证了三大性质之可见性(对于多CPU而言，单CPU不存在可见性问题)、有序性;<br>      对任意单个volatile变量的读/写具有原子性，但类似于volatile++这种复核操作不具有原子性，如</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">volatile</span> <span class="keyword">long</span> v = <span class="number">0L</span>;</span><br><span class="line">v = <span class="number">200L</span>; <span class="comment">// 具有原子性</span></span><br><span class="line">v++; <span class="comment">// 不具有原子性</span></span><br></pre></td></tr></table></figure>
+<p>ps: JDK5开始，JSR-133内存模型只允许64位long/double型的写操作拆分为两个32位的写操作来执行，任意的读操作在JSR-133中都必须具有原子性。</p>
 <h1 id="2-使用优化"><a href="#2-使用优化" class="headerlink" title="2. 使用优化"></a>2. 使用优化</h1><p>JDK7并发包中新增了一个队列集合类LinkedTransferQueue, 他在使用volatile变量时，用一种追加字节的方式来优化队列的入队与出队的性能。使用追加到64字节的方式填满同一个高速缓冲行，避免头结点与尾节点加载到同一个缓存行，使头、尾节点在修改时都不会相互锁定。  </p>
 <h1 id="3-实际使用场景–状态变量标记"><a href="#3-实际使用场景–状态变量标记" class="headerlink" title="3. 实际使用场景–状态变量标记"></a>3. 实际使用场景–状态变量标记</h1><p>一般业务场景中用于 volatile static Boolean flag = true</p>
 <p>ps: CPU术语定义<br>内存屏障： 是一组处理器指令，用于实现对内存操作的顺序控制<br>缓存行： CPU高速缓存中可以分配的最小存储单位，处理器填写缓存行时会加载整个缓存行。</p>
