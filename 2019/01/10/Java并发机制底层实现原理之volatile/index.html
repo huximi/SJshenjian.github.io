@@ -15,18 +15,18 @@
     <meta name="keywords" content="多线程,面试,">
   
 
-  <meta name="description" content="如果一个字段被声明成volatile，Java内存模型保证所有线程看到这个变量的值是一致的。 1. 实现原理有volatile修饰的变量进行写操作时会多出带有lock前缀的汇编指令，该指令在多核处理器中引发两件事情：1）立即将工作内存中寄存器里存储的修改后的变量写回到主内存中，从处理器方面考虑，主要是总线锁定(Lock#信号)、缓存锁定(缓存一致性确保修改的原子性，缓存一致性机制会阻止同事修改由两">
+  <meta name="description" content="如果一个字段被声明成volatile，Java内存模型保证所有线程看到这个变量的值是一致的。 1. 实现原理有volatile修饰的变量进行写操作时会多出带有lock前缀的汇编指令，该指令在多核处理器中引发两件事情：1）将当前处理器缓存行的数据写回系统内存。 通过总线锁定或缓存锁定。2）这个写回内存的操作会使其他CPU中缓存了该内存地址的数据无效。 其他处理器通过嗅探总线上传播过来的数据监测自己工">
 <meta name="keywords" content="多线程,面试">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java并发机制底层实现原理之volatile">
 <meta property="og:url" content="http://www.shenjian.online/2019/01/10/Java并发机制底层实现原理之volatile/index.html">
 <meta property="og:site_name" content="沈健的技术博客">
-<meta property="og:description" content="如果一个字段被声明成volatile，Java内存模型保证所有线程看到这个变量的值是一致的。 1. 实现原理有volatile修饰的变量进行写操作时会多出带有lock前缀的汇编指令，该指令在多核处理器中引发两件事情：1）立即将工作内存中寄存器里存储的修改后的变量写回到主内存中，从处理器方面考虑，主要是总线锁定(Lock#信号)、缓存锁定(缓存一致性确保修改的原子性，缓存一致性机制会阻止同事修改由两">
+<meta property="og:description" content="如果一个字段被声明成volatile，Java内存模型保证所有线程看到这个变量的值是一致的。 1. 实现原理有volatile修饰的变量进行写操作时会多出带有lock前缀的汇编指令，该指令在多核处理器中引发两件事情：1）将当前处理器缓存行的数据写回系统内存。 通过总线锁定或缓存锁定。2）这个写回内存的操作会使其他CPU中缓存了该内存地址的数据无效。 其他处理器通过嗅探总线上传播过来的数据监测自己工">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-06-02T08:55:22.596Z">
+<meta property="og:updated_time" content="2019-06-02T10:21:41.701Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java并发机制底层实现原理之volatile">
-<meta name="twitter:description" content="如果一个字段被声明成volatile，Java内存模型保证所有线程看到这个变量的值是一致的。 1. 实现原理有volatile修饰的变量进行写操作时会多出带有lock前缀的汇编指令，该指令在多核处理器中引发两件事情：1）立即将工作内存中寄存器里存储的修改后的变量写回到主内存中，从处理器方面考虑，主要是总线锁定(Lock#信号)、缓存锁定(缓存一致性确保修改的原子性，缓存一致性机制会阻止同事修改由两">
+<meta name="twitter:description" content="如果一个字段被声明成volatile，Java内存模型保证所有线程看到这个变量的值是一致的。 1. 实现原理有volatile修饰的变量进行写操作时会多出带有lock前缀的汇编指令，该指令在多核处理器中引发两件事情：1）将当前处理器缓存行的数据写回系统内存。 通过总线锁定或缓存锁定。2）这个写回内存的操作会使其他CPU中缓存了该内存地址的数据无效。 其他处理器通过嗅探总线上传播过来的数据监测自己工">
 
   
 
@@ -124,7 +124,7 @@
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-实现原理"><span class="toc-text">1. 实现原理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-使用优化"><span class="toc-text">2. 使用优化</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-实际使用场景–状态变量标记"><span class="toc-text">3. 实际使用场景–状态变量标记</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-实现原理"><span class="toc-text">1. 实现原理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-内存语义层次理解"><span class="toc-text">2. 内存语义层次理解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-volatile的特性"><span class="toc-text">2.1 volatile的特性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-volatile的写-读内存语义"><span class="toc-text">2.2 volatile的写-读内存语义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-3-重排序与volatile内存语义的实现"><span class="toc-text">2.3 重排序与volatile内存语义的实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-1-重排序简介"><span class="toc-text">2.3.1 重排序简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-2-volatile内存语义具体实现"><span class="toc-text">2.3.2 volatile内存语义具体实现</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-使用优化"><span class="toc-text">3. 使用优化</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-实际使用场景–状态变量标记"><span class="toc-text">4. 实际使用场景–状态变量标记</span></a></li></ol>
   </div>
 
 
@@ -171,13 +171,21 @@
   <div class="article-content">
     
       <p>如果一个字段被声明成volatile，Java内存模型保证所有线程看到这个变量的值是一致的。</p>
-<h1 id="1-实现原理"><a href="#1-实现原理" class="headerlink" title="1. 实现原理"></a>1. 实现原理</h1><p>有volatile修饰的变量进行写操作时会多出带有lock前缀的汇编指令，该指令在多核处理器中引发两件事情：<br>1）立即将工作内存中寄存器里存储的修改后的变量写回到主内存中，从处理器方面考虑，主要是总线锁定(Lock#信号)、缓存锁定(缓存一致性确保修改的原子性，缓存一致性机制会阻止同事修改由两个以上处理器换缓存的内存区域数据)<br>从工作内存考虑，主要通过使load/store指令一并执行实现(注意内存模型中规定read/load、 store/write必须成对出现)<br>2）其他处理器通过嗅探总线上传播过来的数据监测自己工作内存中缓存是否过期。过期，修改的时候则从主存中重新读取。</p>
-<p>注意: volatile保证了三大性质之可见性(对于多CPU而言，单CPU不存在可见性问题)、有序性;<br>      对任意单个volatile变量的读/写具有原子性，但类似于volatile++这种复核操作不具有原子性，如</p>
+<h1 id="1-实现原理"><a href="#1-实现原理" class="headerlink" title="1. 实现原理"></a>1. 实现原理</h1><p>有volatile修饰的变量进行写操作时会多出带有lock前缀的汇编指令，该指令在多核处理器中引发两件事情：<br>1）将当前处理器缓存行的数据写回系统内存。 通过总线锁定或缓存锁定。<br>2）这个写回内存的操作会使其他CPU中缓存了该内存地址的数据无效。 其他处理器通过嗅探总线上传播过来的数据监测自己工作内存中缓存是否过期。过期，修改的时候则从主存中重新读取。</p>
+<h1 id="2-内存语义层次理解"><a href="#2-内存语义层次理解" class="headerlink" title="2. 内存语义层次理解"></a>2. 内存语义层次理解</h1><h2 id="2-1-volatile的特性"><a href="#2-1-volatile的特性" class="headerlink" title="2.1 volatile的特性"></a>2.1 volatile的特性</h2><p>volatile变量自身具有以下特性：</p>
+<ul>
+<li>可见性：对一个volatile变量的读，总是能看到任意线程对这个volatile变量最后的写入</li>
+<li>原子性：对任意单个volatile变量的读/写具有原子性，但类似于volatile++这种复合操作不具有原子性，如</li>
+</ul>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">volatile</span> <span class="keyword">long</span> v = <span class="number">0L</span>;</span><br><span class="line">v = <span class="number">200L</span>; <span class="comment">// 具有原子性</span></span><br><span class="line">v++; <span class="comment">// 不具有原子性</span></span><br></pre></td></tr></table></figure>
 <p>ps: JDK5开始，JSR-133内存模型只允许64位long/double型的写操作拆分为两个32位的写操作来执行，任意的读操作在JSR-133中都必须具有原子性。</p>
-<h1 id="2-使用优化"><a href="#2-使用优化" class="headerlink" title="2. 使用优化"></a>2. 使用优化</h1><p>JDK7并发包中新增了一个队列集合类LinkedTransferQueue, 他在使用volatile变量时，用一种追加字节的方式来优化队列的入队与出队的性能。使用追加到64字节的方式填满同一个高速缓冲行，避免头结点与尾节点加载到同一个缓存行，使头、尾节点在修改时都不会相互锁定。  </p>
-<h1 id="3-实际使用场景–状态变量标记"><a href="#3-实际使用场景–状态变量标记" class="headerlink" title="3. 实际使用场景–状态变量标记"></a>3. 实际使用场景–状态变量标记</h1><p>一般业务场景中用于 volatile static Boolean flag = true</p>
-<p>ps: CPU术语定义<br>内存屏障： 是一组处理器指令，用于实现对内存操作的顺序控制<br>缓存行： CPU高速缓存中可以分配的最小存储单位，处理器填写缓存行时会加载整个缓存行。</p>
+<h2 id="2-2-volatile的写-读内存语义"><a href="#2-2-volatile的写-读内存语义" class="headerlink" title="2.2 volatile的写-读内存语义"></a>2.2 volatile的写-读内存语义</h2><p>写内存语义： 当写一个volatile变量时，JMM会把线程对应的本地内存的共享变量刷新到主内存<br>读内存语义： 当读一个volatile变量时，JMM会把该线程对应的本地内存置于无效，线程接下来将从主内存读取共享变量</p>
+<h2 id="2-3-重排序与volatile内存语义的实现"><a href="#2-3-重排序与volatile内存语义的实现" class="headerlink" title="2.3 重排序与volatile内存语义的实现"></a>2.3 重排序与volatile内存语义的实现</h2><h3 id="2-3-1-重排序简介"><a href="#2-3-1-重排序简介" class="headerlink" title="2.3.1 重排序简介"></a>2.3.1 重排序简介</h3><p>为了提高性能，处理器与编译器会对指令做重排序，分为3种类型：<br>1）编译器优化的重排序 不改变单线程程序语义，重新安排语句执行顺序<br>2）指令级并行的重排序 若不存在数据依赖性，处理器可以改变语句对机器指令的执行顺序<br>3）内存系统的重排序 处理器采用缓存和读、写缓冲区，是的加载与存储看上去是乱序执行</p>
+<p>1）属于编译器重排序 2)、3)属于处理器重排序。为了实现volatile内存语义，需要JMM会分别限制这两大类型的重排序。</p>
+<h3 id="2-3-2-volatile内存语义具体实现"><a href="#2-3-2-volatile内存语义具体实现" class="headerlink" title="2.3.2 volatile内存语义具体实现"></a>2.3.2 volatile内存语义具体实现</h3><p>volatile写： 前面插入StoreStore屏障(禁止该屏障前的普通写与volatile写重排序)， 后面插入StoreLoad屏障(防止volatile写与该屏障后的可能有的volatile读/写重排序)<br>volatile读： 后面首先插入一个LoadLoad(禁止该屏障后所有的普通读操作与volatile读重排序)，然后插入LoadStore屏障(禁止该屏障后所有的普通写操作与volatile读重排序)</p>
+<h1 id="3-使用优化"><a href="#3-使用优化" class="headerlink" title="3. 使用优化"></a>3. 使用优化</h1><p>JDK7并发包中新增了一个队列集合类LinkedTransferQueue, 他在使用volatile变量时，用一种追加字节的方式来优化队列的入队与出队的性能。使用追加到64字节的方式填满同一个高速缓冲行，避免头结点与尾节点加载到同一个缓存行，使头、尾节点在修改时都不会相互锁定。  </p>
+<h1 id="4-实际使用场景–状态变量标记"><a href="#4-实际使用场景–状态变量标记" class="headerlink" title="4. 实际使用场景–状态变量标记"></a>4. 实际使用场景–状态变量标记</h1><p>一般业务场景中用于 volatile static Boolean flag = true</p>
+<p>ps: CPU术语定义<br>内存屏障： 是一组处理器指令，用于实现对内存操作的顺序控制<br>缓存行： CPU高速缓存中可以分配的最小存储单位，处理器填写缓存行时会加载整个缓存行<br>数据依赖性： 如果两个操作同时访问一个变量，其中一个操作为写操作，则这两个操作存在数据依赖性</p>
 
     
   </div>
