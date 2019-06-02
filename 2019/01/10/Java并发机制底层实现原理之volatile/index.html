@@ -23,7 +23,7 @@
 <meta property="og:site_name" content="沈健的技术博客">
 <meta property="og:description" content="如果一个字段被声明成volatile，Java内存模型保证所有线程看到这个变量的值是一致的。 1. 实现原理有volatile修饰的变量进行写操作时会多出带有lock前缀的汇编指令，该指令在多核处理器中引发两件事情：1）将当前处理器缓存行的数据写回系统内存。 通过总线锁定或缓存锁定。2）这个写回内存的操作会使其他CPU中缓存了该内存地址的数据无效。 其他处理器通过嗅探总线上传播过来的数据监测自己工">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-06-02T10:21:41.701Z">
+<meta property="og:updated_time" content="2019-06-02T10:22:17.941Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java并发机制底层实现原理之volatile">
 <meta name="twitter:description" content="如果一个字段被声明成volatile，Java内存模型保证所有线程看到这个变量的值是一致的。 1. 实现原理有volatile修饰的变量进行写操作时会多出带有lock前缀的汇编指令，该指令在多核处理器中引发两件事情：1）将当前处理器缓存行的数据写回系统内存。 通过总线锁定或缓存锁定。2）这个写回内存的操作会使其他CPU中缓存了该内存地址的数据无效。 其他处理器通过嗅探总线上传播过来的数据监测自己工">
@@ -180,7 +180,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">volatile</span> <span class="keyword">long</span> v = <span class="number">0L</span>;</span><br><span class="line">v = <span class="number">200L</span>; <span class="comment">// 具有原子性</span></span><br><span class="line">v++; <span class="comment">// 不具有原子性</span></span><br></pre></td></tr></table></figure>
 <p>ps: JDK5开始，JSR-133内存模型只允许64位long/double型的写操作拆分为两个32位的写操作来执行，任意的读操作在JSR-133中都必须具有原子性。</p>
 <h2 id="2-2-volatile的写-读内存语义"><a href="#2-2-volatile的写-读内存语义" class="headerlink" title="2.2 volatile的写-读内存语义"></a>2.2 volatile的写-读内存语义</h2><p>写内存语义： 当写一个volatile变量时，JMM会把线程对应的本地内存的共享变量刷新到主内存<br>读内存语义： 当读一个volatile变量时，JMM会把该线程对应的本地内存置于无效，线程接下来将从主内存读取共享变量</p>
-<h2 id="2-3-重排序与volatile内存语义的实现"><a href="#2-3-重排序与volatile内存语义的实现" class="headerlink" title="2.3 重排序与volatile内存语义的实现"></a>2.3 重排序与volatile内存语义的实现</h2><h3 id="2-3-1-重排序简介"><a href="#2-3-1-重排序简介" class="headerlink" title="2.3.1 重排序简介"></a>2.3.1 重排序简介</h3><p>为了提高性能，处理器与编译器会对指令做重排序，分为3种类型：<br>1）编译器优化的重排序 不改变单线程程序语义，重新安排语句执行顺序<br>2）指令级并行的重排序 若不存在数据依赖性，处理器可以改变语句对机器指令的执行顺序<br>3）内存系统的重排序 处理器采用缓存和读、写缓冲区，是的加载与存储看上去是乱序执行</p>
+<h2 id="2-3-重排序与volatile内存语义的实现"><a href="#2-3-重排序与volatile内存语义的实现" class="headerlink" title="2.3 重排序与volatile内存语义的实现"></a>2.3 重排序与volatile内存语义的实现</h2><h3 id="2-3-1-重排序简介"><a href="#2-3-1-重排序简介" class="headerlink" title="2.3.1 重排序简介"></a>2.3.1 重排序简介</h3><p>为了提高性能，处理器与编译器会对指令做重排序，分为3种类型：<br>1）编译器优化的重排序 不改变单线程程序语义，重新安排语句执行顺序<br>2）指令级并行的重排序 若不存在数据依赖性，处理器可以改变语句对机器指令的执行顺序<br>3）内存系统的重排序 处理器采用缓存和读、写缓冲区，使得加载与存储看上去是乱序执行</p>
 <p>1）属于编译器重排序 2)、3)属于处理器重排序。为了实现volatile内存语义，需要JMM会分别限制这两大类型的重排序。</p>
 <h3 id="2-3-2-volatile内存语义具体实现"><a href="#2-3-2-volatile内存语义具体实现" class="headerlink" title="2.3.2 volatile内存语义具体实现"></a>2.3.2 volatile内存语义具体实现</h3><p>volatile写： 前面插入StoreStore屏障(禁止该屏障前的普通写与volatile写重排序)， 后面插入StoreLoad屏障(防止volatile写与该屏障后的可能有的volatile读/写重排序)<br>volatile读： 后面首先插入一个LoadLoad(禁止该屏障后所有的普通读操作与volatile读重排序)，然后插入LoadStore屏障(禁止该屏障后所有的普通写操作与volatile读重排序)</p>
 <h1 id="3-使用优化"><a href="#3-使用优化" class="headerlink" title="3. 使用优化"></a>3. 使用优化</h1><p>JDK7并发包中新增了一个队列集合类LinkedTransferQueue, 他在使用volatile变量时，用一种追加字节的方式来优化队列的入队与出队的性能。使用追加到64字节的方式填满同一个高速缓冲行，避免头结点与尾节点加载到同一个缓存行，使头、尾节点在修改时都不会相互锁定。  </p>
