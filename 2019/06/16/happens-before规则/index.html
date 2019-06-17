@@ -7,28 +7,23 @@
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
   
-  <title>线程的状态 | 沈健的技术博客</title>
+  <title>happens-before规则 | 沈健的技术博客</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="多线程,">
+    <meta name="keywords" content="JAVA,后端,JVM,高并发,数据结构,算法">
   
 
-  <meta name="description" content="12345678910public class Thread implements Runnable &amp;#123;	 public enum State &amp;#123;	 	 NEW,	 	 RUNNABLE,	 	 BLOCKED,	 	 WAITING,	 	 TIMED_WAITING,	 	 TERMINATED;	 &amp;#125;&amp;#125;">
-<meta name="keywords" content="多线程">
+  <meta name="keywords" content="数据结构,算法,JAVA,多线程,后端,Spring,Mysql">
 <meta property="og:type" content="article">
-<meta property="og:title" content="线程的状态">
-<meta property="og:url" content="http://www.shenjian.online/2019/03/18/线程的状态/index.html">
+<meta property="og:title" content="happens-before规则">
+<meta property="og:url" content="http://www.shenjian.online/2019/06/16/happens-before规则/index.html">
 <meta property="og:site_name" content="沈健的技术博客">
-<meta property="og:description" content="12345678910public class Thread implements Runnable &amp;#123;	 public enum State &amp;#123;	 	 NEW,	 	 RUNNABLE,	 	 BLOCKED,	 	 WAITING,	 	 TIMED_WAITING,	 	 TERMINATED;	 &amp;#125;&amp;#125;">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://www.shenjian.online/2019/03/18/线程的状态/线程状态.png">
-<meta property="og:updated_time" content="2019-03-18T11:14:06.736Z">
+<meta property="og:updated_time" content="2019-06-16T02:55:54.685Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="线程的状态">
-<meta name="twitter:description" content="12345678910public class Thread implements Runnable &amp;#123;	 public enum State &amp;#123;	 	 NEW,	 	 RUNNABLE,	 	 BLOCKED,	 	 WAITING,	 	 TIMED_WAITING,	 	 TERMINATED;	 &amp;#125;&amp;#125;">
-<meta name="twitter:image" content="http://www.shenjian.online/2019/03/18/线程的状态/线程状态.png">
+<meta name="twitter:title" content="happens-before规则">
 
   
 
@@ -133,14 +128,14 @@
 
 
 <div class="content content-post CENTER">
-   <article id="post-线程的状态" class="article article-type-post" itemprop="blogPost">
+   <article id="post-happens-before规则" class="article article-type-post" itemprop="blogPost">
   <header class="article-header">
-    <h1 class="post-title">线程的状态</h1>
+    <h1 class="post-title">happens-before规则</h1>
 
     <div class="article-meta">
       <span>
         <i class="icon-calendar"></i>
-        <span>2019.03.18</span>
+        <span>2019.06.16</span>
       </span>
 
       
@@ -151,11 +146,6 @@
       
 
       
-  <span class="article-category">
-    <i class="icon-list"></i>
-    <a class="article-category-link" href="/category/多线程/">多线程</a>
-  </span>
-
 
 
       
@@ -173,9 +163,7 @@
 
   <div class="article-content">
     
-      <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public class Thread implements Runnable &#123;</span><br><span class="line">	 public enum State &#123;</span><br><span class="line">	 	 NEW,</span><br><span class="line">	 	 RUNNABLE,</span><br><span class="line">	 	 BLOCKED,</span><br><span class="line">	 	 WAITING,</span><br><span class="line">	 	 TIMED_WAITING,</span><br><span class="line">	 	 TERMINATED;</span><br><span class="line">	 &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="/2019/03/18/线程的状态/线程状态.png" alt="线程状态"></p>
-
+      
     
   </div>
 
@@ -212,10 +200,10 @@
 
    
   <div class="box-prev-next clearfix">
-    <a class="show pull-left" href="/2019/03/18/线程的优先级/">
+    <a class="show pull-left" href="/2019/06/11/JAVA流实现文件批量打包下载/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="show pull-right" href="/2019/03/19/wait-notify使用详解/">
+    <a class="hide pull-right" href="/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>
