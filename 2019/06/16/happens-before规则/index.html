@@ -12,18 +12,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="JAVA,后端,JVM,高并发,数据结构,算法">
+    <meta name="keywords" content="多线程,">
   
 
-  <meta name="keywords" content="数据结构,算法,JAVA,多线程,后端,Spring,Mysql">
+  <meta name="description" content="1) 程序顺序规则： 一个线程的每个操作，happends-before于该线程中任意的后续操作2) 监视器锁规则： 对一个锁的解锁，happends-before于任意后续对这个锁的加锁3) volatile变量规则： 对一个volatile的写，happends-before于任意后续对该volatile域的读4) 传递性： 如果A happends-before B 且 B happends">
+<meta name="keywords" content="多线程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="happens-before规则">
 <meta property="og:url" content="http://www.shenjian.online/2019/06/16/happens-before规则/index.html">
 <meta property="og:site_name" content="沈健的技术博客">
+<meta property="og:description" content="1) 程序顺序规则： 一个线程的每个操作，happends-before于该线程中任意的后续操作2) 监视器锁规则： 对一个锁的解锁，happends-before于任意后续对这个锁的加锁3) volatile变量规则： 对一个volatile的写，happends-before于任意后续对该volatile域的读4) 传递性： 如果A happends-before B 且 B happends">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-06-16T02:55:54.685Z">
+<meta property="og:updated_time" content="2019-06-17T13:58:46.854Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="happens-before规则">
+<meta name="twitter:description" content="1) 程序顺序规则： 一个线程的每个操作，happends-before于该线程中任意的后续操作2) 监视器锁规则： 对一个锁的解锁，happends-before于任意后续对这个锁的加锁3) volatile变量规则： 对一个volatile的写，happends-before于任意后续对该volatile域的读4) 传递性： 如果A happends-before B 且 B happends">
 
   
 
@@ -146,6 +149,11 @@
       
 
       
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/category/多线程/">多线程</a>
+  </span>
+
 
 
       
@@ -163,7 +171,8 @@
 
   <div class="article-content">
     
-      
+      <p>1) 程序顺序规则： <em>一个线程的每个操作，happends-before于该线程中任意的后续操作</em><br>2) 监视器锁规则： <em>对一个锁的解锁，happends-before于任意后续对这个锁的加锁</em><br>3) volatile变量规则： <em>对一个volatile的写，happends-before于任意后续对该volatile域的读</em><br>4) 传递性： 如果A happends-before B 且 B happends-before<br>5) start()规则<br>6) join()规则</p>
+
     
   </div>
 
