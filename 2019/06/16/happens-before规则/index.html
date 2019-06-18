@@ -15,18 +15,18 @@
     <meta name="keywords" content="多线程,">
   
 
-  <meta name="description" content="1) 程序顺序规则： 一个线程的每个操作，happends-before于该线程中任意的后续操作2) 监视器锁规则： 对一个锁的解锁，happends-before于任意后续对这个锁的加锁3) volatile变量规则： 对一个volatile的写，happends-before于任意后续对该volatile域的读4) 传递性： 如果A happends-before B 且 B happends">
+  <meta name="description" content="happends-before是JMM最核心的概念，理解happends-befores是理解JMM的关键。 1. happends-before关系定义如下1) 如果一个操作happends-before另一个操作，那么另一个操作执行的结果将对第二个操作可见，而且第一个操作的执行顺序排在第二个操作之前2) 两个操作之间存在happends-before关系，并不意味着java平台的具体实现必须要">
 <meta name="keywords" content="多线程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="happens-before规则">
 <meta property="og:url" content="http://www.shenjian.online/2019/06/16/happens-before规则/index.html">
 <meta property="og:site_name" content="沈健的技术博客">
-<meta property="og:description" content="1) 程序顺序规则： 一个线程的每个操作，happends-before于该线程中任意的后续操作2) 监视器锁规则： 对一个锁的解锁，happends-before于任意后续对这个锁的加锁3) volatile变量规则： 对一个volatile的写，happends-before于任意后续对该volatile域的读4) 传递性： 如果A happends-before B 且 B happends">
+<meta property="og:description" content="happends-before是JMM最核心的概念，理解happends-befores是理解JMM的关键。 1. happends-before关系定义如下1) 如果一个操作happends-before另一个操作，那么另一个操作执行的结果将对第二个操作可见，而且第一个操作的执行顺序排在第二个操作之前2) 两个操作之间存在happends-before关系，并不意味着java平台的具体实现必须要">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-06-17T13:58:46.854Z">
+<meta property="og:updated_time" content="2019-06-18T13:18:13.268Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="happens-before规则">
-<meta name="twitter:description" content="1) 程序顺序规则： 一个线程的每个操作，happends-before于该线程中任意的后续操作2) 监视器锁规则： 对一个锁的解锁，happends-before于任意后续对这个锁的加锁3) volatile变量规则： 对一个volatile的写，happends-before于任意后续对该volatile域的读4) 传递性： 如果A happends-before B 且 B happends">
+<meta name="twitter:description" content="happends-before是JMM最核心的概念，理解happends-befores是理解JMM的关键。 1. happends-before关系定义如下1) 如果一个操作happends-before另一个操作，那么另一个操作执行的结果将对第二个操作可见，而且第一个操作的执行顺序排在第二个操作之前2) 两个操作之间存在happends-before关系，并不意味着java平台的具体实现必须要">
 
   
 
@@ -134,6 +134,11 @@
 </div>
 
 
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-happends-before关系定义如下"><span class="toc-text">1. happends-before关系定义如下</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-happends-before规则"><span class="toc-text">2. happends-before规则</span></a></li></ol>
+  </div>
+
 
 
 <div class="content content-post CENTER">
@@ -177,7 +182,9 @@
 
   <div class="article-content">
     
-      <p>1) 程序顺序规则： <em>一个线程的每个操作，happends-before于该线程中任意的后续操作</em><br>2) 监视器锁规则： <em>对一个锁的解锁，happends-before于任意后续对这个锁的加锁</em><br>3) volatile变量规则： <em>对一个volatile的写，happends-before于任意后续对该volatile域的读</em><br>4) 传递性： 如果A happends-before B 且 B happends-before<br>5) start()规则<br>6) join()规则</p>
+      <p>happends-before是JMM最核心的概念，理解happends-befores是理解JMM的关键。</p>
+<h2 id="1-happends-before关系定义如下"><a href="#1-happends-before关系定义如下" class="headerlink" title="1. happends-before关系定义如下"></a>1. happends-before关系定义如下</h2><p>1) 如果一个操作happends-before另一个操作，那么另一个操作执行的结果将对第二个操作可见，而且第一个操作的执行顺序排在第二个操作之前<br>2) 两个操作之间存在happends-before关系，并不意味着java平台的具体实现必须要按happends-before关系执行的顺序来执行，如果重排序之后的执行结果，与按happends-before关系来执行的结果一致，那么这种重排序并不非法。</p>
+<h2 id="2-happends-before规则"><a href="#2-happends-before规则" class="headerlink" title="2. happends-before规则"></a>2. happends-before规则</h2><p>1) 程序顺序规则： <em>一个线程的每个操作，happends-before于该线程中任意的后续操作</em><br>2) 监视器锁规则： <em>对一个锁的解锁，happends-before于任意后续对这个锁的加锁</em><br>3) volatile变量规则： <em>对一个volatile的写，happends-before于任意后续对该volatile域的读</em><br>4) 传递性： 如果A happends-before B 且 B happends-before，那么 A happends before C<br>5) start()规则: 如果线程A执行操作ThreadB.start(),那么A线程的ThreadB.start()操作happends before于线程B的任意操作<br>6) join()规则：如果线程A执行操作ThreadB.join()方法并成功返回，则线程B中的任意操作happends before于线程A从ThreadB.join()操作成功返回</p>
 
     
   </div>
