@@ -35,6 +35,8 @@ public interface ExecutorService extends Executor {
 
 ### 2. 线程池
 
+![线程池类图](Executor及其相关类分析/ThreadPool.png)
+
 线程池与工作队列密切相关，工作队列中存取所有等待执行的任务，工作线程在工作队列中获取一个任务，执行任务，然后返回线程池等待执行下一个任务
 
 可以通过Executors中的静态方法来创建线程池：
@@ -76,12 +78,3 @@ public class Executors {
       	}
 }
 ```
-
-### 3. 线程池的饱和策略
-
-当有界队列填满后，饱和策略开始起作用。ThreadPoolExecutor的饱和策略可以通过调用setRejectedExecutionHandler来修改。
-
-**中止策略(AbortPolicy):** 该策略抛出未检查的RejectedExecutionException
-**调用者运行策略(CallerRunsPolicy):** 该策略不会抛弃任务，也不会抛出异常，而是把任务回退给调用者执行
-**抛弃策略(DiscardPolicy):** 抛弃任务不执行
-**抛弃最旧策略(DiscardOldestPolicy):** 抛弃队列中下一个被执行的任务。 由于优先队列下一任务为优先级高者，故不可与该策略结合使用

@@ -20,7 +20,7 @@ tag: 多线程
 
 ### 2. 实现生产者消费者
 
-``` bash
+``` java
 public class ProducerConsumerDemo {
 
     public static void main(String[] args) {
@@ -153,12 +153,20 @@ ConsumerOne consume 1411031303
 ConsumerOne consume 1426589341
 ```
 
+### 3. wait/nofity内部运行细节
 
-### 3. sleep与wait的区别
+1) 使用wait()、notify()、notifyAll()时需要先对对象加锁
+2) 调用wait()方法后，线程状态由RUNNING变为WAITTING,并将当前线程放置到对象的等待队列
+3) notify()、notifyAll()方法调用后，等待线程依旧不会从wait()返回，需要调用notify()、notify()的线程释放锁后，等待线程才有机会从wait()返回
+4) notify()、notifyAll()方法将线程从等待队列移到同步队列(前者移1个，后者移全部),被移动的线程由WAITTING变为BLOCKED
+5) 从wait()方法返回的前提是获得了调用对象的锁[这也是3)中为啥说有机会返回的原因]
+
+![wait/nofity运行过程](wait-notify使用详解/WaitNotify运行过程.png)
+
+### 4. sleep与wait的区别
 
 sleep是Thread中定义的方法, wait是Object中定义的方法;
 
 可以在任何地方调用线程对象的sleep方法，wait方法只能在同步代码块或同步方法中调用；
 
 调用线程对象的sleep方法后，不释放锁，调用对象的wait方法，释放对象获得的锁
-
