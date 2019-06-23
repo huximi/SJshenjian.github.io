@@ -23,7 +23,7 @@
 <meta property="og:site_name" content="沈健的技术博客">
 <meta property="og:description" content="同样基于docker-compose安装，Docker快速部署nginx中有讲到，不在重述 1. 编写docker-compose.yml个人习惯放在/opt/下，如/opt/kafka, /opt/nginx, docker-compose.yml如下 123456789101112131415version: &apos;3&apos;services:  zookeeper:    image: wurstme">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-06-23T10:18:33.813Z">
+<meta property="og:updated_time" content="2019-06-23T10:34:23.697Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Docker快速安装kafka">
 <meta name="twitter:description" content="同样基于docker-compose安装，Docker快速部署nginx中有讲到，不在重述 1. 编写docker-compose.yml个人习惯放在/opt/下，如/opt/kafka, /opt/nginx, docker-compose.yml如下 123456789101112131415version: &apos;3&apos;services:  zookeeper:    image: wurstme">
@@ -187,19 +187,7 @@
 <figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'3'</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">  zookeeper:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">wurstmeister/zookeeper</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"2181:2181"</span> <span class="comment"># 端口不可省略，否则，docker会内部会随机分配端口，造成zk connected refused</span></span><br><span class="line"><span class="attr">  kafka:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">wurstmeister/kafka</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"9092:9092"</span></span><br><span class="line"><span class="attr">    environment:</span></span><br><span class="line"><span class="attr">      KAFKA_ADVERTISED_HOST_NAME:</span> <span class="number">192.168</span><span class="number">.153</span><span class="number">.152</span> <span class="comment"># 宿主IP地址，此为我虚拟机地址</span></span><br><span class="line"><span class="attr">      KAFKA_ZOOKEEPER_CONNECT:</span> <span class="attr">zookeeper:2181</span></span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">/var/run/docker.sock:/var/run/docker.sock</span></span><br></pre></td></tr></table></figure>
 <h2 id="2-启动kafka"><a href="#2-启动kafka" class="headerlink" title="2. 启动kafka"></a>2. 启动kafka</h2><p><code>docker-compose up -d</code></p>
 <p>Creating kafka_kafka_1     … done<br>Creating kafka_zookeeper_1 … done</p>
-<h2 id="3-消息生产消费验证"><a href="#3-消息生产消费验证" class="headerlink" title="3. 消息生产消费验证"></a>3. 消息生产消费验证</h2><pre><code class="bash">docker <span class="built_in">exec</span> -it kafka_kafka_1 /bin/bash <span class="comment"># 进入kafka终端</span>
-
-<span class="comment"># 创建test主题，副本1，分区1</span>
-kafka-topics.sh --create --topic <span class="built_in">test</span> --zookeeper kafka_zookeeper_1:2181 --replication-factor 1 --partitions 1
-
-kafka-topics.sh --list --zookeeper kafka_zookeeper_1:2181 <span class="comment"># 查看刚才创建的test分区</span>
-
-<span class="comment"># 发布消息，输入几条消息后，按^C退出发布</span>
-kafka-console-producer.sh --topic=<span class="built_in">test</span> --broker-list kafka_kafka_1:9092
-
-<span class="comment"># 接收消息</span>
-kafka-console-consumer.sh --bootstrap-server kafka_kafka_1:9092 --from-beginning --topic <span class="built_in">test</span>
-</code></pre>
+<h2 id="3-消息生产消费验证"><a href="#3-消息生产消费验证" class="headerlink" title="3. 消息生产消费验证"></a>3. 消息生产消费验证</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it kafka_kafka_1 /bin/bash <span class="comment"># 进入kafka终端</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建test主题，副本1，分区1</span></span><br><span class="line">kafka-topics.sh --create --topic <span class="built_in">test</span> --zookeeper kafka_zookeeper_1:2181 --replication-factor 1 --partitions 1</span><br><span class="line"></span><br><span class="line">kafka-topics.sh --list --zookeeper kafka_zookeeper_1:2181 <span class="comment"># 查看刚才创建的test分区</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 发布消息，输入几条消息后，按^C退出发布</span></span><br><span class="line">kafka-console-producer.sh --topic=<span class="built_in">test</span> --broker-list kafka_kafka_1:9092</span><br><span class="line"></span><br><span class="line"><span class="comment"># 接收消息</span></span><br><span class="line">kafka-console-consumer.sh --bootstrap-server kafka_kafka_1:9092 --from-beginning --topic <span class="built_in">test</span></span><br></pre></td></tr></table></figure>
 <p>如果正常的话，发布的消息能够接收到，开始愉悦的kafka之旅吧~~~</p>
 
     
