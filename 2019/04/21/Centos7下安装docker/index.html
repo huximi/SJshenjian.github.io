@@ -7,7 +7,7 @@
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
   
-  <title>Docker运行常用软件命令 | 沈健的技术博客</title>
+  <title>Centos7下安装docker | 沈健的技术博客</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -15,18 +15,18 @@
     <meta name="keywords" content="Docker,">
   
 
-  <meta name="description" content="12345678910111213141516171819202122232425262728293031323334# 启动(系统为centos7）systemctl start dockersystemctl status docker # 新建一个name为redis的容器并运行redis## -p 主机端口：容器端口 --name 容器名 -v 挂载目录，规则与端口映射相同 -d 后台启动">
+  <meta name="description" content="yum方式安装 12345678910111213141516171819202122232425262728293031# 查看系统版本 ## Docker 运行在 CentOS 7 上，要求系统为64位、系统内核版本为 3.10 以上。 建议采用7，可能6.5会有依赖问题## Docker 运行在 CentOS-6.5 或更高的版本的 CentOS 上，要求系统为64位、系统内核版本为 2.6">
 <meta name="keywords" content="Docker">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Docker运行常用软件命令">
-<meta property="og:url" content="http://www.shenjian.online/2019/04/21/Docker运行常用软件命令/index.html">
+<meta property="og:title" content="Centos7下安装docker">
+<meta property="og:url" content="http://www.shenjian.online/2019/04/21/Centos7下安装docker/index.html">
 <meta property="og:site_name" content="沈健的技术博客">
-<meta property="og:description" content="12345678910111213141516171819202122232425262728293031323334# 启动(系统为centos7）systemctl start dockersystemctl status docker # 新建一个name为redis的容器并运行redis## -p 主机端口：容器端口 --name 容器名 -v 挂载目录，规则与端口映射相同 -d 后台启动">
+<meta property="og:description" content="yum方式安装 12345678910111213141516171819202122232425262728293031# 查看系统版本 ## Docker 运行在 CentOS 7 上，要求系统为64位、系统内核版本为 3.10 以上。 建议采用7，可能6.5会有依赖问题## Docker 运行在 CentOS-6.5 或更高的版本的 CentOS 上，要求系统为64位、系统内核版本为 2.6">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-06-07T09:20:51.947Z">
+<meta property="og:updated_time" content="2019-06-23T03:35:27.262Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Docker运行常用软件命令">
-<meta name="twitter:description" content="12345678910111213141516171819202122232425262728293031323334# 启动(系统为centos7）systemctl start dockersystemctl status docker # 新建一个name为redis的容器并运行redis## -p 主机端口：容器端口 --name 容器名 -v 挂载目录，规则与端口映射相同 -d 后台启动">
+<meta name="twitter:title" content="Centos7下安装docker">
+<meta name="twitter:description" content="yum方式安装 12345678910111213141516171819202122232425262728293031# 查看系统版本 ## Docker 运行在 CentOS 7 上，要求系统为64位、系统内核版本为 3.10 以上。 建议采用7，可能6.5会有依赖问题## Docker 运行在 CentOS-6.5 或更高的版本的 CentOS 上，要求系统为64位、系统内核版本为 2.6">
 
   
 
@@ -137,9 +137,9 @@
 
 
 <div class="content content-post CENTER">
-   <article id="post-Docker运行常用软件命令" class="article article-type-post" itemprop="blogPost">
+   <article id="post-Centos7下安装docker" class="article article-type-post" itemprop="blogPost">
   <header class="article-header">
-    <h1 class="post-title">Docker运行常用软件命令</h1>
+    <h1 class="post-title">Centos7下安装docker</h1>
 
     <div class="article-meta">
       <span>
@@ -177,7 +177,9 @@
 
   <div class="article-content">
     
-      <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 启动(系统为centos7）</span></span><br><span class="line">systemctl start docker</span><br><span class="line"></span><br><span class="line">systemctl status docker </span><br><span class="line"></span><br><span class="line"><span class="comment"># 新建一个name为redis的容器并运行redis</span></span><br><span class="line"><span class="comment">## -p 主机端口：容器端口 --name 容器名 -v 挂载目录，规则与端口映射相同 -d 后台启动 redis-server 已配置文件启动redis --appendonly yes 开启redis持久化</span></span><br><span class="line">docker run --name redis -p 6379:6379  -v /usr/<span class="built_in">local</span>/docker/redis.conf:/etc/redis/redis.conf -v /usr/<span class="built_in">local</span>/docker/data:/data -d redis:4.0 redis-server /etc/redis/redis.conf --requirepass password --appendonly yes</span><br><span class="line"></span><br><span class="line"><span class="comment"># 新建一个name为mysql的容器运行mysql</span></span><br><span class="line"><span class="comment">## -e MYSQL\_ROOT\_PASSWORD=123456 设置登录密码为123456</span></span><br><span class="line">docker run --name mysql -p 6379:6379 mysql:5.7 -e MYSQL\_ROOT\_PASSWORD=123456 -d </span><br><span class="line"></span><br><span class="line"><span class="comment"># 列出所有容器</span></span><br><span class="line">docekr ps -a</span><br><span class="line"></span><br><span class="line"><span class="comment"># 列出已经上线的容器</span></span><br><span class="line">docekr container ls</span><br><span class="line"></span><br><span class="line"><span class="comment"># 列出镜像</span></span><br><span class="line">docker image ls</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将镜像push至远程仓库并在其他机器pull，如docker.io</span></span><br><span class="line">docker login <span class="comment">## 首先登陆</span></span><br><span class="line"></span><br><span class="line">docker tag mongo:4.0 haotu369/mongo:4.0 <span class="comment">## 将本地镜像重命令为带有docker.io账号的形式，如我的账号为haotu369</span></span><br><span class="line"></span><br><span class="line">docker push haotu369/mongo:4.0 <span class="comment">## push至远程仓库</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 从远程仓库下载镜像</span></span><br><span class="line">docker pull haotu369/mongo:4.0 <span class="comment">## push至本地</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># springboot jar包运行</span></span><br><span class="line">nohup java -jar XXX.jar --server.port=8081 &amp;</span><br></pre></td></tr></table></figure>
+      <p>yum方式安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看系统版本 </span></span><br><span class="line"><span class="comment">## Docker 运行在 CentOS 7 上，要求系统为64位、系统内核版本为 3.10 以上。 建议采用7，可能6.5会有依赖问题</span></span><br><span class="line"><span class="comment">## Docker 运行在 CentOS-6.5 或更高的版本的 CentOS 上，要求系统为64位、系统内核版本为 2.6.32-431 或者更高版本。</span></span><br><span class="line">uname -r </span><br><span class="line"></span><br><span class="line"><span class="comment"># 移除旧版本</span></span><br><span class="line">yum remove docker \</span><br><span class="line">                  docker-client \</span><br><span class="line">                  docker-client-latest \</span><br><span class="line">                  docker-common \</span><br><span class="line">                  docker-latest \</span><br><span class="line">                  docker-latest-logrotate \</span><br><span class="line">                  docker-logrotate \</span><br><span class="line">                  docker-selinux \</span><br><span class="line">                  docker-engine-selinux \</span><br><span class="line">                  docker-engine</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装必要系统工具</span></span><br><span class="line">yum install -y yum-utils device-mapper-persistent-data lvm2</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加软件源信息</span></span><br><span class="line">yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新yum缓存</span></span><br><span class="line">yum makecache fast</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装docker-ce</span></span><br><span class="line">yum -y install docker-ce</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动docker后台服务</span></span><br><span class="line">systemctl start docker</span><br></pre></td></tr></table></figure>
+
     
   </div>
 
@@ -214,10 +216,10 @@
 
    
   <div class="box-prev-next clearfix">
-    <a class="show pull-left" href="/2019/04/21/Centos7下安装docker/">
+    <a class="show pull-left" href="/2019/04/21/互联网下半场的主角-区块链/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="show pull-right" href="/2019/04/23/区块链技术模型/">
+    <a class="show pull-right" href="/2019/04/21/Docker运行常用软件命令/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>
