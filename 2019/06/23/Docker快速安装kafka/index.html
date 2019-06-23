@@ -7,26 +7,26 @@
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
   
-  <title>Markdown常用命令 | 沈健的技术博客</title>
+  <title>Docker快速安装kafka | 沈健的技术博客</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="工具,">
+    <meta name="keywords" content="Docker,Kafka,">
   
 
-  <meta name="description" content="123456![wait/nofity运行过程](wait-notify使用详解/WaitNotify运行过程.png) # 插入图片 [图片显示标识](图片所在包名/图片名)[沈健的技术博客](https://shenjian.online) # 插入链接# 插入链接">
-<meta name="keywords" content="工具">
+  <meta name="description" content="同样基于docker-compose安装，Docker快速部署nginx中有讲到，不在重述 1. 编写docker-compose.yml个人习惯放在/opt/下，如/opt/kafka, /opt/nginx, docker-compose.yml如下 123456789101112131415version: &apos;3&apos;services:  zookeeper:    image: wurstme">
+<meta name="keywords" content="Docker,Kafka">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Markdown常用命令">
-<meta property="og:url" content="http://www.shenjian.online/2019/05/19/Markdown常用命令/index.html">
+<meta property="og:title" content="Docker快速安装kafka">
+<meta property="og:url" content="http://www.shenjian.online/2019/06/23/Docker快速安装kafka/index.html">
 <meta property="og:site_name" content="沈健的技术博客">
-<meta property="og:description" content="123456![wait/nofity运行过程](wait-notify使用详解/WaitNotify运行过程.png) # 插入图片 [图片显示标识](图片所在包名/图片名)[沈健的技术博客](https://shenjian.online) # 插入链接# 插入链接">
+<meta property="og:description" content="同样基于docker-compose安装，Docker快速部署nginx中有讲到，不在重述 1. 编写docker-compose.yml个人习惯放在/opt/下，如/opt/kafka, /opt/nginx, docker-compose.yml如下 123456789101112131415version: &apos;3&apos;services:  zookeeper:    image: wurstme">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-06-23T04:43:07.536Z">
+<meta property="og:updated_time" content="2019-06-23T10:18:33.813Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Markdown常用命令">
-<meta name="twitter:description" content="123456![wait/nofity运行过程](wait-notify使用详解/WaitNotify运行过程.png) # 插入图片 [图片显示标识](图片所在包名/图片名)[沈健的技术博客](https://shenjian.online) # 插入链接# 插入链接">
+<meta name="twitter:title" content="Docker快速安装kafka">
+<meta name="twitter:description" content="同样基于docker-compose安装，Docker快速部署nginx中有讲到，不在重述 1. 编写docker-compose.yml个人习惯放在/opt/下，如/opt/kafka, /opt/nginx, docker-compose.yml如下 123456789101112131415version: &apos;3&apos;services:  zookeeper:    image: wurstme">
 
   
 
@@ -134,17 +134,22 @@
 </div>
 
 
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-编写docker-compose-yml"><span class="toc-text">1. 编写docker-compose.yml</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-启动kafka"><span class="toc-text">2. 启动kafka</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-消息生产消费验证"><span class="toc-text">3. 消息生产消费验证</span></a></li></ol>
+  </div>
+
 
 
 <div class="content content-post CENTER">
-   <article id="post-Markdown常用命令" class="article article-type-post" itemprop="blogPost">
+   <article id="post-Docker快速安装kafka" class="article article-type-post" itemprop="blogPost">
   <header class="article-header">
-    <h1 class="post-title">Markdown常用命令</h1>
+    <h1 class="post-title">Docker快速安装kafka</h1>
 
     <div class="article-meta">
       <span>
         <i class="icon-calendar"></i>
-        <span>2019.05.19</span>
+        <span>2019.06.23</span>
       </span>
 
       
@@ -157,7 +162,7 @@
       
   <span class="article-category">
     <i class="icon-list"></i>
-    <a class="article-category-link" href="/category/工具/">工具</a>
+    <a class="article-category-link" href="/category/Docker/">Docker</a>
   </span>
 
 
@@ -177,7 +182,25 @@
 
   <div class="article-content">
     
-      <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">![<span class="built_in">wait</span>/nofity运行过程](<span class="built_in">wait</span>-notify使用详解/WaitNotify运行过程.png) <span class="comment"># 插入图片 [图片显示标识](图片所在包名/图片名)</span></span><br><span class="line"></span><br><span class="line">[沈健的技术博客](https://shenjian.online) <span class="comment"># 插入链接</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 插入链接</span></span><br></pre></td></tr></table></figure>
+      <p>同样基于docker-compose安装，<a href="https://shenjian.online/2019/06/09/Docker%E5%BF%AB%E9%80%9F%E9%83%A8%E7%BD%B2nginx/" target="_blank" rel="noopener">Docker快速部署nginx</a>中有讲到，不在重述</p>
+<h2 id="1-编写docker-compose-yml"><a href="#1-编写docker-compose-yml" class="headerlink" title="1. 编写docker-compose.yml"></a>1. 编写docker-compose.yml</h2><p>个人习惯放在/opt/下，如/opt/kafka, /opt/nginx, docker-compose.yml如下</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'3'</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">  zookeeper:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">wurstmeister/zookeeper</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"2181:2181"</span> <span class="comment"># 端口不可省略，否则，docker会内部会随机分配端口，造成zk connected refused</span></span><br><span class="line"><span class="attr">  kafka:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">wurstmeister/kafka</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"9092:9092"</span></span><br><span class="line"><span class="attr">    environment:</span></span><br><span class="line"><span class="attr">      KAFKA_ADVERTISED_HOST_NAME:</span> <span class="number">192.168</span><span class="number">.153</span><span class="number">.152</span> <span class="comment"># 宿主IP地址，此为我虚拟机地址</span></span><br><span class="line"><span class="attr">      KAFKA_ZOOKEEPER_CONNECT:</span> <span class="attr">zookeeper:2181</span></span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">/var/run/docker.sock:/var/run/docker.sock</span></span><br></pre></td></tr></table></figure>
+<h2 id="2-启动kafka"><a href="#2-启动kafka" class="headerlink" title="2. 启动kafka"></a>2. 启动kafka</h2><p><code>docker-compose up -d</code></p>
+<p>Creating kafka_kafka_1     … done<br>Creating kafka_zookeeper_1 … done</p>
+<h2 id="3-消息生产消费验证"><a href="#3-消息生产消费验证" class="headerlink" title="3. 消息生产消费验证"></a>3. 消息生产消费验证</h2><pre><code class="bash">docker <span class="built_in">exec</span> -it kafka_kafka_1 /bin/bash <span class="comment"># 进入kafka终端</span>
+
+<span class="comment"># 创建test主题，副本1，分区1</span>
+kafka-topics.sh --create --topic <span class="built_in">test</span> --zookeeper kafka_zookeeper_1:2181 --replication-factor 1 --partitions 1
+
+kafka-topics.sh --list --zookeeper kafka_zookeeper_1:2181 <span class="comment"># 查看刚才创建的test分区</span>
+
+<span class="comment"># 发布消息，输入几条消息后，按^C退出发布</span>
+kafka-console-producer.sh --topic=<span class="built_in">test</span> --broker-list kafka_kafka_1:9092
+
+<span class="comment"># 接收消息</span>
+kafka-console-consumer.sh --bootstrap-server kafka_kafka_1:9092 --from-beginning --topic <span class="built_in">test</span>
+</code></pre>
+<p>如果正常的话，发布的消息能够接收到，开始愉悦的kafka之旅吧~~~</p>
 
     
   </div>
@@ -215,10 +238,10 @@
 
    
   <div class="box-prev-next clearfix">
-    <a class="show pull-left" href="/2019/05/18/Git常用命令/">
+    <a class="show pull-left" href="/2019/06/22/AQS队列同步器实现分析/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="show pull-right" href="/2019/05/19/区块链架构/">
+    <a class="hide pull-right" href="/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>
