@@ -7,7 +7,7 @@
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
   
-  <title>10_盛最多水的容器_leetcode | 沈健的技术博客</title>
+  <title>11_盛最多水的容器_leetcode | 沈健的技术博客</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -15,18 +15,18 @@
     <meta name="keywords" content="算法与数据结构,Leetcode,">
   
 
-  <meta name="description" content="10. 盛最多水的容器给定 n 个非负整数 a1，a2，…，an，每个数代表坐标中的一个点 (i, ai) 。在坐标内画 n 条垂直线，垂直线 i 的两个端点分别为 (i, ai) 和 (i, 0)。找出其中的两条线，使得它们与 x 轴共同构成的容器可以容纳最多的水。 说明：你不能倾斜容器，且 n 的值至少为 2 示例: 输入: [1,8,6,2,5,4,8,3,7]输出: 49 12345678">
+  <meta name="description" content="11. 盛最多水的容器给定 n 个非负整数 a1，a2，…，an，每个数代表坐标中的一个点 (i, ai) 。在坐标内画 n 条垂直线，垂直线 i 的两个端点分别为 (i, ai) 和 (i, 0)。找出其中的两条线，使得它们与 x 轴共同构成的容器可以容纳最多的水。 说明：你不能倾斜容器，且 n 的值至少为 2 示例: 输入: [1,8,6,2,5,4,8,3,7]输出: 49 12345678">
 <meta name="keywords" content="算法与数据结构,Leetcode">
 <meta property="og:type" content="article">
-<meta property="og:title" content="10_盛最多水的容器_leetcode">
-<meta property="og:url" content="http://www.shenjian.online/2019/09/03/10-盛最多水的容器-leetcode/index.html">
+<meta property="og:title" content="11_盛最多水的容器_leetcode">
+<meta property="og:url" content="http://www.shenjian.online/2019/09/03/11-盛最多水的容器-leetcode/index.html">
 <meta property="og:site_name" content="沈健的技术博客">
-<meta property="og:description" content="10. 盛最多水的容器给定 n 个非负整数 a1，a2，…，an，每个数代表坐标中的一个点 (i, ai) 。在坐标内画 n 条垂直线，垂直线 i 的两个端点分别为 (i, ai) 和 (i, 0)。找出其中的两条线，使得它们与 x 轴共同构成的容器可以容纳最多的水。 说明：你不能倾斜容器，且 n 的值至少为 2 示例: 输入: [1,8,6,2,5,4,8,3,7]输出: 49 12345678">
+<meta property="og:description" content="11. 盛最多水的容器给定 n 个非负整数 a1，a2，…，an，每个数代表坐标中的一个点 (i, ai) 。在坐标内画 n 条垂直线，垂直线 i 的两个端点分别为 (i, ai) 和 (i, 0)。找出其中的两条线，使得它们与 x 轴共同构成的容器可以容纳最多的水。 说明：你不能倾斜容器，且 n 的值至少为 2 示例: 输入: [1,8,6,2,5,4,8,3,7]输出: 49 12345678">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-09-03T14:49:15.055Z">
+<meta property="og:updated_time" content="2019-09-05T15:19:18.250Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="10_盛最多水的容器_leetcode">
-<meta name="twitter:description" content="10. 盛最多水的容器给定 n 个非负整数 a1，a2，…，an，每个数代表坐标中的一个点 (i, ai) 。在坐标内画 n 条垂直线，垂直线 i 的两个端点分别为 (i, ai) 和 (i, 0)。找出其中的两条线，使得它们与 x 轴共同构成的容器可以容纳最多的水。 说明：你不能倾斜容器，且 n 的值至少为 2 示例: 输入: [1,8,6,2,5,4,8,3,7]输出: 49 12345678">
+<meta name="twitter:title" content="11_盛最多水的容器_leetcode">
+<meta name="twitter:description" content="11. 盛最多水的容器给定 n 个非负整数 a1，a2，…，an，每个数代表坐标中的一个点 (i, ai) 。在坐标内画 n 条垂直线，垂直线 i 的两个端点分别为 (i, ai) 和 (i, 0)。找出其中的两条线，使得它们与 x 轴共同构成的容器可以容纳最多的水。 说明：你不能倾斜容器，且 n 的值至少为 2 示例: 输入: [1,8,6,2,5,4,8,3,7]输出: 49 12345678">
 
   
 
@@ -136,15 +136,15 @@
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#10-盛最多水的容器"><span class="toc-text">10. 盛最多水的容器</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#11-盛最多水的容器"><span class="toc-text">11. 盛最多水的容器</span></a></li></ol>
   </div>
 
 
 
 <div class="content content-post CENTER">
-   <article id="post-10-盛最多水的容器-leetcode" class="article article-type-post" itemprop="blogPost">
+   <article id="post-11-盛最多水的容器-leetcode" class="article article-type-post" itemprop="blogPost">
   <header class="article-header">
-    <h1 class="post-title">10_盛最多水的容器_leetcode</h1>
+    <h1 class="post-title">11_盛最多水的容器_leetcode</h1>
 
     <div class="article-meta">
       <span>
@@ -182,7 +182,7 @@
 
   <div class="article-content">
     
-      <h2 id="10-盛最多水的容器"><a href="#10-盛最多水的容器" class="headerlink" title="10. 盛最多水的容器"></a>10. 盛最多水的容器</h2><p>给定 n 个非负整数 a1，a2，…，an，每个数代表坐标中的一个点 (i, ai) 。在坐标内画 n 条垂直线，垂直线 i 的两个端点分别为 (i, ai) 和 (i, 0)。找出其中的两条线，使得它们与 x 轴共同构成的容器可以容纳最多的水。</p>
+      <h2 id="11-盛最多水的容器"><a href="#11-盛最多水的容器" class="headerlink" title="11. 盛最多水的容器"></a>11. 盛最多水的容器</h2><p>给定 n 个非负整数 a1，a2，…，an，每个数代表坐标中的一个点 (i, ai) 。在坐标内画 n 条垂直线，垂直线 i 的两个端点分别为 (i, ai) 和 (i, 0)。找出其中的两条线，使得它们与 x 轴共同构成的容器可以容纳最多的水。</p>
 <p>说明：你不能倾斜容器，且 n 的值至少为 2</p>
 <p>示例:</p>
 <p>输入: [1,8,6,2,5,4,8,3,7]<br>输出: 49</p>
@@ -228,7 +228,7 @@
     <a class="show pull-left" href="/2019/09/01/9-回文数-leetcode/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="hide pull-right" href="/">
+    <a class="show pull-right" href="/2019/09/05/12-整数转罗马数字-leetcode/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>
