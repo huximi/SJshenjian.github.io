@@ -1,5 +1,5 @@
 ---
-title: JAVA模拟JS JSONP方式实现登录获取资源
+title: JAVA实现登录获取资源
 date: 2019-03-01 10:43:24
 category: 工作干货
 tag: 工作干货
@@ -22,7 +22,7 @@ tag: 工作干货
 
 我们知道，系统登录成功后，**服务器会返回给浏览器一个JSESSIONID用于用户再次访问时的身份凭证**，删除该JSESSIONID后再次访问则重定向到登录页面。
 
-![JSESSIONID](JAVA模拟JS-JSONP方式实现登录获取资源/JSESSIONID.png)
+![JSESSIONID](JAVA实现登录获取资源/JSESSIONID.png)
 
 ### 3. 解决方案
 

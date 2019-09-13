@@ -35,9 +35,13 @@ tar -zcvf [目标压缩文件] [源文件]
 # 本地安装
 yum localinstall *.rpm
 
+yum install net-tools # netstat安装
+
 # rpm安装
 ## ivh 安装显示安装进度--install--verbose--hash
 rpm -ivh XXX.rpm
+
+uname -r # 查看系统信息
 
 ########## 性能监控调优 ##########
 # 线程上下文切换次数查看 
@@ -62,6 +66,16 @@ getconf GNU_LIBPTHREAD_VERSION
 ## 操作系统线程栈默认10M,JVM栈内存默认1M
 ## 一个Java进程中可以创建的线程数主要是受到JVM可以使用的内存大小的影响，而不是操作系统的总内存。
 ulimit -s
+
+# 虚拟机Centos7网络配置及DNS
+## ifcfg-ens后可能不一样 /etc/sysconfig/network-scripts/ifcfg-ens32  /etc/sysconfig/network-scripts/ifcfg-lo
+sudo ls /etc/sysconfig/network-scripts/ifcfg-*
+vim /etc/sysconfig/network-scripts/ifcfg-ens32
+
+# centos7 防火墙
+firewall-cmd --state # 查看防火墙状态
+systemctl stop firewalld.service # 关闭防火墙
+systemctl disable firewalld.service # 禁止开机自启动
 ```
 
 以下为windows常用命令

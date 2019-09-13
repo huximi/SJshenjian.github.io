@@ -1,8 +1,8 @@
 ---
 title: 基于数组的ArrayList
 date: 2019-03-01 14:26:42
-category: 数据结构
-tag: [数据结构,面试]
+category: 算法与数据结构
+tag: 算法与数据结构
 ---
 
 ArrayList基于数组，故需注意数组相关注意事项，详见 [数组](https://sjshenjian.github.io/2019/01/25/%E6%95%B0%E7%BB%84/)

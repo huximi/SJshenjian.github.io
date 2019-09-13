@@ -101,5 +101,8 @@ $ git push origin source:test1
 $ git push origin -d test1
 To github.com:SJshenjian/SJshenjian.github.io.git
  - [deleted]         test1
+
+# 忽略ssl证书
+git config --global http.sslVerify false
 ```
 
