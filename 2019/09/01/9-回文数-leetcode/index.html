@@ -15,18 +15,18 @@
     <meta name="keywords" content="算法与数据结构,Leetcode,">
   
 
-  <meta name="description" content="9. 回文数判断一个整数是否是回文数。回文数是指正序（从左向右）和倒序（从右向左）读都是一样的整数。 示例 1: 输入: 121输出: true  示例 2: 输入: -121输出: false解释: 从左向右读, 为 -121 。 从右向左读, 为 121- 。因此它不是一个回文数。  示例 3: 输入: 10输出: false解释: 从右向左读, 为 01 。因此它不是一个回文数。  1234">
+  <meta name="description" content="9. 回文数判断一个整数是否是回文数。回文数是指正序（从左向右）和倒序（从右向左）读都是一样的整数。  输入: 121输出: true输入: -121输出: false解释: 从左向右读, 为 -121 。 从右向左读, 为 121- 。因此它不是一个回文数。输入: 10输出: false解释: 从右向左读, 为 01 。因此它不是一个回文数。    12345678910111213141516">
 <meta name="keywords" content="算法与数据结构,Leetcode">
 <meta property="og:type" content="article">
 <meta property="og:title" content="9_回文数_leetcode">
 <meta property="og:url" content="http://www.shenjian.online/2019/09/01/9-回文数-leetcode/index.html">
 <meta property="og:site_name" content="沈健的技术博客">
-<meta property="og:description" content="9. 回文数判断一个整数是否是回文数。回文数是指正序（从左向右）和倒序（从右向左）读都是一样的整数。 示例 1: 输入: 121输出: true  示例 2: 输入: -121输出: false解释: 从左向右读, 为 -121 。 从右向左读, 为 121- 。因此它不是一个回文数。  示例 3: 输入: 10输出: false解释: 从右向左读, 为 01 。因此它不是一个回文数。  1234">
+<meta property="og:description" content="9. 回文数判断一个整数是否是回文数。回文数是指正序（从左向右）和倒序（从右向左）读都是一样的整数。  输入: 121输出: true输入: -121输出: false解释: 从左向右读, 为 -121 。 从右向左读, 为 121- 。因此它不是一个回文数。输入: 10输出: false解释: 从右向左读, 为 01 。因此它不是一个回文数。    12345678910111213141516">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-09-01T14:20:15.730Z">
+<meta property="og:updated_time" content="2019-09-21T00:18:01.359Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="9_回文数_leetcode">
-<meta name="twitter:description" content="9. 回文数判断一个整数是否是回文数。回文数是指正序（从左向右）和倒序（从右向左）读都是一样的整数。 示例 1: 输入: 121输出: true  示例 2: 输入: -121输出: false解释: 从左向右读, 为 -121 。 从右向左读, 为 121- 。因此它不是一个回文数。  示例 3: 输入: 10输出: false解释: 从右向左读, 为 01 。因此它不是一个回文数。  1234">
+<meta name="twitter:description" content="9. 回文数判断一个整数是否是回文数。回文数是指正序（从左向右）和倒序（从右向左）读都是一样的整数。  输入: 121输出: true输入: -121输出: false解释: 从左向右读, 为 -121 。 从右向左读, 为 121- 。因此它不是一个回文数。输入: 10输出: false解释: 从右向左读, 为 01 。因此它不是一个回文数。    12345678910111213141516">
 
   
 
@@ -183,15 +183,11 @@
   <div class="article-content">
     
       <h2 id="9-回文数"><a href="#9-回文数" class="headerlink" title="9. 回文数"></a>9. 回文数</h2><p>判断一个整数是否是回文数。回文数是指正序（从左向右）和倒序（从右向左）读都是一样的整数。</p>
-<p>示例 1:</p>
-<table><tr><td bgcolor="#f7f9fa">输入: 121<br>输出: true<br></td></tr></table>
-
-<p>示例 2:</p>
-<table><tr><td bgcolor="#f7f9fa">输入: -121<br>输出: false<br>解释: 从左向右读, 为 -121 。 从右向左读, 为 121- 。因此它不是一个回文数。<br></td></tr></table>
-
-<p>示例 3:</p>
-<table><tr><td bgcolor="#f7f9fa">输入: 10<br>输出: false<br>解释: 从右向左读, 为 01 。因此它不是一个回文数。<br></td></tr></table>
-
+<blockquote>
+<p>输入: 121<br>输出: true<br>输入: -121<br>输出: false<br>解释: 从左向右读, 为 -121 。 从右向左读, 为 121- 。因此它不是一个回文数。<br>输入: 10<br>输出: false<br>解释: 从右向左读, 为 01 。因此它不是一个回文数。</p>
+</blockquote>
+<blockquote>
+</blockquote>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isPalindrome</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// -32等等均不是</span></span><br><span class="line">        <span class="comment">// 120 100等均不是</span></span><br><span class="line">        <span class="keyword">if</span> (x &lt; <span class="number">0</span> || (x % <span class="number">10</span> == <span class="number">0</span> &amp;&amp; x != <span class="number">0</span>)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 采用字符串反转方式简单粗暴</span></span><br><span class="line">        <span class="comment">// 进阶采用整数方式解决，回文数只需反转数字长度的1/2即可</span></span><br><span class="line">        <span class="keyword">int</span> newX = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> ( x &gt; newX) &#123;</span><br><span class="line">            newX = newX * <span class="number">10</span> + x % <span class="number">10</span>;</span><br><span class="line">            x /= <span class="number">10</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 返回结果需考虑奇数情况</span></span><br><span class="line">        <span class="keyword">return</span> x == newX || newX / <span class="number">10</span> == x;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>AC传送门<a href="https://leetcode-cn.com/problems/palindrome-number/" target="_blank" rel="noopener">leetcode</a></p>
 
