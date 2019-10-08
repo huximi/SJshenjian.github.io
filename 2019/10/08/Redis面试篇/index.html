@@ -15,18 +15,18 @@
     <meta name="keywords" content="面试,Redis,">
   
 
-  <meta name="description" content="Redis常见问题总结1. 使用redis有哪些好处？ 速度快 支持多种数据类型存储 支持事务 可用于缓存、消息、按key设置过期时间，过期自动删除  2. Redis与memcached有哪些优势？ memcached值仅为string,redis支持多种数据类型 redis速度比memcached快很多 redis可持久化其数据  3. Redis常见性能问题与解决方案？ Master最好不要">
+  <meta name="description" content="Redis常见问题总结1. 使用redis有哪些好处？ 速度快 基于内存，查找操作时间复杂度O(1) 支持多种数据类型存储 string/list/set/sorted set/hash 支持事务 操作都是原子性，要么全部执行，要么全部不执行 可用于缓存、消息、按key设置过期时间，过期自动删除   2. Redis与memcached有哪些优势？ memcached值仅为string,redis">
 <meta name="keywords" content="面试,Redis">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Redis面试篇">
 <meta property="og:url" content="http://www.shenjian.online/2019/10/08/Redis面试篇/index.html">
 <meta property="og:site_name" content="沈健的技术博客">
-<meta property="og:description" content="Redis常见问题总结1. 使用redis有哪些好处？ 速度快 支持多种数据类型存储 支持事务 可用于缓存、消息、按key设置过期时间，过期自动删除  2. Redis与memcached有哪些优势？ memcached值仅为string,redis支持多种数据类型 redis速度比memcached快很多 redis可持久化其数据  3. Redis常见性能问题与解决方案？ Master最好不要">
+<meta property="og:description" content="Redis常见问题总结1. 使用redis有哪些好处？ 速度快 基于内存，查找操作时间复杂度O(1) 支持多种数据类型存储 string/list/set/sorted set/hash 支持事务 操作都是原子性，要么全部执行，要么全部不执行 可用于缓存、消息、按key设置过期时间，过期自动删除   2. Redis与memcached有哪些优势？ memcached值仅为string,redis">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-10-08T12:58:56.919Z">
+<meta property="og:updated_time" content="2019-10-08T15:08:53.064Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redis面试篇">
-<meta name="twitter:description" content="Redis常见问题总结1. 使用redis有哪些好处？ 速度快 支持多种数据类型存储 支持事务 可用于缓存、消息、按key设置过期时间，过期自动删除  2. Redis与memcached有哪些优势？ memcached值仅为string,redis支持多种数据类型 redis速度比memcached快很多 redis可持久化其数据  3. Redis常见性能问题与解决方案？ Master最好不要">
+<meta name="twitter:description" content="Redis常见问题总结1. 使用redis有哪些好处？ 速度快 基于内存，查找操作时间复杂度O(1) 支持多种数据类型存储 string/list/set/sorted set/hash 支持事务 操作都是原子性，要么全部执行，要么全部不执行 可用于缓存、消息、按key设置过期时间，过期自动删除   2. Redis与memcached有哪些优势？ memcached值仅为string,redis">
 
   
 
@@ -183,10 +183,10 @@
   <div class="article-content">
     
       <h2 id="Redis常见问题总结"><a href="#Redis常见问题总结" class="headerlink" title="Redis常见问题总结"></a>Redis常见问题总结</h2><h3 id="1-使用redis有哪些好处？"><a href="#1-使用redis有哪些好处？" class="headerlink" title="1. 使用redis有哪些好处？"></a>1. 使用redis有哪些好处？</h3><ul>
-<li>速度快</li>
-<li>支持多种数据类型存储</li>
-<li>支持事务</li>
-<li>可用于缓存、消息、按key设置过期时间，过期自动删除</li>
+<li>速度快 基于内存，查找操作时间复杂度O(1)</li>
+<li>支持多种数据类型存储 string/list/set/sorted set/hash</li>
+<li>支持事务 操作都是原子性，要么全部执行，要么全部不执行</li>
+<li>可用于缓存、消息、按key设置过期时间，过期自动删除 </li>
 </ul>
 <h3 id="2-Redis与memcached有哪些优势？"><a href="#2-Redis与memcached有哪些优势？" class="headerlink" title="2. Redis与memcached有哪些优势？"></a>2. Redis与memcached有哪些优势？</h3><ul>
 <li>memcached值仅为string,redis支持多种数据类型</li>
@@ -198,16 +198,16 @@
 <li>如果数据比较重要，某个Slave设置AOF备份数据,策略设置每秒同步一次</li>
 <li>为了主从复制的速度与连接的稳定性，Master与Slave最好在同一个局域网内</li>
 <li>尽量避免在压力很大的主库上增加从库</li>
-<li>主从复制不要用图状结构，用单向连接结构更为稳定。如Master &lt;- Slave1 &lt;- Slave2</li>
+<li>主从复制不要用图状结构，用单向链表结构更为稳定。如Master &lt;- Slave1 &lt;- Slave2</li>
 </ul>
 <h3 id="4-MySQL里有2000w数据，redis中只存20w的数据，如何保证redis中的数据都是热点数据？"><a href="#4-MySQL里有2000w数据，redis中只存20w的数据，如何保证redis中的数据都是热点数据？" class="headerlink" title="4. MySQL里有2000w数据，redis中只存20w的数据，如何保证redis中的数据都是热点数据？"></a>4. MySQL里有2000w数据，redis中只存20w的数据，如何保证redis中的数据都是热点数据？</h3><p>redis内存数据集上升到一定大小的时候，就会执行数据淘汰策略。redis有6种数据淘汰策略</p>
 <ul>
-<li>volatile-lru</li>
-<li>volatile-ttl</li>
-<li>volatile-random</li>
-<li>allkeys-lru</li>
-<li>allkeys-random</li>
-<li>no-enviction</li>
+<li>volatile-lru 从已设置过期时间的数据集挑选最近最少使用的数据淘汰</li>
+<li>volatile-ttl 从已设置过期时间的数据集挑选即将过期的数据淘汰</li>
+<li>volatile-random 从已设置过期的数据集任意选择数据淘汰</li>
+<li>allkeys-lru 从数据集挑选最近最少使用的数据淘汰</li>
+<li>allkeys-random 从数据集任意选择数据淘汰</li>
+<li>no-enviction 禁止驱逐数据</li>
 </ul>
 <h3 id="5-Zookeeper四种类型的znode？"><a href="#5-Zookeeper四种类型的znode？" class="headerlink" title="5. Zookeeper四种类型的znode？"></a>5. Zookeeper四种类型的znode？</h3><ul>
 <li>PERSISTENT:客户端与zookeeper断开连接后，节点不会删除</li>
