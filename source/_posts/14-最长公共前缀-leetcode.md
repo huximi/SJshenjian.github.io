@@ -17,13 +17,11 @@ tag: [算法与数据结构, Leetcode]
 >输入: ["dog","racecar","car"]
 输出: ""
 解释: 输入不存在公共前缀。
-
 说明:所有输入只包含小写字母 a-z 。
 
+题解： 二分查找求解最长公共前缀
+
 ```java
-/**
-* 二分查找求解最长公共前缀
-*/
 class Solution {
 	public String longestCommonPrefix(String[] strs) {
 		if (strs == null || strs.length == 0) {
