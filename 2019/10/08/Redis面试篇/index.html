@@ -23,7 +23,7 @@
 <meta property="og:site_name" content="沈健的技术博客">
 <meta property="og:description" content="Redis常见问题总结1. 使用redis有哪些好处？ 速度快 基于内存，查找操作时间复杂度O(1) 支持多种数据类型存储 string/list/set/sorted set/hash 支持事务 操作都是原子性，要么全部执行，要么全部不执行 可用于缓存、消息、按key设置过期时间，过期自动删除   2. Redis与memcached有哪些优势？ memcached值仅为string,redis">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-10-08T15:08:53.064Z">
+<meta property="og:updated_time" content="2019-10-08T15:12:36.866Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redis面试篇">
 <meta name="twitter:description" content="Redis常见问题总结1. 使用redis有哪些好处？ 速度快 基于内存，查找操作时间复杂度O(1) 支持多种数据类型存储 string/list/set/sorted set/hash 支持事务 操作都是原子性，要么全部执行，要么全部不执行 可用于缓存、消息、按key设置过期时间，过期自动删除   2. Redis与memcached有哪些优势？ memcached值仅为string,redis">
@@ -224,7 +224,7 @@
 <h3 id="7-Redis最适合的场景？"><a href="#7-Redis最适合的场景？" class="headerlink" title="7. Redis最适合的场景？"></a>7. Redis最适合的场景？</h3><p>redis最适合所有数据in-memory的场景，虽然也提供了持久化功能，但更多的是disk-back的功能<br>实际项目使用场景： 存储JWT,用户授权验证；定时模块分布式执行控制(在多台设备中仅执行一次)</p>
 <h3 id="8-Redis的同步机制了解吗？"><a href="#8-Redis的同步机制了解吗？" class="headerlink" title="8. Redis的同步机制了解吗？"></a>8. Redis的同步机制了解吗？</h3><p>主从同步。第一次同步时，主节点做一次bgsave,并同时将后续修改操作记录至内存buffer,待完成后将rdb文件全量同步到复制节点，复制节点接收完成后将rdb镜像加载到内存，加载完成后，在通知主节点将期间修改的操作记录过来进行重放就完成了同步过程</p>
 <h3 id="9-是否使用过Redis集群，集群的原理是什么？"><a href="#9-是否使用过Redis集群，集群的原理是什么？" class="headerlink" title="9. 是否使用过Redis集群，集群的原理是什么？"></a>9. 是否使用过Redis集群，集群的原理是什么？</h3><p>Redis Sentinel着眼于高可用，在master宕机时会自动将slave提升为master，继续提供服务。<br>Redis Cluster着眼于扩展性，在单个redis内存不足时，使用Cluster进行分片存储。</p>
-<p>参考来源：<br><a href="https://github.com/0voice/interview_internal_reference/blob/master/10.Redis%E7%AF%87/10.1.0%20%E4%BD%BF%E7%94%A8Redis%E6%9C%89%E5%93%AA%E4%BA%9B%E5%A5%BD%E5%A4%84%EF%BC%9F.md" target="_blank" rel="noopener">interview_internal_reference/10.Redis篇</a></p>
+<p>参考来源：<br><a href="https://github.com/0voice/interview_internal_reference/blob/master/10.Redis%E7%AF%87" target="_blank" rel="noopener">interview_internal_reference/10.Redis篇</a></p>
 
     
   </div>
