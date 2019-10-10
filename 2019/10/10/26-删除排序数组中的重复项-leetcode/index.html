@@ -7,7 +7,7 @@
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
   
-  <title>24_两两交换链表中的节点_leetcode | 沈健的技术博客</title>
+  <title>26_删除排序数组中的重复项_leetcode | 沈健的技术博客</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -15,18 +15,18 @@
     <meta name="keywords" content="算法与数据结构,Leetcode,">
   
 
-  <meta name="description" content="24. 两两交换链表中的节点给定一个链表，两两交换其中相邻的节点，并返回交换后的链表。 你不能只是单纯的改变节点内部的值，而是需要实际的进行节点交换。  示例:给定 1-&amp;gt;2-&amp;gt;3-&amp;gt;4, 你应该返回 2-&amp;gt;1-&amp;gt;4-&amp;gt;3.  题解： 三个主要节点： temp用于遍历，start end用于交换 123456789101112131415161718192021">
+  <meta name="description" content="26. 删除排序数组中的重复项给定一个排序数组，你需要在原地删除重复出现的元素，使得每个元素只出现一次，返回移除后数组的新长度。不要使用额外的数组空间，你必须在原地修改输入数组并在使用 O(1) 额外空间的条件下完成。  给定数组 nums = [1,1,2],函数应该返回新的长度 2, 并且原数组 nums 的前两个元素被修改为 1, 2。你不需要考虑数组中超出新长度后面的元素。   给定 nu">
 <meta name="keywords" content="算法与数据结构,Leetcode">
 <meta property="og:type" content="article">
-<meta property="og:title" content="24_两两交换链表中的节点_leetcode">
-<meta property="og:url" content="http://www.shenjian.online/2019/10/08/24-两两交换链表中的节点-leetcode/index.html">
+<meta property="og:title" content="26_删除排序数组中的重复项_leetcode">
+<meta property="og:url" content="http://www.shenjian.online/2019/10/10/26-删除排序数组中的重复项-leetcode/index.html">
 <meta property="og:site_name" content="沈健的技术博客">
-<meta property="og:description" content="24. 两两交换链表中的节点给定一个链表，两两交换其中相邻的节点，并返回交换后的链表。 你不能只是单纯的改变节点内部的值，而是需要实际的进行节点交换。  示例:给定 1-&amp;gt;2-&amp;gt;3-&amp;gt;4, 你应该返回 2-&amp;gt;1-&amp;gt;4-&amp;gt;3.  题解： 三个主要节点： temp用于遍历，start end用于交换 123456789101112131415161718192021">
+<meta property="og:description" content="26. 删除排序数组中的重复项给定一个排序数组，你需要在原地删除重复出现的元素，使得每个元素只出现一次，返回移除后数组的新长度。不要使用额外的数组空间，你必须在原地修改输入数组并在使用 O(1) 额外空间的条件下完成。  给定数组 nums = [1,1,2],函数应该返回新的长度 2, 并且原数组 nums 的前两个元素被修改为 1, 2。你不需要考虑数组中超出新长度后面的元素。   给定 nu">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-10-08T12:14:31.342Z">
+<meta property="og:updated_time" content="2019-10-10T12:15:13.174Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="24_两两交换链表中的节点_leetcode">
-<meta name="twitter:description" content="24. 两两交换链表中的节点给定一个链表，两两交换其中相邻的节点，并返回交换后的链表。 你不能只是单纯的改变节点内部的值，而是需要实际的进行节点交换。  示例:给定 1-&amp;gt;2-&amp;gt;3-&amp;gt;4, 你应该返回 2-&amp;gt;1-&amp;gt;4-&amp;gt;3.  题解： 三个主要节点： temp用于遍历，start end用于交换 123456789101112131415161718192021">
+<meta name="twitter:title" content="26_删除排序数组中的重复项_leetcode">
+<meta name="twitter:description" content="26. 删除排序数组中的重复项给定一个排序数组，你需要在原地删除重复出现的元素，使得每个元素只出现一次，返回移除后数组的新长度。不要使用额外的数组空间，你必须在原地修改输入数组并在使用 O(1) 额外空间的条件下完成。  给定数组 nums = [1,1,2],函数应该返回新的长度 2, 并且原数组 nums 的前两个元素被修改为 1, 2。你不需要考虑数组中超出新长度后面的元素。   给定 nu">
 
   
 
@@ -136,20 +136,20 @@
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#24-两两交换链表中的节点"><span class="toc-text">24. 两两交换链表中的节点</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#26-删除排序数组中的重复项"><span class="toc-text">26. 删除排序数组中的重复项</span></a></li></ol>
   </div>
 
 
 
 <div class="content content-post CENTER">
-   <article id="post-24-两两交换链表中的节点-leetcode" class="article article-type-post" itemprop="blogPost">
+   <article id="post-26-删除排序数组中的重复项-leetcode" class="article article-type-post" itemprop="blogPost">
   <header class="article-header">
-    <h1 class="post-title">24_两两交换链表中的节点_leetcode</h1>
+    <h1 class="post-title">26_删除排序数组中的重复项_leetcode</h1>
 
     <div class="article-meta">
       <span>
         <i class="icon-calendar"></i>
-        <span>2019.10.08</span>
+        <span>2019.10.10</span>
       </span>
 
       
@@ -182,14 +182,16 @@
 
   <div class="article-content">
     
-      <h2 id="24-两两交换链表中的节点"><a href="#24-两两交换链表中的节点" class="headerlink" title="24. 两两交换链表中的节点"></a>24. 两两交换链表中的节点</h2><p>给定一个链表，两两交换其中相邻的节点，并返回交换后的链表。</p>
-<p>你不能只是单纯的改变节点内部的值，而是需要实际的进行节点交换。</p>
+      <h2 id="26-删除排序数组中的重复项"><a href="#26-删除排序数组中的重复项" class="headerlink" title="26. 删除排序数组中的重复项"></a>26. 删除排序数组中的重复项</h2><p>给定一个排序数组，你需要在原地删除重复出现的元素，使得每个元素只出现一次，返回移除后数组的新长度。<br>不要使用额外的数组空间，你必须在原地修改输入数组并在使用 O(1) 额外空间的条件下完成。</p>
 <blockquote>
-<p>示例:<br>给定 1-&gt;2-&gt;3-&gt;4, 你应该返回 2-&gt;1-&gt;4-&gt;3.</p>
+<p>给定数组 nums = [1,1,2],<br>函数应该返回新的长度 2, 并且原数组 nums 的前两个元素被修改为 1, 2。<br>你不需要考虑数组中超出新长度后面的元素。</p>
 </blockquote>
-<p>题解： 三个主要节点： temp用于遍历，start end用于交换</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * public class ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode next;</span></span><br><span class="line"><span class="comment"> *     ListNode(int x) &#123; val = x; &#125;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> ListNode <span class="title">swapPairs</span><span class="params">(ListNode head)</span> </span>&#123;</span><br><span class="line">    	ListNode prev = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</span><br><span class="line">    	prev.next = head;</span><br><span class="line">    	ListNode temp = prev;</span><br><span class="line">    	</span><br><span class="line">    	<span class="keyword">while</span> (temp.next != <span class="keyword">null</span> &amp;&amp; temp.next.next != <span class="keyword">null</span>) &#123;</span><br><span class="line">    		ListNode start = temp.next;</span><br><span class="line">    		ListNode end = temp.next.next;</span><br><span class="line">    		temp.next = end;</span><br><span class="line">    		start.next = end.next;</span><br><span class="line">    		end.next = start;</span><br><span class="line">    		temp = start;</span><br><span class="line">    	&#125;</span><br><span class="line">    	<span class="keyword">return</span> prev.next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>AC传送门<a href="https://leetcode-cn.com/problems/swap-nodes-in-pairs/" target="_blank" rel="noopener">leetcode</a></p>
+<blockquote>
+<p>给定 nums = [0,0,1,1,1,2,2,3,3,4],<br>函数应该返回新的长度 5, 并且原数组 nums 的前五个元素被修改为 0, 1, 2, 3, 4。<br>你不需要考虑数组中超出新长度后面的元素。</p>
+</blockquote>
+<p>题解： 简单题，给AC加点心</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">removeDuplicates</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">    	<span class="keyword">if</span> (nums == <span class="keyword">null</span> || nums.length &lt;= <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    	<span class="keyword">int</span> length = <span class="number">1</span>;</span><br><span class="line">    	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; nums.length; i++) &#123;</span><br><span class="line">    		<span class="keyword">if</span> (nums[i] != nums[i - <span class="number">1</span>]) &#123;</span><br><span class="line">    			nums[length] = nums[i];</span><br><span class="line">    			length++;   			</span><br><span class="line">    		&#125;</span><br><span class="line">    	&#125;</span><br><span class="line">    	<span class="keyword">return</span> length;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>AC传送门<a href="https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array/" target="_blank" rel="noopener">leetcode</a></p>
 
     
   </div>
@@ -227,10 +229,10 @@
 
    
   <div class="box-prev-next clearfix">
-    <a class="show pull-left" href="/2019/10/08/Redis面试篇/">
+    <a class="show pull-left" href="/2019/10/08/24-两两交换链表中的节点-leetcode/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="show pull-right" href="/2019/10/10/26-删除排序数组中的重复项-leetcode/">
+    <a class="hide pull-right" href="/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>
