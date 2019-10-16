@@ -7,7 +7,7 @@
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
   
-  <title>29-两数相除_leetcode | 沈健的技术博客</title>
+  <title>29_两数相除_leetcode | 沈健的技术博客</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -18,14 +18,14 @@
   <meta name="description" content="29. 两数相除给定两个整数，被除数 dividend 和除数 divisor。将两数相除，要求不使用乘法、除法和 mod 运算符。返回被除数 dividend 除以除数 divisor 得到的商。  输入: dividend = 10, divisor = 3输出: 3输入: dividend = 7, divisor = -3输出: -2说明:被除数和除数均为 32 位有符号整数。除数不为 0">
 <meta name="keywords" content="算法与数据结构,Leetcode">
 <meta property="og:type" content="article">
-<meta property="og:title" content="29-两数相除_leetcode">
+<meta property="og:title" content="29_两数相除_leetcode">
 <meta property="og:url" content="http://www.shenjian.online/2019/10/16/29-两数相除-leetcode/index.html">
 <meta property="og:site_name" content="沈健的技术博客">
 <meta property="og:description" content="29. 两数相除给定两个整数，被除数 dividend 和除数 divisor。将两数相除，要求不使用乘法、除法和 mod 运算符。返回被除数 dividend 除以除数 divisor 得到的商。  输入: dividend = 10, divisor = 3输出: 3输入: dividend = 7, divisor = -3输出: -2说明:被除数和除数均为 32 位有符号整数。除数不为 0">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-10-16T14:12:31.194Z">
+<meta property="og:updated_time" content="2019-10-16T14:16:58.304Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="29-两数相除_leetcode">
+<meta name="twitter:title" content="29_两数相除_leetcode">
 <meta name="twitter:description" content="29. 两数相除给定两个整数，被除数 dividend 和除数 divisor。将两数相除，要求不使用乘法、除法和 mod 运算符。返回被除数 dividend 除以除数 divisor 得到的商。  输入: dividend = 10, divisor = 3输出: 3输入: dividend = 7, divisor = -3输出: -2说明:被除数和除数均为 32 位有符号整数。除数不为 0">
 
   
@@ -144,7 +144,7 @@
 <div class="content content-post CENTER">
    <article id="post-29-两数相除-leetcode" class="article article-type-post" itemprop="blogPost">
   <header class="article-header">
-    <h1 class="post-title">29-两数相除_leetcode</h1>
+    <h1 class="post-title">29_两数相除_leetcode</h1>
 
     <div class="article-meta">
       <span>
@@ -186,7 +186,7 @@
 <blockquote>
 <p>输入: dividend = 10, divisor = 3<br>输出: 3<br>输入: dividend = 7, divisor = -3<br>输出: -2<br>说明:<br>被除数和除数均为 32 位有符号整数。<br>除数不为 0。<br>假设我们的环境只能存储 32 位有符号整数，其数值范围是 [−2^31,  2^31 − 1]。本题中，如果除法结果溢出，则返回 2^31 − 1</p>
 </blockquote>
-<p>题解：这题是除法，所以先普及下除法术语商，公式是：(被除数-余数)÷除数=商，记作：被除数÷除数=商…余数，是一种数学术语。在一个除法算式里，被除数、余数、除数和商的关系为：(被除数-余数)÷除数=商，记作：被除数÷除数=商…余数，进而推导得出：商×除数+余数=被除数。要求商，我们首先想到的是减法，能被减多少次，那么商就为多少，<br>但是明显减法的效率太低那么我们可以用<strong>位移法</strong>，因为计算机在做位移时效率特别高，向左移1相当于乘以2，向右位移1相当于除以2。我们可以把一个dividend（被除数）先除以2^n，n最初为31，不断减小n去试探,当某个n满足dividend/2^n&gt;=divisor时，表示我们找到了一个足够大的数，这个数<em>divisor是不大于dividend的，所以我们就可以减去2^n个divisor，以此类推<br>我们可以以100/3为例2^n是1，2，4，8…2^31这种数，当n为31时，这个数特别大，100/2^n是一个很小的数，肯定是小于3的，所以循环下来，当n=5时，100/32=3, 刚好是大于等于3的，这时我们将100-32</em>3=4，也就是减去了32个3，接下来我们再处理4，同样手法可以再减去一个3，所以一共是减去了33个3，所以商就是33<br>这其中得处理一些特殊的数，比如divisor是不能为0的，Integer.MIN_VALUE和Integer.MAX_VALUE<br><a href="https://github.com/foxleezh/leetcode-java" target="_blank" rel="noopener">题解来源</a></p>
+<p><strong>题解</strong>：这题是除法，所以先普及下除法术语商，公式是：(被除数-余数)÷除数=商，记作：被除数÷除数=商…余数，是一种数学术语。在一个除法算式里，被除数、余数、除数和商的关系为：(被除数-余数)÷除数=商，记作：被除数÷除数=商…余数，进而推导得出：商×除数+余数=被除数。要求商，我们首先想到的是减法，能被减多少次，那么商就为多少，<br>但是明显减法的效率太低那么我们可以用<strong>位移法</strong>，因为计算机在做位移时效率特别高，向左移1相当于乘以2，向右位移1相当于除以2。我们可以把一个dividend（被除数）先除以2^n，n最初为31，不断减小n去试探,当某个n满足dividend/2^n&gt;=divisor时，表示我们找到了一个足够大的数，这个数<em>divisor是不大于dividend的，所以我们就可以减去2^n个divisor，以此类推<br>我们可以以100/3为例2^n是1，2，4，8…2^31这种数，当n为31时，这个数特别大，100/2^n是一个很小的数，肯定是小于3的，所以循环下来，当n=5时，100/32=3, 刚好是大于等于3的，这时我们将100-32</em>3=4，也就是减去了32个3，接下来我们再处理4，同样手法可以再减去一个3，所以一共是减去了33个3，所以商就是33<br>这其中得处理一些特殊的数，比如divisor是不能为0的，Integer.MIN_VALUE和Integer.MAX_VALUE<br><a href="https://github.com/foxleezh/leetcode-java" target="_blank" rel="noopener">题解来源</a></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">divide</span><span class="params">(<span class="keyword">int</span> dividend, <span class="keyword">int</span> divisor)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (divisor == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (dividend == Integer.MIN_VALUE &amp;&amp; divisor == -<span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> Integer.MAX_VALUE;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">boolean</span> negative = (dividend ^ divisor) &lt; <span class="number">0</span>; <span class="comment">// 异或判断符号是否相等</span></span><br><span class="line">        <span class="keyword">long</span> dividendAbs = Math.abs((<span class="keyword">long</span>)dividend);</span><br><span class="line">        <span class="keyword">long</span> divisorAbs = Math.abs((<span class="keyword">long</span>)divisor);</span><br><span class="line">        <span class="keyword">int</span> result = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">31</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">            <span class="keyword">if</span> ((dividendAbs &gt;&gt; i ) &gt;= divisorAbs) &#123;</span><br><span class="line">                result += <span class="number">1</span> &lt;&lt; i;</span><br><span class="line">                dividendAbs -= divisorAbs &lt;&lt; i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> negative ? -result : result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>AC传送门<a href="https://leetcode-cn.com/problems/divide-two-integers/" target="_blank" rel="noopener">leetcode</a></p>
 
