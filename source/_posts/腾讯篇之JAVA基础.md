@@ -167,8 +167,8 @@ final修饰符既可以修饰类、方法，也可以修饰变量
  如果一个对象内部只有基本数据类型，呢么clone()方法获取到的就是这个对象的深拷贝，而如果其内部还有引用数据类型，那么clone()方法
  
  **浅拷贝** 对基本数据类型进行值拷贝，对引用数据类型进行引用传递般的拷贝，此为浅拷贝
- **深拷贝**
- 对基本数据类型进行值拷贝，对引用数据类型，创建一个新的对象，并复制其内容，此为深拷贝
+ 
+ **深拷贝** 对基本数据类型进行值拷贝，对引用数据类型，创建一个新的对象，并复制其内容，此为深拷贝
 + 序列化
 + clone方法 对其内部引用类型的变量，在进行一次clone
 
@@ -188,36 +188,68 @@ final修饰符既可以修饰类、方法，也可以修饰变量
 数组利用下标定位，时间复杂度为O(1)，链表定位元素时间复杂度O(n)；
 数组插入或删除元素的时间复杂度O(n)，链表的时间复杂度O(1)。
 
+### 21. error和exception的区别，CheckedException，RuntimeException的区别
+
+Error: 程序无法处理的错误，如OutOfMemory
+Exception: 程序可以处理的异常
+
+RuntimeException表示虚拟机运行时可能遇到的错误，只要程序设计的没有问题通常不会发生。如空指针、数组下标越界异常
+CheckedException与运行的上下文环境有关，即使程序设计无误，仍然可能因为使用问题而发生。
+编译器不要求声明抛出RuntimeException，要求必须声明抛出CheckedException,
+
+### 22. 请列出5个运行时异常
+
+ClassCastException、IndexOutOfBoundsException、NullPointerException、ArrayStoreException、BufferOverflowException
+
+### 23. 在自己的代码中，如果创建一个java.lang.String类，这个类是否可以被类加载器加载？为什么
+
+不能。由于双亲委派模型限制，先从父加载器加载，依次为引导类加载器 > 扩展类加载器 > 应用程序类加载器，父加载器找不到，才从子加载器加载，依次类推
+
+### 24. 在jdk1.5中，引入了泛型，泛型的存在是用来解决什么问题
+
+泛型主要针对向下转型时带来的安全隐患，其核心组成是在声明类或接口时，不设置参数或属性的类型
 
 
+### 25. 这样的a.hashcode() 有什么用，与a.equals(b)有什么关系
 
+hashcode()提供了对象的hashcode值，是一个native函数，返回的默认值与System.identityHashCode(obj)一致
+作用是用一个数字标识对象，比如HashMap中的key就是基于hashcode, hashcode只能说是标识对象，在hash算法中可以将对象相对离散些，但不是唯一的，根据hashcode定位到具体的链表后，需要循环链表，然后通过equals()方法来对比key是否是一致的。
+equals相等的两个对象，hashcode一定相等；hashcode相等的两个对象不一定equals相等
 
+### 26. 有没有可能2个不相等的对象有相同的hashcode
 
+有。同25
 
+### 27. Java中的HashSet内部是如何工作的
 
+HashSet内部采用HashMap实现。实现了Set接口，不允许有重复的值，只允许有一个null key
 
+### 28. 什么是序列化，怎么序列化，为什么序列化，反序列化会遇到什么问题，如何解决
 
+**什么是序列化**
++ 序列化 把对象转换为字节序列的过程称为序列化
++ 反序列化 把字节序列转化为对象的过程称为序列化
 
+**为什么序列化**
+内存对象保存到文件或数据库时需要序列化；
+用套接字在网络上传输对象的时需要序列化;
+通过RMI传输对象的时候需要序列化
 
+**怎么序列化**
+对象实现Serializable接口，然后通过ObjectOutputStream.writeObject进行序列化，通过ObjectInputStream.readObject进行反序列化
 
+**问题及解决方式**
+serialVersionUID未定义,导致反序列化报InvalidClassException,这是由于在反序列化时Java会自动为serialVersionUI赋值，导致两边不一致找不到旧数据报错
+当属性是对象时，也需要实现serializable接口，不然会报NotSerializableException
 
+ps:
+transient修饰的属性不参与序列化；静态属性不参与序列化
 
+### 29.  java8的新特性
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
++ 接口提供默认方法
++ Lambda表达式
++ 函数式接口
++ 方法与构造函数引用
++ 扩展了集合类，可以通过 Collection.stream() 或者 Collection.parallelStream() 来创建一个Stream
++ 在包java.time下包含了一组全新的时间日期API
