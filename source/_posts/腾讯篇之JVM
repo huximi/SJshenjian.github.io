@@ -82,3 +82,107 @@ JVM除了程序计数器其他区域都可能发生内存溢出
 
 **方法区溢出**
 方法区是存放类的地方。如果多个项目有多个相同jar,且都在WEB-INF/lib下，则每个项目都会加载一遍jar,会导致方法区有大量相同类，又不会被GC,则可建立共享lib库，否则尝试增加-XX:MaxPermSize
+
+### 8. JVM内存模型的相关知识了解多少，比如重排序，内存屏障，happen-before，主内存，工作内存等
+
+思路： 先画出Java内存模型图，结合例子volatile ，说明什么是重排序，内存屏障，最好能给面试官写以下demo说明。
+
+1）Java内存模型图： 
+Java模型规定了所有的变量都存储在主内存中，每个线程线程有自己的工作内存，线程的工作内存保存了所使用变量主内存的副本拷贝。
+线程对变量的所有操作都必须在工作内存中进行，而不能直接读写主内存。
+不同线程之间无法访问对方工作内存的变量，线程间变量传递依赖于主内存。
+
+2）指令重排
+处理器将指令乱序执行，可以大大提高执行效率，这就是指令重排
+
+3）内存屏障
+内存屏障，也叫内存栅栏，是一种CPU指令，用于控制特定条件下的重排序与内存可见性问题
+
++ LoadLoad屏障： 对于语句Load1;LoadLoad;Load2,在Load2及后续读取操作要读取的数据被访问前，保证load1要读取的数据被读取完毕
++ StoreStore屏障：对于语句Store1;StoreStore;Store2,在Store2及后续写入操作执行时，保证Store的写入操作对其他处理器可见
++ LoadStore屏障： 对于语句Load1;LoadStore;Store2,在Store2及后续写入操作执行时，保证Load要读取的数据被读取完毕
++ StoreLoad屏障： 对于语句Store1;StoreLoad;Load1,在Load及以后所有的读取操作执行前，保证Store1的写入操作对所有处理器可见。它的开销是最大的，这个屏障是个万能屏障，兼具其他三种屏障的功能
+
+4）happen-before原则
+
+[happens-before规则](https://shenjian.online/2019/06/16/happens-before%E8%A7%84%E5%88%99/)
+
+### 9. 简单说说你了解的类加载器，可以打破双亲委派么，怎么打破
+
+思路： 先说明一下什么是类加载器，可以给面试官画个图，再说一下类加载器存在的意义，说一下双亲委派模型，最后阐述怎么打破双亲委派模型。
+
+1) 什么是类加载器
+类加载器就是根据指定全限定名称将class文件加载到JVM内存，转为Class对象
++ 启动类加载器（Bootstrap ClassLoader）: 由C++语言实现(针对HotSpot),负责将存放在<JAVA_HOME>\lib目录或-Xbootclasspath参数指定路径中的类库
++ 其他类加载器：由Java语言实现，继承自抽象类ClassLoader
+    - 扩展类加载器（Extension ClassLoader）: 负责加载<JAVA_HOME>\lib\ext或java.ext.dirs系统变量指定路径类库
+    - 应用程序类加载器（Application ClassLoader）: 负责加载用户路径（classpath）上的指定类库，我们可以直接使用这个类加载器。一般情况下，如果我们没有自定义类加载器就默认使用这个加载器
+    
+2）双亲委派模型
+    如果一个类加载器收到类加载请求时，首先不会尝试自己加载这个类，而是把这个请求委派给父加载器完成。每个加载器都是如此，只有当父加载器在自己的搜索范围找不到指定的类时（即ClassNotFoundException）,子加载器才会尝试自己去加载
+
+3）为什么需要双亲委派模型
+    如果没有双亲委派，那么用户自定义一个java.lang.Object, java.lang.String类，并把它放在classpath中，那么类之间的比较结果及类的唯一性将无法保证。双亲委派模型，防止内存中出现多份同样的字节码
+
+4）怎么打破双亲委派模型
+    继承ClassLoader类，重写loadClass和findClass方法
+    
+### 10. 你们线上应用的JVM参数有哪些
+
+思路： 可以说一下堆栈配置相关的，垃圾收集器相关的，还有一下辅助信息相关的。
+
+1) 堆栈配置相关
+
+``` bash
+java -Xmx3550m -Xms3550m -Xmn2g -Xss128k
+-XX:MaxPermSize=16m -XX:NewRatio=4 -XX:SurviorRatio=4 -XX:MaxTenuringThreshold=0
+```
+
+-Xmx3550m: 最大堆大小为3550m
+-Xms3550m: 最小堆大小为3550m
+-Xmn2g: 设置新生代大小为2g
+-Xss128k: 设置每个线程的栈大小为128K
+-XX:MaxPermSize: 设置永久代的大小为16m
+-XX:NewRatio: 设置新生代（包括Eden和两个Survivor区）与老年代的比值(除去永久代)
+-XX:SurvivorRatio: 设置新生代Eden与Survivor区的大小比值，设置为4，则两个Survivor区与Eden区比值为2：4，一个Survivor区占整个年轻代的1/6
+-XX:MaxTenuringThreshold: 设置垃圾最大年龄。如果设置为0的话，则新生代不经过Survivor区，直接进入老年代
+
+2）垃圾收集器相关
+
+```bash
+-XX:+UseParallelGC # 选择垃圾收集器为并行收集器
+-XX:ParallelGCThreads=20 # 配置并行收集器的线程数
+-XX:+UseConcMarkSweepGC # 设置老年代为并发收集
+-XX:CMSFullGCsBeforeCompaction=5 # 由于CMS收集器不对内存空间进行压缩整理，所有会产生内存碎片。此值设置运行5次Full GC后对内存空间压缩整理
+-XX:+UseCMSCompactAtFullCollection # 打开对老年代的压缩，可能会影响性能，但是可以消除碎片
+```
+
+3）辅助信息相关
+
+```bash
+-XX:+PrintGC
+-XX:+PrintGCDetails
+```
+
+-XX:+PrintGC 输出形式:
+[GC 118250K->113543K(130112K), 0.0094143 secs] [Full GC 121376K->10414K(130112K), 0.0650971 secs]
+
+-XX:+PrintGCDetails 输出形式:
+[GC [DefNew: 8614K->781K(9088K), 0.0123035 secs] 118250K->113543K(130112K), 0.0124633 secs] 
+[GC [DefNew: 8614K->8614K(9088K), 0.0000665 secs][Tenured: 112761K->10414K(121024K), 0.0433488 secs] 121376K->10414K(130112K), 0.0436268 secs
+
+
+### 11. g1和cms区别,吞吐量优先和响应优先的垃圾收集器选择
+
+[详见5](###5. 你知道哪几种垃圾收集器，各自的优缺点，重点讲下cms和G1，包括原理，流程，优缺点)
+
+
+### 12. 怎么打出线程栈信息
+
+思路： 可以说一下jps，top ，jstack这几个命令，再配合一次排查线上问题进行解答。
+
++ 首先执行`jps`,获取进程号
++ 然后执行`top -Hp pid`，获取本进程所有线程的CPU耗时性能
++ `jstack pid`,查看当前java进程的堆栈信息
++ 或者 `jstack -l /tmp/output.txt` 把堆栈信息打到一个txt文件
++ 可以使用[fastthread](https://fastthread.io/)进行堆栈定位
