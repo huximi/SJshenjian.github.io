@@ -25,6 +25,9 @@ docekr ps -a
 # 列出已经上线的容器
 docekr container ls
 
+# 进入容器
+docker exec -it pid /bin/bash
+
 # 列出镜像
 docker image ls
 

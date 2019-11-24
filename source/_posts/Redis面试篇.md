@@ -9,10 +9,10 @@ tag: [Redis,面试]
 
 ### 1. 使用redis有哪些好处？
 
-+ 速度快
-+ 支持多种数据类型存储
-+ 支持事务
-+ 可用于缓存、消息、按key设置过期时间，过期自动删除
++ 速度快 基于内存，查找操作时间复杂度O(1)
++ 支持多种数据类型存储 string/list/set/sorted set/hash
++ 支持事务 操作都是原子性，要么全部执行，要么全部不执行
++ 可用于缓存、消息、按key设置过期时间，过期自动删除 
 
 ### 2. Redis与memcached有哪些优势？
 
@@ -27,17 +27,17 @@ tag: [Redis,面试]
 + 如果数据比较重要，某个Slave设置AOF备份数据,策略设置每秒同步一次
 + 为了主从复制的速度与连接的稳定性，Master与Slave最好在同一个局域网内
 + 尽量避免在压力很大的主库上增加从库
-+ 主从复制不要用图状结构，用单向连接结构更为稳定。如Master <- Slave1 <- Slave2
++ 主从复制不要用图状结构，用单向链表结构更为稳定。如Master <- Slave1 <- Slave2
 
 ### 4. MySQL里有2000w数据，redis中只存20w的数据，如何保证redis中的数据都是热点数据？
 
 redis内存数据集上升到一定大小的时候，就会执行数据淘汰策略。redis有6种数据淘汰策略
-+ volatile-lru
-+ volatile-ttl
-+ volatile-random
-+ allkeys-lru
-+ allkeys-random
-+ no-enviction
++ volatile-lru 从已设置过期时间的数据集挑选最近最少使用的数据淘汰
++ volatile-ttl 从已设置过期时间的数据集挑选即将过期的数据淘汰
++ volatile-random 从已设置过期的数据集任意选择数据淘汰
++ allkeys-lru 从数据集挑选最近最少使用的数据淘汰
++ allkeys-random 从数据集任意选择数据淘汰
++ no-enviction 禁止驱逐数据
 
 ### 5. Zookeeper四种类型的znode？
 
@@ -70,4 +70,4 @@ Redis Cluster着眼于扩展性，在单个redis内存不足时，使用Cluster�
 
 参考来源：
 [interview_internal_reference/10.Redis篇](
-https://github.com/0voice/interview_internal_reference/blob/master/10.Redis%E7%AF%87/10.1.0%20%E4%BD%BF%E7%94%A8Redis%E6%9C%89%E5%93%AA%E4%BA%9B%E5%A5%BD%E5%A4%84%EF%BC%9F.md)
+https://github.com/0voice/interview_internal_reference/blob/master/10.Redis%E7%AF%87)

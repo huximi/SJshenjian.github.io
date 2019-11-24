@@ -6,6 +6,11 @@ tag: Linux
 ---
 
 ``` bash
+# 定位到第一行(连续按两个g)
+gg
+# 定位到最后一行
+G
+
 # 查看软件安装目录
 which ftp
 
@@ -40,6 +45,9 @@ yum install net-tools # netstat安装
 # rpm安装
 ## ivh 安装显示安装进度--install--verbose--hash
 rpm -ivh XXX.rpm
+
+# 执行post请求
+curl -v -X POST http://localhost:8772/actuator/bus-refresh
 
 uname -r # 查看系统信息
 
