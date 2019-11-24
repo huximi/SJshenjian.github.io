@@ -1,3 +1,10 @@
+---
+title: 腾讯篇之JVM
+date: 2019-11-03 17:23:25
+category: [JAVA]
+tag: [JAVA,面试]
+---
+
 ### 1. 什么情况下会发生栈内存溢出
 
 栈分配空间太小，或执行的方法递归层数太多创建了太多的栈帧导致溢出
@@ -186,3 +193,4 @@ java -Xmx3550m -Xms3550m -Xmn2g -Xss128k
 + `jstack pid`,查看当前java进程的堆栈信息
 + 或者 `jstack -l /tmp/output.txt` 把堆栈信息打到一个txt文件
 + 可以使用[fastthread](https://fastthread.io/)进行堆栈定位
+

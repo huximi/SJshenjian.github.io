@@ -1,3 +1,10 @@
+---
+title: Mysql面试篇
+date: 2019-11-07 17:23:25
+category: [Mysql]
+tag: [Mysql,面试]
+---
+
 ## MySQL面试篇
 
 ### 1. 解释下超键、候选键、主键、外键
