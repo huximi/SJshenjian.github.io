@@ -15,18 +15,18 @@
     <meta name="keywords" content="面试,">
   
 
-  <meta name="description" content="首先要仔细分析日志，根据报错的类层层查找，重点按以下几点进行排查： 审查静态对象对于静态对象要特别留神，特别是类型为Map、List、Set，静态的变量会一直驻存在内存中，生命周期比较长，不会被垃圾器回收 审查栈变量不用的变量设成Null以便回收，多用局部变量，少用成员变量 审查String类相关1）字符串累加的尽量用StirngBuffer或StringBuilder的append方法，避免使用">
+  <meta name="description" content="十种JVM内存溢出的情况，你碰到过几种？">
 <meta name="keywords" content="面试">
 <meta property="og:type" content="article">
 <meta property="og:title" content="内存溢出遇到过吗，怎么处理">
 <meta property="og:url" content="http://www.shenjian.online/2019/01/09/内存溢出遇到过吗，怎么处理/index.html">
 <meta property="og:site_name" content="沈健的技术博客">
-<meta property="og:description" content="首先要仔细分析日志，根据报错的类层层查找，重点按以下几点进行排查： 审查静态对象对于静态对象要特别留神，特别是类型为Map、List、Set，静态的变量会一直驻存在内存中，生命周期比较长，不会被垃圾器回收 审查栈变量不用的变量设成Null以便回收，多用局部变量，少用成员变量 审查String类相关1）字符串累加的尽量用StirngBuffer或StringBuilder的append方法，避免使用">
+<meta property="og:description" content="十种JVM内存溢出的情况，你碰到过几种？">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-01-16T15:17:17.370Z">
+<meta property="og:updated_time" content="2019-11-29T12:31:43.988Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="内存溢出遇到过吗，怎么处理">
-<meta name="twitter:description" content="首先要仔细分析日志，根据报错的类层层查找，重点按以下几点进行排查： 审查静态对象对于静态对象要特别留神，特别是类型为Map、List、Set，静态的变量会一直驻存在内存中，生命周期比较长，不会被垃圾器回收 审查栈变量不用的变量设成Null以便回收，多用局部变量，少用成员变量 审查String类相关1）字符串累加的尽量用StirngBuffer或StringBuilder的append方法，避免使用">
+<meta name="twitter:description" content="十种JVM内存溢出的情况，你碰到过几种？">
 
   
 
@@ -134,11 +134,6 @@
 </div>
 
 
-  <div id="toc" class="toc-article">
-    <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#审查静态对象"><span class="toc-text">审查静态对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#审查栈变量"><span class="toc-text">审查栈变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#审查String类相关"><span class="toc-text">审查String类相关</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#审查频繁申请内存与释放内存的操作"><span class="toc-text">审查频繁申请内存与释放内存的操作</span></a></li></ol>
-  </div>
-
 
 
 <div class="content content-post CENTER">
@@ -182,11 +177,7 @@
 
   <div class="article-content">
     
-      <p>首先要仔细分析日志，根据报错的类层层查找，重点按以下几点进行排查：</p>
-<h2 id="审查静态对象"><a href="#审查静态对象" class="headerlink" title="审查静态对象"></a>审查静态对象</h2><p>对于静态对象要特别留神，特别是类型为Map、List、Set，静态的变量会一直驻存在内存中，生命周期比较长，不会被垃圾器回收</p>
-<h2 id="审查栈变量"><a href="#审查栈变量" class="headerlink" title="审查栈变量"></a>审查栈变量</h2><p>不用的变量设成Null以便回收，多用局部变量，少用成员变量</p>
-<h2 id="审查String类相关"><a href="#审查String类相关" class="headerlink" title="审查String类相关"></a>审查String类相关</h2><p>1）字符串累加的尽量用StirngBuffer或StringBuilder的append方法，避免使用+操作符连接两个字符串。<br>2）在循环中不要去创建String对象。</p>
-<h2 id="审查频繁申请内存与释放内存的操作"><a href="#审查频繁申请内存与释放内存的操作" class="headerlink" title="审查频繁申请内存与释放内存的操作"></a>审查频繁申请内存与释放内存的操作</h2><p>对于频繁申请释放内存的操作，System.gc()不一定适用，因为JVM并不保证调用该方法就一定能启动垃圾回收集，它只不过是向JVM发出一定申请，最好使用finallize强制执行。</p>
+      <p><a href="https://segmentfault.com/a/1190000017226359" target="_blank" rel="noopener">十种JVM内存溢出的情况，你碰到过几种？</a></p>
 
     
   </div>
