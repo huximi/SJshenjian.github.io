@@ -23,7 +23,7 @@
 <meta property="og:site_name" content="沈健的技术博客">
 <meta property="og:description" content="1. 使用Spring框架的好处是？轻量  Spring是轻量的，基本版本约为2M控制反转(IOC) Spring通过控制反转实现松耦合，对象们给出了依赖，而不是创建与查找依赖的对象们面向切面(AOP) Spring支持AOP编程，把业务逻辑与系统服务分开容器 Spring管理应用中对象的生命周期与配置MVC框架事务管理 Spring提供事务管理接口，上至本地事务，下至全局事务异常处理 Sprin">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-01-20T08:42:56.447Z">
+<meta property="og:updated_time" content="2019-11-30T02:48:06.665Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring常见面试题">
 <meta name="twitter:description" content="1. 使用Spring框架的好处是？轻量  Spring是轻量的，基本版本约为2M控制反转(IOC) Spring通过控制反转实现松耦合，对象们给出了依赖，而不是创建与查找依赖的对象们面向切面(AOP) Spring支持AOP编程，把业务逻辑与系统服务分开容器 Spring管理应用中对象的生命周期与配置MVC框架事务管理 Spring提供事务管理接口，上至本地事务，下至全局事务异常处理 Sprin">
@@ -187,7 +187,7 @@
 <h2 id="3-ApplicationContext通常的实现是什么？"><a href="#3-ApplicationContext通常的实现是什么？" class="headerlink" title="3. ApplicationContext通常的实现是什么？"></a>3. ApplicationContext通常的实现是什么？</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ClassPathXmlApplicationContext</span><br><span class="line">FileSystemXmlApplicationContext</span><br><span class="line">WebXmlApplicationContext</span><br></pre></td></tr></table></figure>
 <h2 id="4-解释Spring支持的几种bean的作用域"><a href="#4-解释Spring支持的几种bean的作用域" class="headerlink" title="4. 解释Spring支持的几种bean的作用域"></a>4. 解释Spring支持的几种bean的作用域</h2><p><strong>singleton</strong> 容器中只有一个对应bean实例<br><strong>prototype</strong> 一个bean的定义有多个实例<br><em>以下四种基于web模块下的webApplicationContext</em><br><strong>request</strong><br><strong>session</strong><br><strong>globalSession</strong><br><strong>application</strong></p>
 <h2 id="5-Spring框架中的单例bean是线程安全的吗"><a href="#5-Spring框架中的单例bean是线程安全的吗" class="headerlink" title="5. Spring框架中的单例bean是线程安全的吗"></a>5. Spring框架中的单例bean是线程安全的吗</h2><p>不是</p>
-<h2 id="6-解释Spring框架中bean的生命周期"><a href="#6-解释Spring框架中bean的生命周期" class="headerlink" title="6. 解释Spring框架中bean的生命周期"></a>6. 解释Spring框架中bean的生命周期</h2><p>1) Spring容器从XML文件中读取bean的定义，并实例化bean<br>2) Spring根据bean的定义填充所有属性<br>3) 如果bean实现了BeanNameAware接口，Spring传递bean的Id到setBeanName方法<br>4) 如果bean实现了BeanFactoryAware接口, Spring传递beanFactory到setBeanFactory方法<br>5) 如果bean实现了BeanPostProcessors接口，postProcessorBeforeInitialization方法将被调用<br>6) 如果bean实现了InitializingBean接口，afterPropertiesSet方法被调用；如果bean声明了初始化方法，则调用该初始化方法<br>7) 如果bean实现了BeanPostProcessors接口，postProcessorAfterInitialization方法将被调用<br>8) 如果bean实现了DisposableBean接口，destroy方法将被调用</p>
+<h2 id="6-解释Spring框架中bean的生命周期"><a href="#6-解释Spring框架中bean的生命周期" class="headerlink" title="6. 解释Spring框架中bean的生命周期"></a>6. 解释Spring框架中bean的生命周期</h2><p>1) Spring容器从XML文件中读取bean的定义，并实例化bean<br>2) Spring根据bean的定义填充所有属性<br>3) 如果bean实现了BeanNameAware接口，Spring传递bean的Id到setBeanName方法<br>4) 如果bean实现了BeanFactoryAware接口, Spring传递beanFactory到setBeanFactory方法<br>5) 如果bean实现了BeanPostProcessor接口，postProcessorBeforeInitialization方法将被调用<br>6) 如果bean实现了InitializingBean接口，afterPropertiesSet方法被调用；如果bean声明了初始化方法，则调用该初始化方法<br>7) 如果bean实现了BeanPostProcessor接口，postProcessorAfterInitialization方法将被调用<br>8) 如果bean实现了DisposableBean接口，destroy方法将被调用</p>
 
     
   </div>
