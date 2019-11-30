@@ -7,26 +7,26 @@
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
   
-  <title>二分查找 | 沈健的技术博客</title>
+  <title>38_报数_leetcode | 沈健的技术博客</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="算法与数据结构,">
+    <meta name="keywords" content="算法与数据结构,Leetcode,">
   
 
-  <meta name="description" content="12345678910111213141516171819202122232425262728/** * 二分查找 * * 要在有序的数组里查找元素x,先取中间元素与x比较， * 若小于中间元素，则在左边查找，反之，在右边查找，直到找到x或子数组为0 * * @author Jian Shen * @version V1.0.0 * @date 2019/10/13 */public class">
-<meta name="keywords" content="算法与数据结构">
+  <meta name="description" content="38. 报数报数序列是一个整数序列，按照其中的整数的顺序进行报数，得到下一个数。其前五项如下：   1 11 21 1211 1112211 被读作  “one 1”  (“一个一”) , 即 11。11 被读作 “two 1” (“两个一”）, 即 21。21 被读作 “one 2”,  “one 1” （”一个二” ,  “一个一”) , 即 1211。   给定一个正整数 n（1 ≤ n ≤">
+<meta name="keywords" content="算法与数据结构,Leetcode">
 <meta property="og:type" content="article">
-<meta property="og:title" content="二分查找">
-<meta property="og:url" content="http://www.shenjian.online/2019/10/13/二分查找/index.html">
+<meta property="og:title" content="38_报数_leetcode">
+<meta property="og:url" content="http://www.shenjian.online/2019/11/30/38-报数-leetcode/index.html">
 <meta property="og:site_name" content="沈健的技术博客">
-<meta property="og:description" content="12345678910111213141516171819202122232425262728/** * 二分查找 * * 要在有序的数组里查找元素x,先取中间元素与x比较， * 若小于中间元素，则在左边查找，反之，在右边查找，直到找到x或子数组为0 * * @author Jian Shen * @version V1.0.0 * @date 2019/10/13 */public class">
+<meta property="og:description" content="38. 报数报数序列是一个整数序列，按照其中的整数的顺序进行报数，得到下一个数。其前五项如下：   1 11 21 1211 1112211 被读作  “one 1”  (“一个一”) , 即 11。11 被读作 “two 1” (“两个一”）, 即 21。21 被读作 “one 2”,  “one 1” （”一个二” ,  “一个一”) , 即 1211。   给定一个正整数 n（1 ≤ n ≤">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-10-13T12:58:06.167Z">
+<meta property="og:updated_time" content="2019-11-30T05:33:25.182Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="二分查找">
-<meta name="twitter:description" content="12345678910111213141516171819202122232425262728/** * 二分查找 * * 要在有序的数组里查找元素x,先取中间元素与x比较， * 若小于中间元素，则在左边查找，反之，在右边查找，直到找到x或子数组为0 * * @author Jian Shen * @version V1.0.0 * @date 2019/10/13 */public class">
+<meta name="twitter:title" content="38_报数_leetcode">
+<meta name="twitter:description" content="38. 报数报数序列是一个整数序列，按照其中的整数的顺序进行报数，得到下一个数。其前五项如下：   1 11 21 1211 1112211 被读作  “one 1”  (“一个一”) , 即 11。11 被读作 “two 1” (“两个一”）, 即 21。21 被读作 “one 2”,  “one 1” （”一个二” ,  “一个一”) , 即 1211。   给定一个正整数 n（1 ≤ n ≤">
 
   
 
@@ -134,17 +134,22 @@
 </div>
 
 
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#38-报数"><span class="toc-text">38. 报数</span></a></li></ol>
+  </div>
+
 
 
 <div class="content content-post CENTER">
-   <article id="post-二分查找" class="article article-type-post" itemprop="blogPost">
+   <article id="post-38-报数-leetcode" class="article article-type-post" itemprop="blogPost">
   <header class="article-header">
-    <h1 class="post-title">二分查找</h1>
+    <h1 class="post-title">38_报数_leetcode</h1>
 
     <div class="article-meta">
       <span>
         <i class="icon-calendar"></i>
-        <span>2019.10.13</span>
+        <span>2019.11.30</span>
       </span>
 
       
@@ -177,7 +182,21 @@
 
   <div class="article-content">
     
-      <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 二分查找</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 要在有序的数组里查找元素x,先取中间元素与x比较，</span></span><br><span class="line"><span class="comment"> * 若小于中间元素，则在左边查找，反之，在右边查找，直到找到x或子数组为0</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Jian Shen</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> V1.0.0</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2019/10/13</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BinarySearch</span>&lt;<span class="title">T</span> <span class="keyword">extends</span> <span class="title">Comparable</span>&lt;<span class="title">T</span>&gt;&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">search</span><span class="params">(@NotNull  T[] arr, T x)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> low = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> high = arr.length - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (low &lt;= high) &#123;</span><br><span class="line">            <span class="keyword">int</span> mid = (low + high) / <span class="number">2</span>;</span><br><span class="line">            <span class="keyword">if</span> (arr[mid].compareTo(x) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">                low = mid + <span class="number">1</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (arr[mid].compareTo(x) &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                high = mid - <span class="number">1</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> mid;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>; <span class="comment">// 未查找到</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      <h2 id="38-报数"><a href="#38-报数" class="headerlink" title="38. 报数"></a>38. 报数</h2><p>报数序列是一个整数序列，按照其中的整数的顺序进行报数，得到下一个数。其前五项如下：</p>
+<blockquote>
+<ol>
+<li>1</li>
+<li>11</li>
+<li>21</li>
+<li>1211</li>
+<li>111221<br>1 被读作  “one 1”  (“一个一”) , 即 11。<br>11 被读作 “two 1” (“两个一”）, 即 21。<br>21 被读作 “one 2”,  “one 1” （”一个二” ,  “一个一”) , 即 1211。</li>
+</ol>
+</blockquote>
+<p>给定一个正整数 n（1 ≤ n ≤ 30），输出报数序列的第 n 项。<br>注意：整数顺序将表示为一个字符串。</p>
+<p><strong>题解：</strong> 简单，关键在于理解题意</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">countAndSay</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        String pre = <span class="string">"1"</span>;</span><br><span class="line">        StringBuilder sb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; i++) &#123;</span><br><span class="line">            <span class="keyword">char</span> ch = pre.charAt(<span class="number">0</span>);</span><br><span class="line">            <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">            sb.delete(<span class="number">0</span>, sb.length());</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">char</span> curr : pre.toCharArray()) &#123;</span><br><span class="line">                <span class="keyword">if</span> (curr == ch) &#123;</span><br><span class="line">                    count++;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    sb.append(count).append(ch);</span><br><span class="line">                    <span class="comment">// 重新计数</span></span><br><span class="line">                    ch = curr;</span><br><span class="line">                    count = <span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            sb.append(count).append(ch);</span><br><span class="line">            pre = sb.toString();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> pre;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>AC传送门<a href="https://leetcode-cn.com/problems/count-and-say/" target="_blank" rel="noopener">leetcode</a></p>
+
     
   </div>
 
@@ -214,10 +233,10 @@
 
    
   <div class="box-prev-next clearfix">
-    <a class="show pull-left" href="/2019/10/10/26-删除排序数组中的重复项-leetcode/">
+    <a class="show pull-left" href="/2019/11/29/36-有效的数独-leetcode/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="show pull-right" href="/2019/10/13/28-实现strStr()-leetcode/">
+    <a class="hide pull-right" href="/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>
