@@ -125,10 +125,82 @@ zookeeper采用了递增的事务id来标识。所有的proposal(提议)在提�
 低32位用来递增计数。当新产生proposal时候，会依据数据库的两阶段过程，首先向其他的server发出事务执行请求，如果超过半数的机器都能执行并且能够成功，
 那么就会开始执行。
 
+### 12.2.4 zk集群下server工作状态
 
+每个Server工作状态中有四种状态  
++ LOOKING: 当前server不知道谁是leader,正在搜寻
++ LEADER: 当前server角色是leader
++ FOLLOWING: 当前server角色是follower
++ OBSERVING: 当前server角色是observer
 
+### 12.2.5 zk是如何选举leader的？
 
+当leader崩溃或者leader失去大多数follower时，这时zk进入恢复模式，恢复模式需要重新选举出一个新的leader,让所有的server都恢复到一个正确的状态。zk的选举算法有两种：
+一种是基于basic paxos算法实现的，一种是基于fast paxos算法实现，系统默认的选举算法是fast paxos.  
+**basic paxos**  
+（1） 选举线程由当前server发起选举的线程担任，其主要功能是对投票结果统计，并选出推荐的server  
+（2） 选举线程首先向所有server发起一次询问(包括自己)  
+（3） 选举线程收到回复后，验证是否是自己发起的询问(验证zxid是否一致),然后获取对方的id(myid),并存储到当前询问对象列表中，最后获取对方提议的leader
+相关信息(id,zxid),并将这些信息存储到当次选举的投票记录表中  
+（4） 收到所有server回复以后，就计算出zxid最大的那个server,并将这个server相关信息设置成下一次要投票的server  
+（5） 线程线程将当前zxid最大的server设置为当前server要推荐的leader，如果此时获胜的server获得n/2+1的server票数，设置当前推荐的leader为获胜的server,
+将根据获胜的server相关信息设置自己的状态，否则，继续这个过程，知道leader被选举出来
 
+**fast paxos**    
+fast paxos流程是在选举过程中，某server向所有server提议自己要成为leader,当其他server收到提议后，解决epoch和zxid的冲突，并接受对方的提议，然后向对方发送接受提议完成的消息，
+重复这个流程，最后一定能选举出leader
 
+# TODO 图片
 
+### 12.2.6 zk同步流程
 
+选完leader以后，zk就进入状态同步状态  
+1) leader等待follower和observer连接  
+2) follower连接leader,将最大的zxid发送给leader  
+3) leader根据follower的zxid确定同步点  
+4) 完成通知后通知follower已经成为uptodate状态  
+5) follower收到uptodate消息后，又可以接收client的请求进行服务了  
+
+**数据同步的4中方式**    
+1) SNAP-全量同步  
++ 条件： peerLastZxid < minCommittedLog  
++ 说明： 证明二者数据差异太大，follower数据过于陈旧，leader发送SNAP指令给follower全量同步数据，即leader将所有数据全量发送给follower  
+2) DIFF-增量同步  
++ 条件： minCommittedLog <= peerLastZxid <= maxCommittedLog  
++ 说明： 证明二者数据差异不大，follower上有一些leader上已经提交的提议proposal未同步，此时需要增量提交这些提议即可  
+3) TRUNC-仅回滚同步  
++ 条件： peerLastZxid > maxCommittedLog  
++ 说明： 证明follower上有些提议proposal未在leader上提交，follower需要回滚zxid为maxCommittedLog对应的事务操作  
+4) TRUNC-DIFF-回滚+增量同步  
++ 条件： minCommittedLog <= peerLastZxid <= maxCommittedLog
++ 说明： leader a已经将事务truncA提交到本地事务日志中，然后还未成功发起proposal协议进行投票就宕机了；然后集群中剔除leader a重新选举出leader b, 
+新leader b提交了若干新的提议proposal，若原有leader a恢复后重新加入集群，需要先回滚truncA,然后增量同步leader b上的数据。  
+
+### 12.2.7 分布式通知与协调  
+对于系统调度来说：操作人员发送通知实际是通过控制台改变某个节点的状态，然后zk将这些变化发送给注册了这个节点watcher的所有客户端  
+对于执行情况汇报：每个工作进程都在某个目录节点下创建一个临时节点，并携带工作的进度数据，这样汇总进程通过监控某个节点的变化来获取工作进度的实时的全局情况  
+
+###  12.2.8 zk的session机制
+zookeeper会为每个客户端分配一个session,类似于web服务器一样，用来标识客户端的身份  
+**session的作用：**   
++ 客户端标识
++ 超时检查
++ 请求的顺序执行
++ 维护临时节点的生命周期
++ watcher通知    
+ 
+**session的状态：**  
++ CONNECTING
++ CONNECTED
++ RECONNECTING
++ RECONNECTED
++ CLOSED
+
+**session的属性：**    
++ SessionID: 会话ID，全局唯一
+    - 高8位表示创建session时所在zk节点的id
+    - 中间40位表示zk节点当前角色创建时的时间戳
+    - 低16位是一个计数器，初始值为0
++ TimeOut: 会话超时时间
++ TickTime: 下次会话超时时间点
++ isClosing: 会话是否已经被关闭
