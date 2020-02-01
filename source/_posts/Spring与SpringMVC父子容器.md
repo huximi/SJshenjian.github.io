@@ -52,10 +52,10 @@ tag: Spring
 
 ## 2. 父子容器的作用
 
-1）查找bean时，先从子容器找，如果子容器中找不到且父容器非空，则从父容器中找到bean，类似于JVM中类加载的机制——双亲委派模型
+1）查找bean时，先从子容器找，如果子容器中找不到且父容器非空，则从父容器中找到bean
 2）SRP职责分离，解耦。Servlet WebApplicationContext主要针对Web层，而web层有多种选择如Spring MVC, Struts，这样即使web层框架改变并不会影响到Root WebApplicationContext中使用的配置文件，同理，dao层改变，也互不影响
 
-## 3. Root WebApplicationConetxt源码主方法
+## 3. Root WebApplicationContext源码主方法
 
 ``` bash
 public class ContextLoaderListener extends ContextLoader implements ServletContextListener {

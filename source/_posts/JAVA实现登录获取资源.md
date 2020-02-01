@@ -16,8 +16,6 @@ tag: 工作干货
 
 ### 2. 分析过程
 
-本文仅讨论如何实现JAVA模拟JSONP方式进行登录
-
 采用jsonp方式登录缺点： 需js实现定时；需js实现资源获取与保存，由于js知识欠缺且个人认为js实现不如java方式简便便于管理
 
 我们知道，系统登录成功后，**服务器会返回给浏览器一个JSESSIONID用于用户再次访问时的身份凭证**，删除该JSESSIONID后再次访问则重定向到登录页面。
@@ -38,7 +36,7 @@ import org.springframework.web.client.RestTemplate;
 import java.io.*;
 
 /**
- * JAVA方式模拟JSONP登录获取数据
+ * JAVA后台登录获取数据
  */
 public class JsonpLogin {
 

@@ -75,7 +75,6 @@ public class SafeDoubleCheckedLocking {
 	}
 }
 ```
-(1)
 
 ps: CPU术语定义
 内存屏障： 是一组处理器指令，用于实现对内存操作的顺序控制
