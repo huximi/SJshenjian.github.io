@@ -15,18 +15,18 @@
     <meta name="keywords" content="多线程,面试,">
   
 
-  <meta name="description" content="如果一个字段被声明成volatile，Java内存模型保证所有线程看到这个变量的值是一致的。 1. 实现原理有volatile修饰的变量进行写操作时会多出带有lock前缀的汇编指令，该指令在多核处理器中引发两件事情：1）将当前处理器缓存行的数据写回系统内存。 通过总线锁定或缓存锁定。2）这个写回内存的操作会使其他CPU中缓存了该内存地址的数据无效。 其他处理器通过嗅探总线上传播过来的数据监测自己工">
+  <meta name="description" content="如果一个字段被声明成volatile，Java内存模型保证所有线程看到这个变量的值是一致的。 1. 实现原理有volatile修饰的变量进行写操作时会多出带有lock前缀的汇编指令，该指令在多核处理器中引发两件事情：1）将当前处理器缓存行的数据写回系统内存。 通过总线锁定或缓存行锁定。2）这个写回内存的操作会使其他CPU中缓存了该内存地址的数据无效。 其他处理器通过嗅探总线上传播过来的数据监测自己">
 <meta name="keywords" content="多线程,面试">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java并发机制底层实现原理之volatile">
 <meta property="og:url" content="http://www.shenjian.online/2019/01/10/Java并发机制底层实现原理之volatile/index.html">
 <meta property="og:site_name" content="沈健的技术博客">
-<meta property="og:description" content="如果一个字段被声明成volatile，Java内存模型保证所有线程看到这个变量的值是一致的。 1. 实现原理有volatile修饰的变量进行写操作时会多出带有lock前缀的汇编指令，该指令在多核处理器中引发两件事情：1）将当前处理器缓存行的数据写回系统内存。 通过总线锁定或缓存锁定。2）这个写回内存的操作会使其他CPU中缓存了该内存地址的数据无效。 其他处理器通过嗅探总线上传播过来的数据监测自己工">
+<meta property="og:description" content="如果一个字段被声明成volatile，Java内存模型保证所有线程看到这个变量的值是一致的。 1. 实现原理有volatile修饰的变量进行写操作时会多出带有lock前缀的汇编指令，该指令在多核处理器中引发两件事情：1）将当前处理器缓存行的数据写回系统内存。 通过总线锁定或缓存行锁定。2）这个写回内存的操作会使其他CPU中缓存了该内存地址的数据无效。 其他处理器通过嗅探总线上传播过来的数据监测自己">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-11-30T02:18:33.621Z">
+<meta property="og:updated_time" content="2020-02-04T12:32:53.389Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java并发机制底层实现原理之volatile">
-<meta name="twitter:description" content="如果一个字段被声明成volatile，Java内存模型保证所有线程看到这个变量的值是一致的。 1. 实现原理有volatile修饰的变量进行写操作时会多出带有lock前缀的汇编指令，该指令在多核处理器中引发两件事情：1）将当前处理器缓存行的数据写回系统内存。 通过总线锁定或缓存锁定。2）这个写回内存的操作会使其他CPU中缓存了该内存地址的数据无效。 其他处理器通过嗅探总线上传播过来的数据监测自己工">
+<meta name="twitter:description" content="如果一个字段被声明成volatile，Java内存模型保证所有线程看到这个变量的值是一致的。 1. 实现原理有volatile修饰的变量进行写操作时会多出带有lock前缀的汇编指令，该指令在多核处理器中引发两件事情：1）将当前处理器缓存行的数据写回系统内存。 通过总线锁定或缓存行锁定。2）这个写回内存的操作会使其他CPU中缓存了该内存地址的数据无效。 其他处理器通过嗅探总线上传播过来的数据监测自己">
 
   
 
@@ -183,7 +183,7 @@
   <div class="article-content">
     
       <p>如果一个字段被声明成volatile，Java内存模型保证所有线程看到这个变量的值是一致的。</p>
-<h1 id="1-实现原理"><a href="#1-实现原理" class="headerlink" title="1. 实现原理"></a>1. 实现原理</h1><p>有volatile修饰的变量进行写操作时会多出带有lock前缀的汇编指令，该指令在多核处理器中引发两件事情：<br>1）将当前处理器缓存行的数据写回系统内存。 通过总线锁定或缓存锁定。<br>2）这个写回内存的操作会使其他CPU中缓存了该内存地址的数据无效。 其他处理器通过嗅探总线上传播过来的数据监测自己工作内存中缓存是否过期。过期，修改的时候则从主存中重新读取。</p>
+<h1 id="1-实现原理"><a href="#1-实现原理" class="headerlink" title="1. 实现原理"></a>1. 实现原理</h1><p>有volatile修饰的变量进行写操作时会多出带有lock前缀的汇编指令，该指令在多核处理器中引发两件事情：<br>1）将当前处理器缓存行的数据写回系统内存。 通过总线锁定或缓存行锁定。<br>2）这个写回内存的操作会使其他CPU中缓存了该内存地址的数据无效。 其他处理器通过嗅探总线上传播过来的数据监测自己工作内存中缓存是否过期。过期，修改的时候则从主存中重新读取。</p>
 <h1 id="2-内存语义层次理解"><a href="#2-内存语义层次理解" class="headerlink" title="2. 内存语义层次理解"></a>2. 内存语义层次理解</h1><h2 id="2-1-volatile的特性"><a href="#2-1-volatile的特性" class="headerlink" title="2.1 volatile的特性"></a>2.1 volatile的特性</h2><p>volatile变量自身具有以下特性：</p>
 <ul>
 <li>可见性：对一个volatile变量的读，总是能看到任意线程对这个volatile变量最后的写入</li>
