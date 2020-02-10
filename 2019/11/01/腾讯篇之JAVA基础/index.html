@@ -23,7 +23,7 @@
 <meta property="og:site_name" content="沈健的技术博客">
 <meta property="og:description" content="JAVA基础1. JAVA中的几种基本数据类型是什么，各自占用多少字节。   数据类型 字节 默认值     byte 1 0   short 2 0   char 2 ‘\u0000’   int 4 0   float 4 0.0f   long 8 0   double 8 0.0d   boolean 4 false    PS: JVM规范中，boolean当做int处理，也就是4字节，">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-02-10T03:19:51.491Z">
+<meta property="og:updated_time" content="2020-02-10T03:27:47.518Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="腾讯篇之JAVA基础">
 <meta name="twitter:description" content="JAVA基础1. JAVA中的几种基本数据类型是什么，各自占用多少字节。   数据类型 字节 默认值     byte 1 0   short 2 0   char 2 ‘\u0000’   int 4 0   float 4 0.0f   long 8 0   double 8 0.0d   boolean 4 false    PS: JVM规范中，boolean当做int处理，也就是4字节，">
@@ -243,7 +243,7 @@
 <p>StringBuilder、 StringBuffer继承AbstractStringBuilder，无参数默认初始容量为16，<br>追加字符串的时候长度超过16则扩容:增加自身长度一倍再加2,如果还放不下，则扩容为所需长度minCapacity<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">newCapacity</span><span class="params">(<span class="keyword">int</span> minCapacity)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> newCapacity = (value.length &lt;&lt; <span class="number">1</span>) + <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span> (newCapacity - minCapacity &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            newCapacity = minCapacity;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h3 id="4-ArrayList和LinkedList有什么区别"><a href="#4-ArrayList和LinkedList有什么区别" class="headerlink" title="4. ArrayList和LinkedList有什么区别"></a>4. ArrayList和LinkedList有什么区别</h3><ul>
 <li>ArrayList: 基于数组实现的非线程安全的集合。查询速度快，插入、删除中间元素速度慢</li>
-<li>LinkedList: 基于链表实现的线程安全的集合。查询速度慢，插入、删除中间元素快</li>
+<li>LinkedList: 基于链表实现的非线程安全的集合。查询速度慢，插入、删除中间元素快</li>
 <li>Vector: 基于数组实现的线程安全的集合。采用synchronize加锁,性能比ArrayList差</li>
 <li>CopyOnWriteArrayList: 基于数组实现的线程安全的写时复制集合，采用ReentrantLock加锁，性能比Vector高，适合读多写少的场景</li>
 </ul>
