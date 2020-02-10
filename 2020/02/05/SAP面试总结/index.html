@@ -7,26 +7,26 @@
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
   
-  <title>二分查找 | 沈健的技术博客</title>
+  <title>SAP面试总结 | 沈健的技术博客</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="算法与数据结构,">
+    <meta name="keywords" content="面试,">
   
 
-  <meta name="description" content="12345678910111213141516171819202122232425262728/** * 二分查找 * * 要在有序的数组里查找元素x,先取中间元素与x比较， * 若小于中间元素，则在左边查找，反之，在右边查找，直到找到x或子数组为0 * * @author Jian Shen * @version V1.0.0 * @date 2019/10/13 */public class">
-<meta name="keywords" content="算法与数据结构">
+  <meta name="description" content="机会是留给有准备的人的，哎，春节几天没有复习基础知识，面试前一天看了看之前写的博客，发现好多重复问到的问题，然而，并想不起如何作答~~ 这是一次惨痛的教训 1. 介绍下最近做过的两个项目项目都是传统的项目，面试官可能不感兴趣，没有继续问下去，接下来开始基础知识的空袭了 2. JAVA访问修饰符请结合OO设计理念，谈谈访问修饰符public、private、protected、default在应用设">
+<meta name="keywords" content="面试">
 <meta property="og:type" content="article">
-<meta property="og:title" content="二分查找">
-<meta property="og:url" content="http://www.shenjian.online/2019/10/13/二分查找/index.html">
+<meta property="og:title" content="SAP面试总结">
+<meta property="og:url" content="http://www.shenjian.online/2020/02/05/SAP面试总结/index.html">
 <meta property="og:site_name" content="沈健的技术博客">
-<meta property="og:description" content="12345678910111213141516171819202122232425262728/** * 二分查找 * * 要在有序的数组里查找元素x,先取中间元素与x比较， * 若小于中间元素，则在左边查找，反之，在右边查找，直到找到x或子数组为0 * * @author Jian Shen * @version V1.0.0 * @date 2019/10/13 */public class">
+<meta property="og:description" content="机会是留给有准备的人的，哎，春节几天没有复习基础知识，面试前一天看了看之前写的博客，发现好多重复问到的问题，然而，并想不起如何作答~~ 这是一次惨痛的教训 1. 介绍下最近做过的两个项目项目都是传统的项目，面试官可能不感兴趣，没有继续问下去，接下来开始基础知识的空袭了 2. JAVA访问修饰符请结合OO设计理念，谈谈访问修饰符public、private、protected、default在应用设">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-10-13T12:58:06.167Z">
+<meta property="og:updated_time" content="2020-02-10T02:22:10.192Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="二分查找">
-<meta name="twitter:description" content="12345678910111213141516171819202122232425262728/** * 二分查找 * * 要在有序的数组里查找元素x,先取中间元素与x比较， * 若小于中间元素，则在左边查找，反之，在右边查找，直到找到x或子数组为0 * * @author Jian Shen * @version V1.0.0 * @date 2019/10/13 */public class">
+<meta name="twitter:title" content="SAP面试总结">
+<meta name="twitter:description" content="机会是留给有准备的人的，哎，春节几天没有复习基础知识，面试前一天看了看之前写的博客，发现好多重复问到的问题，然而，并想不起如何作答~~ 这是一次惨痛的教训 1. 介绍下最近做过的两个项目项目都是传统的项目，面试官可能不感兴趣，没有继续问下去，接下来开始基础知识的空袭了 2. JAVA访问修饰符请结合OO设计理念，谈谈访问修饰符public、private、protected、default在应用设">
 
   
 
@@ -134,17 +134,22 @@
 </div>
 
 
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-介绍下最近做过的两个项目"><span class="toc-text">1. 介绍下最近做过的两个项目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-JAVA访问修饰符"><span class="toc-text">2. JAVA访问修饰符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-error与exception的区别"><span class="toc-text">3. error与exception的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-Stringbuffer，StringBuilder的区别及扩容机制"><span class="toc-text">4. Stringbuffer，StringBuilder的区别及扩容机制</span></a></li></ol>
+  </div>
+
 
 
 <div class="content content-post CENTER">
-   <article id="post-二分查找" class="article article-type-post" itemprop="blogPost">
+   <article id="post-SAP面试总结" class="article article-type-post" itemprop="blogPost">
   <header class="article-header">
-    <h1 class="post-title">二分查找</h1>
+    <h1 class="post-title">SAP面试总结</h1>
 
     <div class="article-meta">
       <span>
         <i class="icon-calendar"></i>
-        <span>2019.10.13</span>
+        <span>2020.02.05</span>
       </span>
 
       
@@ -157,7 +162,7 @@
       
   <span class="article-category">
     <i class="icon-list"></i>
-    <a class="article-category-link" href="/category/算法与数据结构/">算法与数据结构</a>
+    <a class="article-category-link" href="/category/面试/">面试</a>
   </span>
 
 
@@ -177,7 +182,16 @@
 
   <div class="article-content">
     
-      <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 二分查找</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 要在有序的数组里查找元素x,先取中间元素与x比较，</span></span><br><span class="line"><span class="comment"> * 若小于中间元素，则在左边查找，反之，在右边查找，直到找到x或子数组为0</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Jian Shen</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> V1.0.0</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2019/10/13</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BinarySearch</span>&lt;<span class="title">T</span> <span class="keyword">extends</span> <span class="title">Comparable</span>&lt;<span class="title">T</span>&gt;&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">search</span><span class="params">(@NotNull  T[] arr, T x)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> low = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> high = arr.length - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (low &lt;= high) &#123;</span><br><span class="line">            <span class="keyword">int</span> mid = (low + high) / <span class="number">2</span>;</span><br><span class="line">            <span class="keyword">if</span> (arr[mid].compareTo(x) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">                low = mid + <span class="number">1</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (arr[mid].compareTo(x) &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                high = mid - <span class="number">1</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> mid;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>; <span class="comment">// 未查找到</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      <p>机会是留给有准备的人的，哎，春节几天没有复习基础知识，面试前一天看了看之前写的博客，发现好多重复问到的问题，然而，并想不起如何作答~~ 这是一次惨痛的教训</p>
+<h3 id="1-介绍下最近做过的两个项目"><a href="#1-介绍下最近做过的两个项目" class="headerlink" title="1. 介绍下最近做过的两个项目"></a>1. 介绍下最近做过的两个项目</h3><p>项目都是传统的项目，面试官可能不感兴趣，没有继续问下去，接下来开始基础知识的空袭了</p>
+<h3 id="2-JAVA访问修饰符"><a href="#2-JAVA访问修饰符" class="headerlink" title="2. JAVA访问修饰符"></a>2. JAVA访问修饰符</h3><p><a href="https://shenjian.online/2019/11/01/%E8%85%BE%E8%AE%AF%E7%AF%87%E4%B9%8BJAVA%E5%9F%BA%E7%A1%80/#18-%E5%A6%82%E4%BD%95%E5%9C%A8%E7%88%B6%E7%B1%BB%E4%B8%AD%E4%B8%BA%E5%AD%90%E7%B1%BB%E8%87%AA%E5%8A%A8%E5%AE%8C%E6%88%90%E6%89%80%E6%9C%89%E7%9A%84hashcode%E5%92%8Cequals%E5%AE%9E%E7%8E%B0%EF%BC%9F%E8%BF%99%E4%B9%88%E5%81%9A%E6%9C%89%E4%BD%95%E4%BC%98%E5%8A%A3" target="_blank" rel="noopener">请结合OO设计理念，谈谈访问修饰符public、private、protected、default在应用设计中的作用</a></p>
+<h3 id="3-error与exception的区别"><a href="#3-error与exception的区别" class="headerlink" title="3. error与exception的区别"></a>3. error与exception的区别</h3><p><a href="https://shenjian.online/2019/11/01/%E8%85%BE%E8%AE%AF%E7%AF%87%E4%B9%8BJAVA%E5%9F%BA%E7%A1%80/#21-error%E5%92%8Cexception%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%8CCheckedException%EF%BC%8CRuntimeException%E7%9A%84%E5%8C%BA%E5%88%AB" target="_blank" rel="noopener">error和exception的区别，CheckedException，RuntimeException的区别</a></p>
+<h3 id="4-Stringbuffer，StringBuilder的区别及扩容机制"><a href="#4-Stringbuffer，StringBuilder的区别及扩容机制" class="headerlink" title="4. Stringbuffer，StringBuilder的区别及扩容机制"></a>4. Stringbuffer，StringBuilder的区别及扩容机制</h3><ul>
+<li>StringBuffer： 可变字符序列，效率低，线程安全</li>
+<li>StringBuilder: 可变字符序列，效率高，线程不安全</li>
+</ul>
+<p>无参数默认初始容量为16<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">newCapacity</span><span class="params">(<span class="keyword">int</span> minCapacity)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> newCapacity = (value.length &lt;&lt; <span class="number">1</span>) + <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span> (newCapacity - minCapacity &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            newCapacity = minCapacity;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
     
   </div>
 
@@ -214,10 +228,10 @@
 
    
   <div class="box-prev-next clearfix">
-    <a class="show pull-left" href="/2019/10/10/26-删除排序数组中的重复项-leetcode/">
+    <a class="show pull-left" href="/2020/02/01/JSON与自定义对象转换工具类/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="show pull-right" href="/2019/10/13/28-实现strStr()-leetcode/">
+    <a class="hide pull-right" href="/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>
