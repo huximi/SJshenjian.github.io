@@ -19,7 +19,7 @@
 <meta name="keywords" content="高并发,面试">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CopyOnWriteArrayList实现原理">
-<meta property="og:url" content="http://www.shenjian.online/category/2019/02/23/CopyOnWriteArrayList实现原理/index.html">
+<meta property="og:url" content="http://www.shenjian.online/2019/02/23/CopyOnWriteArrayList实现原理/index.html">
 <meta property="og:site_name" content="沈健的技术博客">
 <meta property="og:description" content="1. 实现原理CopyOnWriteArrayList是线程安全且读操作无锁的ArrayList,写操作则通过创建底层数组的新副本来实现，是一种读写分离的并发策略。对于写操作，比如向容器中添加一个元素，首先将当前容器复制一份，然后在新副本上执行写操作，然后将原容器的引用指向新容器 2. 优点读操作不加锁，性能很高，适合读多写少的并发场景，使用迭代器遍历时候，不会抛出ConcurrentModifi">
 <meta property="og:locale" content="default">
@@ -38,7 +38,7 @@
 
 
   
-    <link rel="stylesheet" href="/category/css/personal-style.css">
+    <link rel="stylesheet" href="/css/personal-style.css">
   
 
   
@@ -162,7 +162,7 @@
       
   <span class="article-category">
     <i class="icon-list"></i>
-    <a class="article-category-link" href="/category/category/高并发/">高并发</a>
+    <a class="article-category-link" href="/category/高并发/">高并发</a>
   </span>
 
 
@@ -226,10 +226,10 @@
 
    
   <div class="box-prev-next clearfix">
-    <a class="show pull-left" href="/category/2019/02/14/ConcurrentHashMap的实现原理/">
+    <a class="show pull-left" href="/2019/02/14/ConcurrentHashMap的实现原理/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="show pull-right" href="/category/2019/02/24/阻塞队列和生产者-消费者模式/">
+    <a class="show pull-right" href="/2019/02/24/阻塞队列和生产者-消费者模式/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>

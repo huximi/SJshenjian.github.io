@@ -19,18 +19,18 @@
 <meta name="keywords" content="JAVA">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JVM内存结构、JAVA内存模型、JAVA对象模型">
-<meta property="og:url" content="http://www.shenjian.online/category/2019/03/21/JVM内存结构、JAVA内存模型、JAVA对象模型/index.html">
+<meta property="og:url" content="http://www.shenjian.online/2019/03/21/JVM内存结构、JAVA内存模型、JAVA对象模型/index.html">
 <meta property="og:site_name" content="沈健的技术博客">
 <meta property="og:description" content="1. JVM内存结构  不同版本的方法区所处的位置可能不一样，某些JDK版本方法区在堆中实现 除JVM运行时内存外，还有直接内存，不由JVM管理，利用本地方法库直接在堆外分配内存 堆与栈的数据划分也不是绝对的，如HotSpot的JIT对对象分配做相应优化  2. JAVA内存模型 JAVA内存模型是为了解决多线程间通信产生的原子性、可见性、有序性等问题，定义了一些语法集，这些语法集映射到JAVA语">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://www.shenjian.online/category/2019/03/21/JVM内存结构、JAVA内存模型、JAVA对象模型/JVM内存结构.png">
-<meta property="og:image" content="http://www.shenjian.online/category/2019/03/21/JVM内存结构、JAVA内存模型、JAVA对象模型/JAVA内存模型.png">
-<meta property="og:image" content="http://www.shenjian.online/category/2019/03/21/JVM内存结构、JAVA内存模型、JAVA对象模型/JAVA对象模型.jpeg">
+<meta property="og:image" content="http://www.shenjian.online/2019/03/21/JVM内存结构、JAVA内存模型、JAVA对象模型/JVM内存结构.png">
+<meta property="og:image" content="http://www.shenjian.online/2019/03/21/JVM内存结构、JAVA内存模型、JAVA对象模型/JAVA内存模型.png">
+<meta property="og:image" content="http://www.shenjian.online/2019/03/21/JVM内存结构、JAVA内存模型、JAVA对象模型/JAVA对象模型.jpeg">
 <meta property="og:updated_time" content="2019-03-21T08:29:31.692Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM内存结构、JAVA内存模型、JAVA对象模型">
 <meta name="twitter:description" content="1. JVM内存结构  不同版本的方法区所处的位置可能不一样，某些JDK版本方法区在堆中实现 除JVM运行时内存外，还有直接内存，不由JVM管理，利用本地方法库直接在堆外分配内存 堆与栈的数据划分也不是绝对的，如HotSpot的JIT对对象分配做相应优化  2. JAVA内存模型 JAVA内存模型是为了解决多线程间通信产生的原子性、可见性、有序性等问题，定义了一些语法集，这些语法集映射到JAVA语">
-<meta name="twitter:image" content="http://www.shenjian.online/category/2019/03/21/JVM内存结构、JAVA内存模型、JAVA对象模型/JVM内存结构.png">
+<meta name="twitter:image" content="http://www.shenjian.online/2019/03/21/JVM内存结构、JAVA内存模型、JAVA对象模型/JVM内存结构.png">
 
   
 
@@ -42,7 +42,7 @@
 
 
   
-    <link rel="stylesheet" href="/category/css/personal-style.css">
+    <link rel="stylesheet" href="/css/personal-style.css">
   
 
   
@@ -166,7 +166,7 @@
       
   <span class="article-category">
     <i class="icon-list"></i>
-    <a class="article-category-link" href="/category/category/JAVA/">JAVA</a>
+    <a class="article-category-link" href="/category/JAVA/">JAVA</a>
   </span>
 
 
@@ -186,15 +186,15 @@
 
   <div class="article-content">
     
-      <h3 id="1-JVM内存结构"><a href="#1-JVM内存结构" class="headerlink" title="1. JVM内存结构"></a>1. JVM内存结构</h3><p><img src="/category/2019/03/21/JVM内存结构、JAVA内存模型、JAVA对象模型/JVM内存结构.png" alt="JVM内存结构"></p>
+      <h3 id="1-JVM内存结构"><a href="#1-JVM内存结构" class="headerlink" title="1. JVM内存结构"></a>1. JVM内存结构</h3><p><img src="/2019/03/21/JVM内存结构、JAVA内存模型、JAVA对象模型/JVM内存结构.png" alt="JVM内存结构"></p>
 <ol>
 <li>不同版本的方法区所处的位置可能不一样，某些JDK版本方法区在堆中实现</li>
 <li>除JVM运行时内存外，还有直接内存，不由JVM管理，利用本地方法库直接在堆外分配内存</li>
 <li>堆与栈的数据划分也不是绝对的，如HotSpot的JIT对对象分配做相应优化</li>
 </ol>
-<h3 id="2-JAVA内存模型"><a href="#2-JAVA内存模型" class="headerlink" title="2. JAVA内存模型"></a>2. JAVA内存模型</h3><p><img src="/category/2019/03/21/JVM内存结构、JAVA内存模型、JAVA对象模型/JAVA内存模型.png" alt="JAVA内存模型"></p>
+<h3 id="2-JAVA内存模型"><a href="#2-JAVA内存模型" class="headerlink" title="2. JAVA内存模型"></a>2. JAVA内存模型</h3><p><img src="/2019/03/21/JVM内存结构、JAVA内存模型、JAVA对象模型/JAVA内存模型.png" alt="JAVA内存模型"></p>
 <p>JAVA内存模型是为了解决多线程间通信产生的原子性、可见性、有序性等问题，定义了一些语法集，这些语法集映射到JAVA语言上就是volatile、synchronized等</p>
-<h3 id="3-JAVA对象模型"><a href="#3-JAVA对象模型" class="headerlink" title="3. JAVA对象模型"></a>3. JAVA对象模型</h3><p><img src="/category/2019/03/21/JVM内存结构、JAVA内存模型、JAVA对象模型/JAVA对象模型.jpeg" alt="JAVA对象模型"></p>
+<h3 id="3-JAVA对象模型"><a href="#3-JAVA对象模型" class="headerlink" title="3. JAVA对象模型"></a>3. JAVA对象模型</h3><p><img src="/2019/03/21/JVM内存结构、JAVA内存模型、JAVA对象模型/JAVA对象模型.jpeg" alt="JAVA对象模型"></p>
 <p>HotSpot虚拟机中，每一个JAVA类被JVM加载时，JVM会给该类创建一个instanceKlass,保存在方法区，用来在JVM层表示该类。<br>当我们new一个对象时，JVM会创建instanceOopDesc对象。</p>
 <h3 id="4-总结"><a href="#4-总结" class="headerlink" title="4. 总结"></a>4. 总结</h3><p>JVM内存结构，与JVM运行时数据区有关；JAVA内存模型，与JAVA并发编程有关；JAVA对象模型，与JAVA对象在JVM中表现形式有关</p>
 
@@ -234,10 +234,10 @@
 
    
   <div class="box-prev-next clearfix">
-    <a class="show pull-left" href="/category/2019/03/19/wait-notify使用详解/">
+    <a class="show pull-left" href="/2019/03/19/wait-notify使用详解/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="show pull-right" href="/category/2019/03/25/Unsafe简介与使用/">
+    <a class="show pull-right" href="/2019/03/25/Unsafe简介与使用/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>
