@@ -19,16 +19,16 @@
 <meta name="keywords" content="多线程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Lock接口和ReentrantLock">
-<meta property="og:url" content="http://www.shenjian.online/2019/03/29/Lock接口和ReentrantLock/index.html">
+<meta property="og:url" content="http://www.shenjian.online/category/2019/03/29/Lock接口和ReentrantLock/index.html">
 <meta property="og:site_name" content="沈健的技术博客">
 <meta property="og:description" content="1. Lock接口的特性Lock接口提供的synchronized所不具备的主要特性：    特性 描述     尝试非阻塞的获取锁 当线程尝试获取锁，如果该锁没有被其他线程持有，则成功获取并持有锁   能被中断的获取锁 与synchronized不同，获取到锁的线程能够响应中断，当获取到锁的线程被中断时，抛出中断异常，同时锁被释放   超时获取锁 在指定的时间内获取锁，如果超过了指定时间，则返回">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://www.shenjian.online/2019/03/29/Lock接口和ReentrantLock/Lock接口类图.png">
+<meta property="og:image" content="http://www.shenjian.online/category/2019/03/29/Lock接口和ReentrantLock/Lock接口类图.png">
 <meta property="og:updated_time" content="2019-04-09T14:12:51.028Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Lock接口和ReentrantLock">
 <meta name="twitter:description" content="1. Lock接口的特性Lock接口提供的synchronized所不具备的主要特性：    特性 描述     尝试非阻塞的获取锁 当线程尝试获取锁，如果该锁没有被其他线程持有，则成功获取并持有锁   能被中断的获取锁 与synchronized不同，获取到锁的线程能够响应中断，当获取到锁的线程被中断时，抛出中断异常，同时锁被释放   超时获取锁 在指定的时间内获取锁，如果超过了指定时间，则返回">
-<meta name="twitter:image" content="http://www.shenjian.online/2019/03/29/Lock接口和ReentrantLock/Lock接口类图.png">
+<meta name="twitter:image" content="http://www.shenjian.online/category/2019/03/29/Lock接口和ReentrantLock/Lock接口类图.png">
 
   
 
@@ -40,7 +40,7 @@
 
 
   
-    <link rel="stylesheet" href="/css/personal-style.css">
+    <link rel="stylesheet" href="/category/css/personal-style.css">
   
 
   
@@ -164,7 +164,7 @@
       
   <span class="article-category">
     <i class="icon-list"></i>
-    <a class="article-category-link" href="/category/多线程/">多线程</a>
+    <a class="article-category-link" href="/category/category/多线程/">多线程</a>
   </span>
 
 
@@ -241,7 +241,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="3-Lock接口类图"><a href="#3-Lock接口类图" class="headerlink" title="3. Lock接口类图"></a>3. Lock接口类图</h2><p><img src="/2019/03/29/Lock接口和ReentrantLock/Lock接口类图.png" alt="Lock接口类图"></p>
+<h2 id="3-Lock接口类图"><a href="#3-Lock接口类图" class="headerlink" title="3. Lock接口类图"></a>3. Lock接口类图</h2><p><img src="/category/2019/03/29/Lock接口和ReentrantLock/Lock接口类图.png" alt="Lock接口类图"></p>
 <h2 id="4-Lock接口使用的模板方法"><a href="#4-Lock接口使用的模板方法" class="headerlink" title="4. Lock接口使用的模板方法"></a>4. Lock接口使用的模板方法</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Lock lock = new ReentrantLock();</span><br><span class="line">        ...</span><br><span class="line">        lock.lock();//获取锁</span><br><span class="line">        try &#123;</span><br><span class="line">            ...</span><br><span class="line">        &#125; finally &#123;</span><br><span class="line">            lock.unlock();//释放锁</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>不要将锁的获取过程写在try块中。因为如果在获取锁(自定义锁的实现)时，发生了异常，异常抛出的同时，也会导致锁的无故释放。</p>
 <h2 id="5-ReentrantLock内部组成"><a href="#5-ReentrantLock内部组成" class="headerlink" title="5. ReentrantLock内部组成"></a>5. ReentrantLock内部组成</h2><p>ReentrantLock支持公平锁(FairSync)与非公平锁(NonfairSync)。new ReentrantLock()，事实上使用的就是非公平锁</p>
@@ -286,10 +286,10 @@
 
    
   <div class="box-prev-next clearfix">
-    <a class="show pull-left" href="/2019/03/27/AbstractQueuedSynchronizer简介与使用/">
+    <a class="show pull-left" href="/category/2019/03/27/AbstractQueuedSynchronizer简介与使用/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="show pull-right" href="/2019/03/29/Condition接口/">
+    <a class="show pull-right" href="/category/2019/03/29/Condition接口/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>

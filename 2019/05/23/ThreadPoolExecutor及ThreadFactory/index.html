@@ -19,17 +19,17 @@
 <meta name="keywords" content="多线程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ThreadPoolExecutor及ThreadFactory">
-<meta property="og:url" content="http://www.shenjian.online/2019/05/23/ThreadPoolExecutor及ThreadFactory/index.html">
+<meta property="og:url" content="http://www.shenjian.online/category/2019/05/23/ThreadPoolExecutor及ThreadFactory/index.html">
 <meta property="og:site_name" content="沈健的技术博客">
 <meta property="og:description" content="1. 线程池工作原理 线程池的主要实现类是ThreadPoolExecutor 2. ThreadPoolExecutor构造参数详解2.1 corePoolSize与maximumPoolSizeThreadPoolExecutor将根据corePoolSize与maximumPoolSize自动调整线程池的大小。当新任务在方法execute(java.lang.Runnable)中提交时如果池">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://www.shenjian.online/2019/05/23/ThreadPoolExecutor及ThreadFactory/工作原理.png">
-<meta property="og:image" content="http://www.shenjian.online/2019/05/23/ThreadPoolExecutor及ThreadFactory/死锁示例.png">
+<meta property="og:image" content="http://www.shenjian.online/category/2019/05/23/ThreadPoolExecutor及ThreadFactory/工作原理.png">
+<meta property="og:image" content="http://www.shenjian.online/category/2019/05/23/ThreadPoolExecutor及ThreadFactory/死锁示例.png">
 <meta property="og:updated_time" content="2020-02-10T06:39:36.436Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ThreadPoolExecutor及ThreadFactory">
 <meta name="twitter:description" content="1. 线程池工作原理 线程池的主要实现类是ThreadPoolExecutor 2. ThreadPoolExecutor构造参数详解2.1 corePoolSize与maximumPoolSizeThreadPoolExecutor将根据corePoolSize与maximumPoolSize自动调整线程池的大小。当新任务在方法execute(java.lang.Runnable)中提交时如果池">
-<meta name="twitter:image" content="http://www.shenjian.online/2019/05/23/ThreadPoolExecutor及ThreadFactory/工作原理.png">
+<meta name="twitter:image" content="http://www.shenjian.online/category/2019/05/23/ThreadPoolExecutor及ThreadFactory/工作原理.png">
 
   
 
@@ -41,7 +41,7 @@
 
 
   
-    <link rel="stylesheet" href="/css/personal-style.css">
+    <link rel="stylesheet" href="/category/css/personal-style.css">
   
 
   
@@ -165,7 +165,7 @@
       
   <span class="article-category">
     <i class="icon-list"></i>
-    <a class="article-category-link" href="/category/多线程/">多线程</a>
+    <a class="article-category-link" href="/category/category/多线程/">多线程</a>
   </span>
 
 
@@ -185,7 +185,7 @@
 
   <div class="article-content">
     
-      <h1 id="1-线程池工作原理"><a href="#1-线程池工作原理" class="headerlink" title="1. 线程池工作原理"></a>1. 线程池工作原理</h1><p><img src="/2019/05/23/ThreadPoolExecutor及ThreadFactory/工作原理.png" alt="工作原理"></p>
+      <h1 id="1-线程池工作原理"><a href="#1-线程池工作原理" class="headerlink" title="1. 线程池工作原理"></a>1. 线程池工作原理</h1><p><img src="/category/2019/05/23/ThreadPoolExecutor及ThreadFactory/工作原理.png" alt="工作原理"></p>
 <p>线程池的主要实现类是ThreadPoolExecutor</p>
 <h1 id="2-ThreadPoolExecutor构造参数详解"><a href="#2-ThreadPoolExecutor构造参数详解" class="headerlink" title="2. ThreadPoolExecutor构造参数详解"></a>2. ThreadPoolExecutor构造参数详解</h1><h2 id="2-1-corePoolSize与maximumPoolSize"><a href="#2-1-corePoolSize与maximumPoolSize" class="headerlink" title="2.1 corePoolSize与maximumPoolSize"></a>2.1 corePoolSize与maximumPoolSize</h2><p>ThreadPoolExecutor将根据corePoolSize与maximumPoolSize自动调整线程池的大小。当新任务在方法execute(java.lang.Runnable)中提交时<strong>如果池中当前运行线程数量少于corePoolSize,则新创建线程来处理请求，即使其他线程是空闲的;如果池中当前运行线程数量多于corePoolSize而小于maximumPoolSize,则仅当队列满时才新创建线程</strong>(由此可得，若队列无界，maximumPoolSize无效，池中线程数始终为corePoolSize；若队列有界，maximumPoolSize无界，则允许任意数量的并发)</p>
 <h2 id="2-2-keepAliveTime与timeUnit"><a href="#2-2-keepAliveTime与timeUnit" class="headerlink" title="2.2 keepAliveTime与timeUnit"></a>2.2 keepAliveTime与timeUnit</h2><p>池中线程数多于corePoolSize时，线程空闲时间超过以timeUnit为单位的时间keepAliveTime后，则终止，避免资源浪费。默认情况下，保持活动资源策略不应用于corePoolSizeThreads,但是只要keepAliveTime不为0，可以通过allowsCoreThreadTimeOut(boolean)方法将此超时策略应用于核心线程。</p>
@@ -210,7 +210,7 @@
 <h1 id="3-自定义ThreadFactory"><a href="#3-自定义ThreadFactory" class="headerlink" title="3. 自定义ThreadFactory"></a>3. 自定义ThreadFactory</h1><p><strong>在使用ThreadPoolExecutor的时候，建议编写自己的ThreadFactory,这样在使用jstack工具查看内存中线程时，可很容易看出线程所属线程池，这对于在生产环境中解决死锁问题非常有帮助</strong></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NamedThreadFactory</span> <span class="keyword">implements</span> <span class="title">ThreadFactory</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> AtomicInteger poolId;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> ThreadGroup threadGroup;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> AtomicInteger threadId;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> String threadNamePrefix = <span class="string">"NamedThreadPool"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">NamedThreadFactory</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        poolId = <span class="keyword">new</span> AtomicInteger();</span><br><span class="line">        threadGroup = <span class="keyword">new</span> ThreadGroup(<span class="string">"NamedThreadFactory"</span>);</span><br><span class="line">        threadId = <span class="keyword">new</span> AtomicInteger();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Thread <span class="title">newThread</span><span class="params">(Runnable r)</span> </span>&#123;</span><br><span class="line">        String name = threadNamePrefix + <span class="string">"-pool-"</span> + poolId + <span class="string">"-thread-"</span> + threadId.getAndIncrement();</span><br><span class="line">        Thread thread = <span class="keyword">new</span> Thread(threadGroup, r, name);</span><br><span class="line">        <span class="keyword">return</span> thread;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> corePoolSize = <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">int</span> maximumPoolSize = <span class="number">4</span>;</span><br><span class="line">        <span class="keyword">long</span> keepAliveTime = <span class="number">1000</span>;</span><br><span class="line">        ThreadPoolExecutor threadPoolExecutor = <span class="keyword">new</span> ThreadPoolExecutor(corePoolSize, maximumPoolSize,</span><br><span class="line">                keepAliveTime, TimeUnit.MILLISECONDS, <span class="keyword">new</span> SynchronousQueue&lt;&gt;());</span><br><span class="line">        threadPoolExecutor.setThreadFactory(<span class="keyword">new</span> NamedThreadFactory());</span><br><span class="line"></span><br><span class="line">        Lock lockOne = <span class="keyword">new</span> ReentrantLock();</span><br><span class="line">        Lock lockTwo = <span class="keyword">new</span> ReentrantLock();</span><br><span class="line"></span><br><span class="line">        threadPoolExecutor.execute(() -&gt; &#123;</span><br><span class="line">            lockOne.lock();</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            lockTwo.lock();</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        threadPoolExecutor.execute(() -&gt; &#123;</span><br><span class="line">            lockTwo.lock();</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">2000</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            lockOne.lock();</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>首先jps查看所有进程pid，jstack打印对应pid堆栈信息 jstack 1156 &gt; /opt/temp/dump，结果如下：</p>
-<p><img src="/2019/05/23/ThreadPoolExecutor及ThreadFactory/死锁示例.png" alt="死锁示例"></p>
+<p><img src="/category/2019/05/23/ThreadPoolExecutor及ThreadFactory/死锁示例.png" alt="死锁示例"></p>
 
     
   </div>
@@ -248,10 +248,10 @@
 
    
   <div class="box-prev-next clearfix">
-    <a class="show pull-left" href="/2019/05/19/区块链架构/">
+    <a class="show pull-left" href="/category/2019/05/19/区块链架构/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="show pull-right" href="/2019/05/29/IDEA常用快捷键/">
+    <a class="show pull-right" href="/category/2019/05/29/IDEA常用快捷键/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>

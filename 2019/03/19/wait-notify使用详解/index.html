@@ -19,16 +19,16 @@
 <meta name="keywords" content="多线程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="wait&#x2F;notify使用详解">
-<meta property="og:url" content="http://www.shenjian.online/2019/03/19/wait-notify使用详解/index.html">
+<meta property="og:url" content="http://www.shenjian.online/category/2019/03/19/wait-notify使用详解/index.html">
 <meta property="og:site_name" content="沈健的技术博客">
 <meta property="og:description" content="1. 使用注意事项1) wait/notify(All)可用于线程间(线程数量&amp;gt;3)通信 2) 永远在synchronized方法或对象里使用wait/notify(All),不然JVM报java.lang.IllegalMonitorStateException 3) 永远在while循环里使用wait，防止其他原因改变先前判断条件 4) 永远在线程间共享对象(生产者消费者中为缓冲区队列)">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://www.shenjian.online/2019/03/19/wait-notify使用详解/WaitNotify运行过程.png">
+<meta property="og:image" content="http://www.shenjian.online/category/2019/03/19/wait-notify使用详解/WaitNotify运行过程.png">
 <meta property="og:updated_time" content="2019-06-20T14:51:41.926Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="wait&#x2F;notify使用详解">
 <meta name="twitter:description" content="1. 使用注意事项1) wait/notify(All)可用于线程间(线程数量&amp;gt;3)通信 2) 永远在synchronized方法或对象里使用wait/notify(All),不然JVM报java.lang.IllegalMonitorStateException 3) 永远在while循环里使用wait，防止其他原因改变先前判断条件 4) 永远在线程间共享对象(生产者消费者中为缓冲区队列)">
-<meta name="twitter:image" content="http://www.shenjian.online/2019/03/19/wait-notify使用详解/WaitNotify运行过程.png">
+<meta name="twitter:image" content="http://www.shenjian.online/category/2019/03/19/wait-notify使用详解/WaitNotify运行过程.png">
 
   
 
@@ -40,7 +40,7 @@
 
 
   
-    <link rel="stylesheet" href="/css/personal-style.css">
+    <link rel="stylesheet" href="/category/css/personal-style.css">
   
 
   
@@ -164,7 +164,7 @@
       
   <span class="article-category">
     <i class="icon-list"></i>
-    <a class="article-category-link" href="/category/多线程/">多线程</a>
+    <a class="article-category-link" href="/category/category/多线程/">多线程</a>
   </span>
 
 
@@ -193,7 +193,7 @@
 <p>执行结果：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">Queue is empty, Consumer ConsumerOne waiting</span><br><span class="line">Queue is empty, Consumer ConsumerTwo waiting</span><br><span class="line">Producer -1203276467</span><br><span class="line">Producer 626398544</span><br><span class="line">Producer -108152878</span><br><span class="line">Producer -705401944</span><br><span class="line">ConsumerTwo consume -1203276467</span><br><span class="line">ConsumerTwo consume 626398544</span><br><span class="line">ConsumerTwo consume -108152878</span><br><span class="line">ConsumerTwo consume -705401944</span><br><span class="line">Queue is empty, Consumer ConsumerTwo waiting</span><br><span class="line">Queue is empty, Consumer ConsumerOne waiting</span><br><span class="line">Producer -1487489511</span><br><span class="line">Producer 420807949</span><br><span class="line">Producer 428506738</span><br><span class="line">ConsumerOne consume -1487489511</span><br><span class="line">ConsumerTwo consume 420807949</span><br><span class="line">ConsumerTwo consume 428506738</span><br><span class="line">Queue is empty, Consumer ConsumerTwo waiting</span><br><span class="line">Queue is empty, Consumer ConsumerOne waiting</span><br><span class="line">Producer 1411031303</span><br><span class="line">Producer 1426589341</span><br><span class="line">Producer -1307293143</span><br><span class="line">Producer -970522822</span><br><span class="line">Producer -2074755062</span><br><span class="line">ConsumerOne consume 1411031303</span><br><span class="line">ConsumerOne consume 1426589341</span><br></pre></td></tr></table></figure>
 <h3 id="3-wait-nofity内部运行细节"><a href="#3-wait-nofity内部运行细节" class="headerlink" title="3. wait/nofity内部运行细节"></a>3. wait/nofity内部运行细节</h3><p>1) 使用wait()、notify()、notifyAll()时需要先对对象加锁<br>2) 调用wait()方法后，线程状态由RUNNING变为WAITTING,并将当前线程放置到对象的等待队列<br>3) notify()、notifyAll()方法调用后，等待线程依旧不会从wait()返回，需要调用notify()、notify()的线程释放锁后，等待线程才有机会从wait()返回<br>4) notify()、notifyAll()方法将线程从等待队列移到同步队列(前者移1个，后者移全部),被移动的线程由WAITTING变为BLOCKED<br>5) 从wait()方法返回的前提是获得了调用对象的锁[这也是3)中为啥说有机会返回的原因]</p>
-<p><img src="/2019/03/19/wait-notify使用详解/WaitNotify运行过程.png" alt="wait/nofity运行过程"></p>
+<p><img src="/category/2019/03/19/wait-notify使用详解/WaitNotify运行过程.png" alt="wait/nofity运行过程"></p>
 <h3 id="4-sleep与wait的区别"><a href="#4-sleep与wait的区别" class="headerlink" title="4. sleep与wait的区别"></a>4. sleep与wait的区别</h3><p>sleep是Thread中定义的方法, wait是Object中定义的方法;</p>
 <p>可以在任何地方调用线程对象的sleep方法，wait方法只能在同步代码块或同步方法中调用；</p>
 <p>调用线程对象的sleep方法后，不释放锁，调用对象的wait方法，释放对象获得的锁</p>
@@ -234,10 +234,10 @@
 
    
   <div class="box-prev-next clearfix">
-    <a class="show pull-left" href="/2019/03/18/线程的状态/">
+    <a class="show pull-left" href="/category/2019/03/18/线程的状态/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="show pull-right" href="/2019/03/21/JVM内存结构、JAVA内存模型、JAVA对象模型/">
+    <a class="show pull-right" href="/category/2019/03/21/JVM内存结构、JAVA内存模型、JAVA对象模型/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>
