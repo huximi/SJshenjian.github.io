@@ -23,7 +23,7 @@
 <meta property="og:site_name" content="沈健的技术博客">
 <meta property="og:description" content="1. java虚拟机内存模型java内存模型 2. 内存溢出一般发生在哪个区？永久代会不会导致内存溢出堆内存溢出、栈内存溢出。永久代是JDK1.7中方法区的一种实现，会导致内存溢出，最常见的是大量JSP文件导致永久代溢出 3. 动态加载类的框架了解哪些JDK动态代理、CGLIB框架 proxy 4. 动态代理一般有哪几种实现方式？动态代理的应用场景有哪些JDK动态代理、CGLIB框架 proxy">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-02-13T11:25:11.279Z">
+<meta property="og:updated_time" content="2020-02-13T13:40:02.753Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="美团面试篇">
 <meta name="twitter:description" content="1. java虚拟机内存模型java内存模型 2. 内存溢出一般发生在哪个区？永久代会不会导致内存溢出堆内存溢出、栈内存溢出。永久代是JDK1.7中方法区的一种实现，会导致内存溢出，最常见的是大量JSP文件导致永久代溢出 3. 动态加载类的框架了解哪些JDK动态代理、CGLIB框架 proxy 4. 动态代理一般有哪几种实现方式？动态代理的应用场景有哪些JDK动态代理、CGLIB框架 proxy">
@@ -340,6 +340,7 @@
 <h3 id="19-线程加锁有哪些方式？synchronized和lock的区别"><a href="#19-线程加锁有哪些方式？synchronized和lock的区别" class="headerlink" title="19. 线程加锁有哪些方式？synchronized和lock的区别"></a>19. 线程加锁有哪些方式？synchronized和lock的区别</h3><p>synchronized与lock</p>
 <p><a href="https://shenjian.online/2019/03/29/Lock%E6%8E%A5%E5%8F%A3%E5%92%8CReentrantLock/#6-synchronized%E5%92%8CReentrantLock%E4%B9%8B%E9%97%B4%E7%9A%84%E9%80%89%E6%8B%A9" target="_blank" rel="noopener">synchronized和ReentrantLock之间的选择</a></p>
 <h3 id="20-volatile关键字的作用？为什么使用AtomicLong而不使用Long-AtomicLong的底层是怎么实现的？"><a href="#20-volatile关键字的作用？为什么使用AtomicLong而不使用Long-AtomicLong的底层是怎么实现的？" class="headerlink" title="20. volatile关键字的作用？为什么使用AtomicLong而不使用Long?AtomicLong的底层是怎么实现的？"></a>20. volatile关键字的作用？为什么使用AtomicLong而不使用Long?AtomicLong的底层是怎么实现的？</h3><p><a href="https://shenjian.online/2019/01/10/Java%E5%B9%B6%E5%8F%91%E6%9C%BA%E5%88%B6%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E4%B9%8Bvolatile/" target="_blank" rel="noopener">Java并发机制底层实现原理之volatile</a></p>
+<p>long 64位，不具有原子性，使用AtomicLong使其具有原子性，线程安全<br>AtomicLong底层采用volatile + CAS,  具体采用Unsafe类CAS赋值</p>
 <h3 id="21-mysql的存储引擎有哪几种"><a href="#21-mysql的存储引擎有哪几种" class="headerlink" title="21. mysql的存储引擎有哪几种"></a>21. mysql的存储引擎有哪几种</h3><table>
 <thead>
 <tr>
