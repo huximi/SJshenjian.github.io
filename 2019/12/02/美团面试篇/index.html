@@ -23,7 +23,7 @@
 <meta property="og:site_name" content="沈健的技术博客">
 <meta property="og:description" content="1. java虚拟机内存模型java内存模型 2. 内存溢出一般发生在哪个区？永久代会不会导致内存溢出堆内存溢出、栈内存溢出。永久代是JDK1.7中方法区的一种实现，会导致内存溢出，最常见的是大量JSP文件导致永久代溢出 3. 动态加载类的框架了解哪些JDK动态代理、CGLIB框架 proxy 4. 动态代理一般有哪几种实现方式？动态代理的应用场景有哪些JDK动态代理、CGLIB框架 proxy">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-02-01T05:05:16.678Z">
+<meta property="og:updated_time" content="2020-02-13T11:17:09.572Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="美团面试篇">
 <meta name="twitter:description" content="1. java虚拟机内存模型java内存模型 2. 内存溢出一般发生在哪个区？永久代会不会导致内存溢出堆内存溢出、栈内存溢出。永久代是JDK1.7中方法区的一种实现，会导致内存溢出，最常见的是大量JSP文件导致永久代溢出 3. 动态加载类的框架了解哪些JDK动态代理、CGLIB框架 proxy 4. 动态代理一般有哪几种实现方式？动态代理的应用场景有哪些JDK动态代理、CGLIB框架 proxy">
@@ -222,7 +222,7 @@
 <tr>
 <td>StringBuilder</td>
 <td>可变类，原字符串基础上生成字符串</td>
-<td>安全</td>
+<td>不安全</td>
 <td>性能最好（比StringBuffer高10%~15%）</td>
 <td>单线程用于操作大量数据（方法内部，用完回收）</td>
 <td>尽可能指定容量（默认16，不超过16字符不用指定），不指定显著降低性能</td>
