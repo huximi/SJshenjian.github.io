@@ -23,7 +23,7 @@
 <meta property="og:site_name" content="沈健的技术博客">
 <meta property="og:description" content="MySQL面试篇1. 解释下超键、候选键、主键、外键超键： 在关系中能唯一标识元组的属性集称， 如学号、姓名候选键： 不含有多余属性的超键，如学号主键： 用户选择的候选键外键： 外键是相对于主键的，如学生表中学号为主键，成绩表中学号为外键 总结：主键为候选键的子集，候选键为超键的子集，而外键是相对于主键的 2. 数据库事务的四个特性及含义ACID: 原子性、一致性、隔离性、持久性 +原子性： 事务">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-11-24T09:36:41.843Z">
+<meta property="og:updated_time" content="2020-03-11T09:54:44.439Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Mysql面试篇">
 <meta name="twitter:description" content="MySQL面试篇1. 解释下超键、候选键、主键、外键超键： 在关系中能唯一标识元组的属性集称， 如学号、姓名候选键： 不含有多余属性的超键，如学号主键： 用户选择的候选键外键： 外键是相对于主键的，如学生表中学号为主键，成绩表中学号为外键 总结：主键为候选键的子集，候选键为超键的子集，而外键是相对于主键的 2. 数据库事务的四个特性及含义ACID: 原子性、一致性、隔离性、持久性 +原子性： 事务">
@@ -136,7 +136,7 @@
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#MySQL面试篇"><span class="toc-text">MySQL面试篇</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-解释下超键、候选键、主键、外键"><span class="toc-text">1. 解释下超键、候选键、主键、外键</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-数据库事务的四个特性及含义"><span class="toc-text">2. 数据库事务的四个特性及含义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-视图的作用，可以更改吗"><span class="toc-text">3. 视图的作用，可以更改吗</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-drop-delete-truncate的区别"><span class="toc-text">4. drop delete truncate的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-索引的工作原理及其种类"><span class="toc-text">5. 索引的工作原理及其种类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-连接的种类"><span class="toc-text">6. 连接的种类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-数据库范式"><span class="toc-text">7. 数据库范式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-数据库优化的思路"><span class="toc-text">8. 数据库优化的思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-解释left-join和right-join-阿里巴巴新零售技术质量部"><span class="toc-text">10. 解释left join和right join[阿里巴巴新零售技术质量部]</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#MySQL面试篇"><span class="toc-text">MySQL面试篇</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-解释下超键、候选键、主键、外键"><span class="toc-text">1. 解释下超键、候选键、主键、外键</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-数据库事务的四个特性及含义"><span class="toc-text">2. 数据库事务的四个特性及含义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-视图的作用，可以更改吗"><span class="toc-text">3. 视图的作用，可以更改吗</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-drop-delete-truncate的区别"><span class="toc-text">4. drop delete truncate的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-索引的工作原理及其种类-太保面试题"><span class="toc-text">5. 索引的工作原理及其种类(太保面试题)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-连接的种类"><span class="toc-text">6. 连接的种类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-数据库范式"><span class="toc-text">7. 数据库范式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-数据库优化的思路"><span class="toc-text">8. 数据库优化的思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-解释left-join和right-join-阿里巴巴新零售技术质量部"><span class="toc-text">10. 解释left join和right join[阿里巴巴新零售技术质量部]</span></a></li></ol></li></ol>
   </div>
 
 
@@ -199,8 +199,9 @@
 <li>truncate与不带where的delete: 只删除数据，而不删除表的结构,drop删除表的结构被依赖的约束、触发器、索引，依赖与该表的存储过程/函数不会被删除，但其状态会变为invalid</li>
 <li>由于foreign key约束引用的表，不能使用truncate table,而应使用不带where子句的delete语句。由于truncate table不记录在日志中，不能激活触发器删除外键信息</li>
 </ul>
-<h3 id="5-索引的工作原理及其种类"><a href="#5-索引的工作原理及其种类" class="headerlink" title="5. 索引的工作原理及其种类"></a>5. 索引的工作原理及其种类</h3><p>数据库索引，是数据库系统中一个排序的数据结构，以便快速查询、更新数据库中数据，通常实现为B树及B+树<br>数据库设计者巧妙利用了磁盘预读原理，将一个节点的大小设置为一个页(主存与磁盘间以页为单位交换数据)，这样每个节点只需一次I/0就可以完全载入<br>B-Tree一次检索最多需要h-1次I/0(根节点常驻内存)，渐进复杂度O(h)=O(logdN)</p>
-<p><strong>种类</strong><br>唯一索引： 不允许在其中任何两行具有相同的索引值<br>主键索引： 在数据库中为表定义主键则自动创建主键索引，主键索引是唯一索引的特例<br>聚集索引： 表中行的物理顺序与键值的逻辑(索引)顺序相同，一个表只能包含一个聚集索引</p>
+<h3 id="5-索引的工作原理及其种类-太保面试题"><a href="#5-索引的工作原理及其种类-太保面试题" class="headerlink" title="5. 索引的工作原理及其种类(太保面试题)"></a>5. 索引的工作原理及其种类(太保面试题)</h3><p>数据库索引，是数据库系统中一个排序的数据结构，以便快速查询、更新数据库中数据，通常实现为B树及B+树<br>数据库设计者巧妙利用了磁盘预读原理，将一个节点的大小设置为一个页(主存与磁盘间以页为单位交换数据)，这样每个节点只需一次I/0就可以完全载入<br>B-Tree一次检索最多需要h-1次I/0(根节点常驻内存)，渐进复杂度O(h)=O(logdN)</p>
+<p><strong>种类</strong><br>普通索引： 最基本的索引，没有任何限制<br>唯一索引： 索引列的值必须唯一，但允许有空值。如果是组合索引，则列值的组合必须唯一<br>主键索引： 在数据库中为表定义主键则自动创建主键索引，主键索引是唯一索引的特例<br>组合索引： 指多个字段上创建的索引，遵循最左前缀原则<br>全文索引</p>
+<p>主键索引与唯一索引区别:<br>一个表只能有一个主键，可以有多个唯一索引<br>主键列值不允许为空，唯一索引列值可以为空<br>主键可以作为其他表的外键<br>主键是逻辑键，实际不存在，唯一索引是物理键，实际存在  </p>
 <h3 id="6-连接的种类"><a href="#6-连接的种类" class="headerlink" title="6. 连接的种类"></a>6. 连接的种类</h3><p>左连接(left join)、右连接(right join)、 完整外部连接(full join返回左右连接和)、内连接(join)、交叉连接(cross join产生笛卡尔积)</p>
 <h3 id="7-数据库范式"><a href="#7-数据库范式" class="headerlink" title="7. 数据库范式"></a>7. 数据库范式</h3><p><strong>第一范式：</strong> 列不可分割<br><strong>第二范式：</strong> 非主属性完全依赖于主属性<br><strong>第三范式：</strong> 非主属性不传递依赖于主属性</p>
 <h3 id="8-数据库优化的思路"><a href="#8-数据库优化的思路" class="headerlink" title="8. 数据库优化的思路"></a>8. 数据库优化的思路</h3><ol>

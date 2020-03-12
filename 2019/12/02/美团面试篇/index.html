@@ -23,7 +23,7 @@
 <meta property="og:site_name" content="沈健的技术博客">
 <meta property="og:description" content="1. java虚拟机内存模型java内存模型 2. 内存溢出一般发生在哪个区？永久代会不会导致内存溢出堆内存溢出、栈内存溢出。永久代是JDK1.7中方法区的一种实现，会导致内存溢出，最常见的是大量JSP文件导致永久代溢出 3. 动态加载类的框架了解哪些JDK动态代理、CGLIB框架 proxy 4. 动态代理一般有哪几种实现方式？动态代理的应用场景有哪些JDK动态代理、CGLIB框架 proxy">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-02-14T01:49:25.978Z">
+<meta property="og:updated_time" content="2020-03-11T09:25:02.042Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="美团面试篇">
 <meta name="twitter:description" content="1. java虚拟机内存模型java内存模型 2. 内存溢出一般发生在哪个区？永久代会不会导致内存溢出堆内存溢出、栈内存溢出。永久代是JDK1.7中方法区的一种实现，会导致内存溢出，最常见的是大量JSP文件导致永久代溢出 3. 动态加载类的框架了解哪些JDK动态代理、CGLIB框架 proxy 4. 动态代理一般有哪几种实现方式？动态代理的应用场景有哪些JDK动态代理、CGLIB框架 proxy">
@@ -396,7 +396,7 @@
 </tbody>
 </table>
 <h2 id="22-sql优化有哪些着手点？组合索引的最左前缀原则的含义"><a href="#22-sql优化有哪些着手点？组合索引的最左前缀原则的含义" class="headerlink" title="22. sql优化有哪些着手点？组合索引的最左前缀原则的含义"></a>22. sql优化有哪些着手点？组合索引的最左前缀原则的含义</h2><p><a href="https://shenjian.online/2019/11/07/MySQL%E9%9D%A2%E8%AF%95%E7%AF%87/#8-%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BC%98%E5%8C%96%E7%9A%84%E6%80%9D%E8%B7%AF" target="_blank" rel="noopener">数据库优化的思路</a></p>
-<p>最左前缀匹配原则，非常重要的原则，mysql会一直向右匹配直到遇到范围查询(&gt;、&lt;、between、like)就停止匹配，比如a = 1 and b = 2 and c &gt; 3 and d = 4 如果建立(a,b,c,d)顺序的索引，d是用不到索引的，如果建立(a,b,d,c)的索引则都可以用到，a,b,d的顺序可以任意调整。<br>=和in可以乱序，比如a = 1 and b = 2 and c = 3 建立(a,b,c)索引可以任意顺序，mysql的查询优化器会帮你优化成索引可以识别的形式</p>
+<p>最左前缀匹配原则，非常重要的原则，mysql会一直向右匹配直到遇到范围查询(&gt;、&lt;、between、like(%位于左边停止匹配，在右边仍然走索引))就停止匹配，比如a = 1 and b = 2 and c &gt; 3 and d = 4 如果建立(a,b,c,d)顺序的索引，d是用不到索引的，如果建立(a,b,d,c)的索引则都可以用到，a,b,d的顺序可以任意调整。<br>=和in可以乱序，比如a = 1 and b = 2 and c = 3 建立(a,b,c)索引可以任意顺序，mysql的查询优化器会帮你优化成索引可以识别的形式</p>
 <h3 id="23-springmvc处理请求的流程"><a href="#23-springmvc处理请求的流程" class="headerlink" title="23. springmvc处理请求的流程"></a>23. springmvc处理请求的流程</h3><p><a href="https://shenjian.online/2019/11/05/%E5%BC%80%E6%BA%90%E6%A1%86%E6%9E%B6%E9%9D%A2%E8%AF%95%E7%AF%87/#17-SpringMVC%E7%94%A8%E5%88%B0%E7%9A%84%E6%B3%A8%E8%A7%A3%EF%BC%8C%E4%BD%9C%E7%94%A8%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%8C%E5%8E%9F%E7%90%86" target="_blank" rel="noopener">SpringMVC用到的注解，作用是什么，原理</a></p>
 <h3 id="24-spring的事务怎么使用？事务回滚？自定义异常？"><a href="#24-spring的事务怎么使用？事务回滚？自定义异常？" class="headerlink" title="24. spring的事务怎么使用？事务回滚？自定义异常？"></a>24. spring的事务怎么使用？事务回滚？自定义异常？</h3><p>使用注解<code>@Transactional</code><br>如让checked例外也回滚<code>@Transactional(rollbackFor=Exception.class)</code>,一般只需添加这个即可<br>让unchecked例外不回滚<code>@Transactional(notRollbackFor=RunTimeException.class)</code><br>不需要事务管理的(只查询的方法)<code>@Transactional(propagation=Propagation.NOT_SUPPORTED)</code>或者不添加   </p>
 <p>Spring声明式事务管理默认对非检查型和运行时异常进行回滚，而对检查型异常则不进行回滚<br>如果异常被try{} catch{}了，事务就不回滚了，要想回滚就必须在往外抛try{} catch{throw Exception}<br>Spring事务设置手动回滚：TransactionAspectSupport.currentTransactionStatus().setRollbackOnly()<br><strong>Transaction是否生效，仅取决于是否加载于接口方法，并且是否通过接口方法调用(而不是本类调用)</strong></p>
