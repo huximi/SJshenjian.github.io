@@ -23,7 +23,7 @@
 <meta property="og:site_name" content="沈健的技术博客">
 <meta property="og:description" content="MySQL面试篇1. 解释下超键、候选键、主键、外键超键： 在关系中能唯一标识元组的属性集称， 如学号、姓名候选键： 不含有多余属性的超键，如学号主键： 用户选择的候选键外键： 外键是相对于主键的，如学生表中学号为主键，成绩表中学号为外键 总结：主键为候选键的子集，候选键为超键的子集，而外键是相对于主键的 2. 数据库事务的四个特性及含义ACID: 原子性、一致性、隔离性、持久性 +原子性： 事务">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-03-12T01:49:24.397Z">
+<meta property="og:updated_time" content="2020-03-12T02:26:40.215Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Mysql面试篇">
 <meta name="twitter:description" content="MySQL面试篇1. 解释下超键、候选键、主键、外键超键： 在关系中能唯一标识元组的属性集称， 如学号、姓名候选键： 不含有多余属性的超键，如学号主键： 用户选择的候选键外键： 外键是相对于主键的，如学生表中学号为主键，成绩表中学号为外键 总结：主键为候选键的子集，候选键为超键的子集，而外键是相对于主键的 2. 数据库事务的四个特性及含义ACID: 原子性、一致性、隔离性、持久性 +原子性： 事务">
@@ -204,9 +204,8 @@
 <p>主键索引与唯一索引区别:<br>一个表只能有一个主键，可以有多个唯一索引<br>主键列值不允许为空，唯一索引列值可以为空<br>主键可以作为其他表的外键<br>主键是逻辑键，实际不存在，唯一索引是物理键，实际存在  </p>
 <h4 id="5-1-不走索引的情况-多次面试题目"><a href="#5-1-不走索引的情况-多次面试题目" class="headerlink" title="5.1 不走索引的情况(多次面试题目)"></a>5.1 不走索引的情况(多次面试题目)</h4><ul>
 <li>没有查询条件，或者查询条件没有建立索引</li>
-<li>在查询条件上没有使用引导列</li>
+<li>在查询条件上没有使用引导列(引导列是组合索引重要概念，如果将要使用的索引列不是复合索引列表中的第一部分，则不会使用索引）</li>
 <li>查询的数量是大表的大部分，应该是30％以上</li>
-<li>索引本身失效</li>
 <li>对小表查询</li>
 <li><p>隐式转换导致索引失效，这一点应当引起重视.也是开发中经常会犯的错误. 由于表的字段tu_mdn定义为varchar2(20)  </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">错误的例子：select * from test where tu_mdn=13333333333;   </span><br><span class="line">正确的例子：select * from test where tu_mdn=&apos;13333333333&apos;;</span><br></pre></td></tr></table></figure>
@@ -221,15 +220,17 @@
 </li>
 <li>如果使用MEMORY/HEAP表并且where条件中不使用“=”进行索引列，那么不会用到索引。Heap表只有在“=”的条件下会使用索引。因为用的是哈希索引 </li>
 <li>用or分割开的条件，如果or前的条件中的列有索引，而后面的列中没有索引，那么涉及的索引都不会被用到</li>
-<li>如果将要使用的索引列不是复合索引列表中的第一部分，则不会使用索引</li>
-<li>如果like是以%开始，MySQL也会采用这个索引</li>
-<li>在JOIN操作中，MYSQL只有在主键和外键的数据类型相同时才能使用索引，否则即使建立了索引也不会使用</li>
+<li><p>如果like是以%开始，MySQL不会采用这个索引</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">问题：解决like ‘%字符串%’时，索引失效问题的方法(么么直播面试题目)</span><br><span class="line">使用覆盖索引(只查询索引的列（索引列和查询列一致）)即可</span><br><span class="line">SELECT id,name,age FROM user WHERE name LIKE &apos;%aa%&apos;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在JOIN操作中，MYSQL只有在主键和外键的数据类型相同时才能使用索引，否则即使建立了索引也不会使用</p>
+</li>
 <li><p>在ORDER BY操作中，MYSQL只有在排序条件不是一个查询条件表达式的情况下才使用索引。尽管如此，在涉及多个数据表的查询里，即使有索引可用，那些索引在加快ORDER BY操作方面也没什么作用</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql查询只使用一个索引，因此如果where子句中已经使用了索引的话，那么order by中的列是不会使用索引的。因此数据库默认排序可以符合要求的情况下不要使用排序操作；尽量不要包含多个列的排序，如果需要最好给这些列创建复合索引</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>如果列名是索引，使用column_name is null将使用索引</p>
+<li><p>索引字段上使用 is null / is not null 判断时，会导致索引失效</p>
 </li>
-<li>不使用NOT IN和&lt;&gt;操作。NOT IN和&lt;&gt;操作都不会使用索引将进行全表扫描。NOT IN可以NOT EXISTS代替，id&lt;&gt;3则可使用id&gt;3 or id&lt;3来代替</li>
+<li>mysql存储引擎不能继续使用索引中范围条件（bettween、&lt;、&gt;、in等）右边的列</li>
 <li><p>使用短索引</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">对串列进行索引，如果可能应该指定一个前缀长度。例如，如果有一个CHAR(255)的列，如果在前10个或20个字符内，多数值是惟一的，那么就不要对整个列进行索引。短索引不仅可以提高查询速度而且可以节省磁盘空间和I/O操作。</span><br></pre></td></tr></table></figure>
 </li>
@@ -240,6 +241,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ENUM保存的是TINYINT，别在枚举中搞一些“中国”“北京”“技术部”这样的字符串，字符串空间又大，效率又低。</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
+<p><a href="https://blog.csdn.net/wuseyukui/article/details/72312574" target="_blank" rel="noopener">MySQL高级之索引失效与优化详解</a></p>
 <h3 id="6-连接的种类"><a href="#6-连接的种类" class="headerlink" title="6. 连接的种类"></a>6. 连接的种类</h3><p>左连接(left join)、右连接(right join)、 完整外部连接(full join返回左右连接和)、内连接(join)、交叉连接(cross join产生笛卡尔积)</p>
 <h3 id="7-数据库范式"><a href="#7-数据库范式" class="headerlink" title="7. 数据库范式"></a>7. 数据库范式</h3><p><strong>第一范式：</strong> 列不可分割<br><strong>第二范式：</strong> 非主属性完全依赖于主属性<br><strong>第三范式：</strong> 非主属性不传递依赖于主属性</p>
 <h3 id="8-数据库优化的思路"><a href="#8-数据库优化的思路" class="headerlink" title="8. 数据库优化的思路"></a>8. 数据库优化的思路</h3><ol>
