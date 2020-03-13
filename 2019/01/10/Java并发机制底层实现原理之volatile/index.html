@@ -12,11 +12,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="面试,多线程,">
+    <meta name="keywords" content="多线程,面试,">
   
 
   <meta name="description" content="如果一个字段被声明成volatile，Java内存模型保证所有线程看到这个变量的值是一致的。 1. 实现原理有volatile修饰的变量进行写操作时会多出带有lock前缀的汇编指令，该指令在多核处理器中引发两件事情：1）将当前处理器缓存行的数据写回系统内存。 通过总线锁定或缓存行锁定。2）这个写回内存的操作会使其他CPU中缓存了该内存地址的数据无效。 其他处理器通过嗅探总线上传播过来的数据监测自己">
-<meta name="keywords" content="面试,多线程">
+<meta name="keywords" content="多线程,面试">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java并发机制底层实现原理之volatile">
 <meta property="og:url" content="http://www.shenjian.online/2019/01/10/Java并发机制底层实现原理之volatile/index.html">
