@@ -15,18 +15,18 @@
     <meta name="keywords" content="面试,HTTP,">
   
 
-  <meta name="description" content="1. 整体概括(4分)2. 举例说明3. 涉及的协议4. HTTP协议和特点，与HTTPS的区别(+2分)5. 三次握手四次挥手原理及原因6. DNS具体解析原理(+2分)7. 通俗的表达整个流程让小白用户理解(+2分)参考： 一个Http请求的流程一次完整的Http请求过程">
+  <meta name="description" content="1. 整体概括(4分)DNS域名解析 -&amp;gt; 发起TCP三次挥手 -&amp;gt; 建立TCP连接后发起HTTP 2. 举例说明3. 涉及的协议4. HTTP协议和特点，与HTTPS的区别(+2分)5. 三次握手四次挥手原理及原因6. DNS具体解析原理(+2分)7. 通俗的表达整个流程让小白用户理解(+2分)参考： 一个Http请求的流程一次完整的Http请求过程">
 <meta name="keywords" content="面试,HTTP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Http请求完整流程">
 <meta property="og:url" content="http://www.shenjian.online/2020/03/16/Http请求完整流程/index.html">
 <meta property="og:site_name" content="沈健的技术博客">
-<meta property="og:description" content="1. 整体概括(4分)2. 举例说明3. 涉及的协议4. HTTP协议和特点，与HTTPS的区别(+2分)5. 三次握手四次挥手原理及原因6. DNS具体解析原理(+2分)7. 通俗的表达整个流程让小白用户理解(+2分)参考： 一个Http请求的流程一次完整的Http请求过程">
+<meta property="og:description" content="1. 整体概括(4分)DNS域名解析 -&amp;gt; 发起TCP三次挥手 -&amp;gt; 建立TCP连接后发起HTTP 2. 举例说明3. 涉及的协议4. HTTP协议和特点，与HTTPS的区别(+2分)5. 三次握手四次挥手原理及原因6. DNS具体解析原理(+2分)7. 通俗的表达整个流程让小白用户理解(+2分)参考： 一个Http请求的流程一次完整的Http请求过程">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-03-17T05:16:10.204Z">
+<meta property="og:updated_time" content="2020-03-18T01:57:30.537Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Http请求完整流程">
-<meta name="twitter:description" content="1. 整体概括(4分)2. 举例说明3. 涉及的协议4. HTTP协议和特点，与HTTPS的区别(+2分)5. 三次握手四次挥手原理及原因6. DNS具体解析原理(+2分)7. 通俗的表达整个流程让小白用户理解(+2分)参考： 一个Http请求的流程一次完整的Http请求过程">
+<meta name="twitter:description" content="1. 整体概括(4分)DNS域名解析 -&amp;gt; 发起TCP三次挥手 -&amp;gt; 建立TCP连接后发起HTTP 2. 举例说明3. 涉及的协议4. HTTP协议和特点，与HTTPS的区别(+2分)5. 三次握手四次挥手原理及原因6. DNS具体解析原理(+2分)7. 通俗的表达整个流程让小白用户理解(+2分)参考： 一个Http请求的流程一次完整的Http请求过程">
 
   
 
@@ -182,7 +182,8 @@
 
   <div class="article-content">
     
-      <h3 id="1-整体概括-4分"><a href="#1-整体概括-4分" class="headerlink" title="1. 整体概括(4分)"></a>1. 整体概括(4分)</h3><h3 id="2-举例说明"><a href="#2-举例说明" class="headerlink" title="2. 举例说明"></a>2. 举例说明</h3><h3 id="3-涉及的协议"><a href="#3-涉及的协议" class="headerlink" title="3. 涉及的协议"></a>3. 涉及的协议</h3><h3 id="4-HTTP协议和特点，与HTTPS的区别-2分"><a href="#4-HTTP协议和特点，与HTTPS的区别-2分" class="headerlink" title="4. HTTP协议和特点，与HTTPS的区别(+2分)"></a>4. HTTP协议和特点，与HTTPS的区别(+2分)</h3><h3 id="5-三次握手四次挥手原理及原因"><a href="#5-三次握手四次挥手原理及原因" class="headerlink" title="5. 三次握手四次挥手原理及原因"></a>5. 三次握手四次挥手原理及原因</h3><h3 id="6-DNS具体解析原理-2分"><a href="#6-DNS具体解析原理-2分" class="headerlink" title="6. DNS具体解析原理(+2分)"></a>6. DNS具体解析原理(+2分)</h3><h3 id="7-通俗的表达整个流程让小白用户理解-2分"><a href="#7-通俗的表达整个流程让小白用户理解-2分" class="headerlink" title="7. 通俗的表达整个流程让小白用户理解(+2分)"></a>7. 通俗的表达整个流程让小白用户理解(+2分)</h3><p>参考： <a href="https://blog.csdn.net/wolf_love666/article/details/93600904" target="_blank" rel="noopener">一个Http请求的流程</a><br><a href="https://blog.csdn.net/zjkC050818/article/details/78345819" target="_blank" rel="noopener">一次完整的Http请求过程</a></p>
+      <h3 id="1-整体概括-4分"><a href="#1-整体概括-4分" class="headerlink" title="1. 整体概括(4分)"></a>1. 整体概括(4分)</h3><p>DNS域名解析 -&gt; 发起TCP三次挥手 -&gt; 建立TCP连接后发起HTTP</p>
+<h3 id="2-举例说明"><a href="#2-举例说明" class="headerlink" title="2. 举例说明"></a>2. 举例说明</h3><h3 id="3-涉及的协议"><a href="#3-涉及的协议" class="headerlink" title="3. 涉及的协议"></a>3. 涉及的协议</h3><h3 id="4-HTTP协议和特点，与HTTPS的区别-2分"><a href="#4-HTTP协议和特点，与HTTPS的区别-2分" class="headerlink" title="4. HTTP协议和特点，与HTTPS的区别(+2分)"></a>4. HTTP协议和特点，与HTTPS的区别(+2分)</h3><h3 id="5-三次握手四次挥手原理及原因"><a href="#5-三次握手四次挥手原理及原因" class="headerlink" title="5. 三次握手四次挥手原理及原因"></a>5. 三次握手四次挥手原理及原因</h3><h3 id="6-DNS具体解析原理-2分"><a href="#6-DNS具体解析原理-2分" class="headerlink" title="6. DNS具体解析原理(+2分)"></a>6. DNS具体解析原理(+2分)</h3><h3 id="7-通俗的表达整个流程让小白用户理解-2分"><a href="#7-通俗的表达整个流程让小白用户理解-2分" class="headerlink" title="7. 通俗的表达整个流程让小白用户理解(+2分)"></a>7. 通俗的表达整个流程让小白用户理解(+2分)</h3><p>参考： <a href="https://blog.csdn.net/wolf_love666/article/details/93600904" target="_blank" rel="noopener">一个Http请求的流程</a><br><a href="https://blog.csdn.net/zjkC050818/article/details/78345819" target="_blank" rel="noopener">一次完整的Http请求过程</a></p>
 
     
   </div>
