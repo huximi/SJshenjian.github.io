@@ -15,18 +15,18 @@
     <meta name="keywords" content="设计模式,">
   
 
-  <meta name="description" content="策略模式定义了算法族，分别封装起来，让他们之间可以互相替换，此模式让算法的变化独立于使用算法的客户    定义算法族123public interface FlyBehavior &amp;#123;	String fly(); // 飞的行为&amp;#125;   123public interface QuackBehavior &amp;#123;	String quack(); // 叫的行为&amp;#125; 12">
+  <meta name="description" content="策略模式定义了算法族，分别封装起来，让他们之间可以互相替换，此模式让算法的变化独立于使用算法的客户    定义算法族    123public interface FlyBehavior &amp;#123;	String fly(); // 飞的行为&amp;#125; 123public interface QuackBehavior &amp;#123;	String quack(); // 叫的行为&amp;#125;">
 <meta name="keywords" content="设计模式">
 <meta property="og:type" content="article">
 <meta property="og:title" content="策略模式">
 <meta property="og:url" content="http://www.shenjian.online/2020/04/04/策略模式/index.html">
 <meta property="og:site_name" content="沈健的技术博客">
-<meta property="og:description" content="策略模式定义了算法族，分别封装起来，让他们之间可以互相替换，此模式让算法的变化独立于使用算法的客户    定义算法族123public interface FlyBehavior &amp;#123;	String fly(); // 飞的行为&amp;#125;   123public interface QuackBehavior &amp;#123;	String quack(); // 叫的行为&amp;#125; 12">
+<meta property="og:description" content="策略模式定义了算法族，分别封装起来，让他们之间可以互相替换，此模式让算法的变化独立于使用算法的客户    定义算法族    123public interface FlyBehavior &amp;#123;	String fly(); // 飞的行为&amp;#125; 123public interface QuackBehavior &amp;#123;	String quack(); // 叫的行为&amp;#125;">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2020-04-04T13:16:07.707Z">
+<meta property="og:updated_time" content="2020-04-04T13:22:44.036Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="策略模式">
-<meta name="twitter:description" content="策略模式定义了算法族，分别封装起来，让他们之间可以互相替换，此模式让算法的变化独立于使用算法的客户    定义算法族123public interface FlyBehavior &amp;#123;	String fly(); // 飞的行为&amp;#125;   123public interface QuackBehavior &amp;#123;	String quack(); // 叫的行为&amp;#125; 12">
+<meta name="twitter:description" content="策略模式定义了算法族，分别封装起来，让他们之间可以互相替换，此模式让算法的变化独立于使用算法的客户    定义算法族    123public interface FlyBehavior &amp;#123;	String fly(); // 飞的行为&amp;#125; 123public interface QuackBehavior &amp;#123;	String quack(); // 叫的行为&amp;#125;">
 
   
 
@@ -179,9 +179,9 @@
     
       <p>策略模式定义了算法族，分别封装起来，让他们之间可以互相替换，此模式让算法的变化独立于使用算法的客户  </p>
 <ol>
-<li>定义算法族<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">FlyBehavior</span> </span>&#123;</span><br><span class="line">	<span class="function">String <span class="title">fly</span><span class="params">()</span></span>; <span class="comment">// 飞的行为</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
+<li>定义算法族  </li>
 </ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">FlyBehavior</span> </span>&#123;</span><br><span class="line">	<span class="function">String <span class="title">fly</span><span class="params">()</span></span>; <span class="comment">// 飞的行为</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">QuackBehavior</span> </span>&#123;</span><br><span class="line">	<span class="function">String <span class="title">quack</span><span class="params">()</span></span>; <span class="comment">// 叫的行为</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FlyNoWay</span> <span class="keyword">implements</span> <span class="title">FlyBehavior</span> </span>&#123;	</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">fly</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">"I can't fly"</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FlyRocketPowered</span> <span class="keyword">implements</span> <span class="title">FlyBehavior</span> </span>&#123;  </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">fly</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"I'm flying with a rocket"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -233,7 +233,7 @@
     <a class="show pull-left" href="/2020/03/22/60-螺旋矩阵-leetcode/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="hide pull-right" href="/">
+    <a class="show pull-right" href="/2020/04/05/观察者模式/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>
