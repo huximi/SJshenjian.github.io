@@ -269,7 +269,7 @@
 <li>为了让这个动态子类得以正常工作，需要把CGLIB的jar文件放在classpath里，这就是我们引用cglib包的原因</li>
 <li>Spring容器要子类化的类(CommandManager)不能是final的，要覆盖的方法(createCommand)也不能是final的</li>
 </ol>
-<p><strong>Spring生命周期</strong><br><a href="https://shenjian.online/2019/01/20/Spring%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%A2%98/#6-%E8%A7%A3%E9%87%8ASpring%E6%A1%86%E6%9E%B6%E4%B8%ADbean%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F" target="_blank" rel="noopener">Spring Bean生命周期</a></p>
+<p><strong>Spring生命周期</strong><br><a href="https://shenjian.huximi.com/2019/01/20/Spring%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%A2%98/#6-%E8%A7%A3%E9%87%8ASpring%E6%A1%86%E6%9E%B6%E4%B8%ADbean%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F" target="_blank" rel="noopener">Spring Bean生命周期</a></p>
 <h3 id="9-SpringMVC中DispatcherServlet初始化过程"><a href="#9-SpringMVC中DispatcherServlet初始化过程" class="headerlink" title="9. SpringMVC中DispatcherServlet初始化过程"></a>9. SpringMVC中DispatcherServlet初始化过程</h3><h3 id="10-Netty的线程模型，-netty如何基于reactor模型上实现的"><a href="#10-Netty的线程模型，-netty如何基于reactor模型上实现的" class="headerlink" title="10. Netty的线程模型， netty如何基于reactor模型上实现的"></a>10. Netty的线程模型， netty如何基于reactor模型上实现的</h3><h3 id="11-为什么选择netty"><a href="#11-为什么选择netty" class="headerlink" title="11. 为什么选择netty"></a>11. 为什么选择netty</h3><h3 id="12-谈谈TCP三次握手，四次挥手"><a href="#12-谈谈TCP三次握手，四次挥手" class="headerlink" title="12. 谈谈TCP三次握手，四次挥手"></a>12. 谈谈TCP三次握手，四次挥手</h3><h3 id="13-什么是TCP粘包、拆包，解决方式是什么"><a href="#13-什么是TCP粘包、拆包，解决方式是什么" class="headerlink" title="13. 什么是TCP粘包、拆包，解决方式是什么"></a>13. 什么是TCP粘包、拆包，解决方式是什么</h3><p>TCP是基于字节流的，且首部没有表示数据长度的字段，因此才有粘包、拆包现象发生。<br>具体表现形式为：客户端向服务端发送包packet1与packet2,如果服务端接收到了一个包，由于TCP是不会丢包的，则发生了粘包；<br>如果服务器接收到了两个包，其中一个多出来一块，一个少了一块，则发生了粘包与拆包</p>
 <p><strong>粘包、拆包原因</strong>[辅助理解，可不回答]</p>
 <ol>
