@@ -19,28 +19,28 @@
 <meta name="keywords" content="Mysql">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Mysql增量备份与恢复">
-<meta property="og:url" content="http://www.shenjian.online/2019/11/24/Mysql增量备份与恢复/index.html">
+<meta property="og:url" content="http://shenjian.huximi.com/2019/11/24/Mysql增量备份与恢复/index.html">
 <meta property="og:site_name" content="沈健的技术博客">
 <meta property="og:description" content="本文基于Centos7与Mysql7.5，其他系统版本可能操作存在差异 1. 检查并开启binlogSHOW VARIABLES LIKE &amp;#39;log_bin%&amp;#39;;  Centos7下Mysql配置my.cnf位置： ps aux|grep mysql|grep &amp;#39;my.cnf&amp;#39;, 如果没有没有输出内容则是使用默认配置位置默认配置my.cnf位置： mysql --h">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://www.shenjian.online/2019/11/24/Mysql增量备份与恢复/showBinlog.png">
-<meta property="og:image" content="http://www.shenjian.online/2019/11/24/Mysql增量备份与恢复/mycnf.png">
-<meta property="og:image" content="http://www.shenjian.online/2019/11/24/Mysql增量备份与恢复/conf.png">
-<meta property="og:image" content="http://www.shenjian.online/2019/11/24/Mysql增量备份与恢复/newlogbin.png">
-<meta property="og:image" content="http://www.shenjian.online/2019/11/24/Mysql增量备份与恢复/mysqlbin.png">
-<meta property="og:image" content="http://www.shenjian.online/2019/11/24/Mysql增量备份与恢复/script.png">
-<meta property="og:image" content="http://www.shenjian.online/2019/11/24/Mysql增量备份与恢复/result.png">
-<meta property="og:image" content="http://www.shenjian.online/2019/11/24/Mysql增量备份与恢复/backup.png">
-<meta property="og:image" content="http://www.shenjian.online/2019/11/24/Mysql增量备份与恢复/delete.png">
-<meta property="og:image" content="http://www.shenjian.online/2019/11/24/Mysql增量备份与恢复/start.png">
-<meta property="og:image" content="http://www.shenjian.online/2019/11/24/Mysql增量备份与恢复/end.png">
-<meta property="og:image" content="http://www.shenjian.online/2019/11/24/Mysql增量备份与恢复/recover.png">
-<meta property="og:image" content="http://www.shenjian.online/2019/11/24/Mysql增量备份与恢复/success.png">
+<meta property="og:image" content="http://shenjian.huximi.com/2019/11/24/Mysql增量备份与恢复/showBinlog.png">
+<meta property="og:image" content="http://shenjian.huximi.com/2019/11/24/Mysql增量备份与恢复/mycnf.png">
+<meta property="og:image" content="http://shenjian.huximi.com/2019/11/24/Mysql增量备份与恢复/conf.png">
+<meta property="og:image" content="http://shenjian.huximi.com/2019/11/24/Mysql增量备份与恢复/newlogbin.png">
+<meta property="og:image" content="http://shenjian.huximi.com/2019/11/24/Mysql增量备份与恢复/mysqlbin.png">
+<meta property="og:image" content="http://shenjian.huximi.com/2019/11/24/Mysql增量备份与恢复/script.png">
+<meta property="og:image" content="http://shenjian.huximi.com/2019/11/24/Mysql增量备份与恢复/result.png">
+<meta property="og:image" content="http://shenjian.huximi.com/2019/11/24/Mysql增量备份与恢复/backup.png">
+<meta property="og:image" content="http://shenjian.huximi.com/2019/11/24/Mysql增量备份与恢复/delete.png">
+<meta property="og:image" content="http://shenjian.huximi.com/2019/11/24/Mysql增量备份与恢复/start.png">
+<meta property="og:image" content="http://shenjian.huximi.com/2019/11/24/Mysql增量备份与恢复/end.png">
+<meta property="og:image" content="http://shenjian.huximi.com/2019/11/24/Mysql增量备份与恢复/recover.png">
+<meta property="og:image" content="http://shenjian.huximi.com/2019/11/24/Mysql增量备份与恢复/success.png">
 <meta property="og:updated_time" content="2019-11-24T08:04:54.936Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Mysql增量备份与恢复">
 <meta name="twitter:description" content="本文基于Centos7与Mysql7.5，其他系统版本可能操作存在差异 1. 检查并开启binlogSHOW VARIABLES LIKE &amp;#39;log_bin%&amp;#39;;  Centos7下Mysql配置my.cnf位置： ps aux|grep mysql|grep &amp;#39;my.cnf&amp;#39;, 如果没有没有输出内容则是使用默认配置位置默认配置my.cnf位置： mysql --h">
-<meta name="twitter:image" content="http://www.shenjian.online/2019/11/24/Mysql增量备份与恢复/showBinlog.png">
+<meta name="twitter:image" content="http://shenjian.huximi.com/2019/11/24/Mysql增量备份与恢复/showBinlog.png">
 
   
 

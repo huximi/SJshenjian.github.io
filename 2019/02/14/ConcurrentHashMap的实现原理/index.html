@@ -19,19 +19,19 @@
 <meta name="keywords" content="高并发,面试">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ConcurrentHashMap的实现原理">
-<meta property="og:url" content="http://www.shenjian.online/2019/02/14/ConcurrentHashMap的实现原理/index.html">
+<meta property="og:url" content="http://shenjian.huximi.com/2019/02/14/ConcurrentHashMap的实现原理/index.html">
 <meta property="og:site_name" content="沈健的技术博客">
 <meta property="og:description" content="1. 哈希表1.1 介绍哈希表是一种key-value存储数据的结构，根据key即可查到对应的value。如果所有的键是整数，我们可用简单的无序数组来表示，键作为数组索引，值即为对应的值 1.2 链式哈希表链式哈希表本质由一组链表构成。每个链表可以看作一个桶，将键传入哈希函数(该过程称为哈希键)，函数通过散列的方式告知元素属于哪个桶，然后在相应的链表头插入元素。查找与删除，以同样的方式先找到桶，然">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://www.shenjian.online/2019/02/14/ConcurrentHashMap的实现原理/链式哈希表结构.jpg">
-<meta property="og:image" content="http://www.shenjian.online/2019/02/14/ConcurrentHashMap的实现原理/Map结构.jpg">
-<meta property="og:image" content="http://www.shenjian.online/2019/02/14/ConcurrentHashMap的实现原理/ConcurrentHashMap内部结构图.jpg">
-<meta property="og:image" content="http://www.shenjian.online/2019/02/14/ConcurrentHashMap的实现原理/链表红黑树.jpg">
+<meta property="og:image" content="http://shenjian.huximi.com/2019/02/14/ConcurrentHashMap的实现原理/链式哈希表结构.jpg">
+<meta property="og:image" content="http://shenjian.huximi.com/2019/02/14/ConcurrentHashMap的实现原理/Map结构.jpg">
+<meta property="og:image" content="http://shenjian.huximi.com/2019/02/14/ConcurrentHashMap的实现原理/ConcurrentHashMap内部结构图.jpg">
+<meta property="og:image" content="http://shenjian.huximi.com/2019/02/14/ConcurrentHashMap的实现原理/链表红黑树.jpg">
 <meta property="og:updated_time" content="2020-03-11T09:21:21.209Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ConcurrentHashMap的实现原理">
 <meta name="twitter:description" content="1. 哈希表1.1 介绍哈希表是一种key-value存储数据的结构，根据key即可查到对应的value。如果所有的键是整数，我们可用简单的无序数组来表示，键作为数组索引，值即为对应的值 1.2 链式哈希表链式哈希表本质由一组链表构成。每个链表可以看作一个桶，将键传入哈希函数(该过程称为哈希键)，函数通过散列的方式告知元素属于哪个桶，然后在相应的链表头插入元素。查找与删除，以同样的方式先找到桶，然">
-<meta name="twitter:image" content="http://www.shenjian.online/2019/02/14/ConcurrentHashMap的实现原理/链式哈希表结构.jpg">
+<meta name="twitter:image" content="http://shenjian.huximi.com/2019/02/14/ConcurrentHashMap的实现原理/链式哈希表结构.jpg">
 
   
 
